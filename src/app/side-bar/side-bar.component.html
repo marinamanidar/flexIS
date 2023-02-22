@@ -1,0 +1,52 @@
+<mat-toolbar class="mat-elevation-z8">
+    <button
+      mat-icon-button
+      *ngIf="sidenav.mode === 'over'"
+      (click)="sidenav.toggle()"
+    >
+      <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+      <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+    </button>
+    FlexJS
+  </mat-toolbar>
+  
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+      <img
+        class="avatar mat-elevation-z8"
+        src="https://source.unsplash.com/c_GmwfHBDzk/200x200"
+      />
+  
+      <div class="name">John Smith</div>
+      <p class="designation">Software Engineer</p>
+  
+      <mat-divider></mat-divider>
+  
+      <button mat-button class="menu-button" routerLink="/register">
+        <span>Register Employee</span>
+      </button>
+      <button mat-button class="menu-button" routerLink="/fwa">
+        <span>FWA Analytics</span>
+      </button>
+      <button mat-button class="menu-button" routerLink="/review">
+        <span>Review Employee Schedules</span>
+      </button>
+      <button mat-button class="menu-button" routerLink="/submit">
+        <span>Submit FWA Request</span>
+      </button>
+      <button mat-button class="menu-button" routerLink="/update">
+        <span>Update Schedule</span>
+      </button>
+  
+  
+      <button mat-button class="menu-button logout" routerLink="/help">
+        <span>Log Out</span>
+      </button>
+
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="content mat-elevation-z8">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>

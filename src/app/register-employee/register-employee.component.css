@@ -1,0 +1,16 @@
+mat-card {
+  background: #004a9f;
+  color: white;
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.example-container mat-form-field + mat-form-field {
+    margin-left: 8px;
+}
+
+.disable {
+    color: black;
+    box-sizing: border-box;
+}
+

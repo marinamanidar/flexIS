@@ -34,7 +34,7 @@ import {MatSelectModule} from '@angular/material/select';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatSidenavModule,
+	MatSidenavModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
@@ -44,7 +44,7 @@ import {MatSelectModule} from '@angular/material/select';
     MatSelectModule,
     MatCardModule,
     MatInputModule,
-    MatButtonModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

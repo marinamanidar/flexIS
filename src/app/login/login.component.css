@@ -1,0 +1,40 @@
+.mat-form-field {
+width: 100%;
+min-width: 40%;
+}
+
+.mat-card {
+margin: auto;
+}
+
+mat-card-title,
+mat-card-content {
+display: flex;
+justify-content: center;
+}
+
+mat-card-title{
+  padding: 30px 0 10px 0;
+}
+
+.error {
+padding: 16px;
+width: 300px;
+color: white;
+background-color: red;
+}
+
+.button {
+display: flex;
+justify-content: flex-end;
+}
+
+.login {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -150px 0 0 -150px;
+	width:300px;
+	height:300px;
+}
+

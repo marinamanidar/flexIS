@@ -6,7 +6,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './login-page/login/login.component';
+import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatCardModule } from "@angular/material/card";
 import { MatInputModule } from "@angular/material/input";
@@ -19,6 +19,7 @@ import { SubmitRequestComponent } from './submit-request/submit-request.componen
 import { UpdateScheduleComponent } from './update-schedule/update-schedule.component';
 import { AppRoutingModule } from './app-routing.module';
 import {MatSelectModule} from '@angular/material/select';
+import { PasswordComponent } from './password/password.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {MatSelectModule} from '@angular/material/select';
     FwaAnalyticsComponent,
     ReviewSchedulesComponent,
     SubmitRequestComponent,
-    UpdateScheduleComponent
+    UpdateScheduleComponent,
+    PasswordComponent
   ],
   imports: [
     BrowserModule,

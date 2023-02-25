@@ -12,12 +12,14 @@ export class LoginComponent {
     password: new FormControl(''),
   });
 
-  submit() {
+  login() {
     if (this.form.valid) {
       this.submitEM.emit(this.form.value);
+
+      alert("test")
     }
   }
- 
+
 
   @Output() submitEM = new EventEmitter();
 }

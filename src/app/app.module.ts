@@ -20,6 +20,7 @@ import { UpdateScheduleComponent } from './update-schedule/update-schedule.compo
 import { AppRoutingModule } from './app-routing.module';
 import {MatSelectModule} from '@angular/material/select';
 import { PasswordComponent } from './password/password.component';
+import { FormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { PasswordComponent } from './password/password.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-	MatSidenavModule,
+	  MatSidenavModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
@@ -46,7 +47,8 @@ import { PasswordComponent } from './password/password.component';
     MatSelectModule,
     MatCardModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

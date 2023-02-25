@@ -1,18 +1,50 @@
-<!-- <mat-card>
-    <mat-card-content>Register Employee</mat-card-content>
-</mat-card>
+<div class="card text-white bg-primary mb-3">
+  <div class="card-body">
+    <h5 class="card-title">Register New Employee</h5>
+  </div>
+</div>
 
-<mat-form-field class="department" appearance="fill">
-    <mat-label>Department ID</mat-label>
-    <mat-select [(value)]="selected">
-      <mat-option>None</mat-option>
-      <mat-option value="option1">Option 1</mat-option>
-      <mat-option value="option2">Option 2</mat-option>
-      <mat-option value="option3">Option 3</mat-option>
-    </mat-select>
-</mat-form-field>
+<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+  <div class="row g-3 mb-3">
+    <div class="form-floating col">
+      <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+        <option *ngFor="let dept of listDepartments">{{dept.departmentID}}</option>
+      </select>
+      <label for="floatingSelect">Department ID</label>
+    </div>
+    <div class="form-floating col">
+      <input type="text" class="form-control" id="floatingInput" placeholder="Server" disabled readonly>
+      <label for="floatingInput">yhrteh</label>
+    </div>
+  </div>
 
-<mat-form-field class="department" appearance="fill">
-    <mat-label>{{selected}}</mat-label>
-    <input matInput readonly>
-</mat-form-field> -->
+
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control input-lg" id="floatingInput" formControlName="id" placeholder="B15265">
+    <label for="floatingInput">Employee ID</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control input-lg" id="floatingInput" name="name" formControlName="name" placeholder="John Doe">
+    <label for="floatingInput">Employee Name</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control input-lg" id="floatingInput" formControlName="position" placeholder="Engineer">
+    <label for="floatingInput">Employee Position</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input type="email" class="form-control input-lg" id="floatingInput" formControlName="email" placeholder="name@example.com">
+    <label for="floatingInput">Employee Email</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control input-lg" id="floatingInput" formControlName="supervisorID" placeholder="S15436">
+    <label for="floatingInput">Supervisor ID</label>
+  </div>
+
+  <div class="d-grid gap-2">
+    <button class="btn btn-lg btn-primary" [disabled]="this.employeeForm.invalid" type="submit">Register</button>
+  </div>
+</form>

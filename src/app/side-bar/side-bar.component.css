@@ -22,7 +22,6 @@ mat-sidenav {
   margin-left: 32px;
   padding: 16px;
   overflow: auto;
-  text-align: center;
 }
 
 mat-sidenav-container {

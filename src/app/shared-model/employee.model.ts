@@ -6,4 +6,5 @@ export class Employee {
   email: string
   FWAstatus: string
   supervisorID: string
+  departmentID: string
 }

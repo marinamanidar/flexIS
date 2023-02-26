@@ -20,7 +20,12 @@ import { UpdateScheduleComponent } from './update-schedule/update-schedule.compo
 import { AppRoutingModule } from './app-routing.module';
 import {MatSelectModule} from '@angular/material/select';
 import { PasswordComponent } from './password/password.component';
-import { FormsModule } from '@angular/forms'
+import {MatGridListModule} from '@angular/material/grid-list';
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatRadioModule } from "@angular/material/radio";
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatRippleModule} from '@angular/material/core';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -48,7 +53,13 @@ import { FormsModule } from '@angular/forms'
     MatCardModule,
     MatInputModule,
     MatButtonModule,
-    FormsModule
+    MatGridListModule,
+    MatDatepickerModule,
+    MatRadioModule,
+    MatStepperModule,
+    MatRippleModule,
+    FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

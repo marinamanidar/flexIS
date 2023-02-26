@@ -42,7 +42,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-	MatSidenavModule,
+	  MatSidenavModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
@@ -59,6 +59,7 @@ import { FormsModule } from '@angular/forms';
     MatStepperModule,
     MatRippleModule,
     FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

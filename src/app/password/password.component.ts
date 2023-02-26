@@ -7,6 +7,8 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./password.component.css']
 })
 export class PasswordComponent {
+  hide = true;
+  picker ="";
   form: FormGroup = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),

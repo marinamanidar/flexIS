@@ -57,8 +57,7 @@ import { ViewEmployeesComponent } from './view-employees/view-employees.componen
     MatInputModule,
     MatButtonModule,
     FormsModule,
-	HttpClientModul
-	MatGridListModule,
+	  MatGridListModule,
     MatDatepickerModule,
     MatRadioModule,
     MatStepperModule,

@@ -2,6 +2,7 @@ import { NgFor } from '@angular/common';
 import { Component, Input, EventEmitter, Output, ANALYZE_FOR_ENTRY_COMPONENTS } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Employee } from '../shared-model/employee.model';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,10 @@ export class LoginComponent {
   keys = Object.values(this.Employees);
 
   flag = 0;
+
+  constructor (
+    private router: Router
+  ) {}
 
   login() {
     if (this.form.valid) {
@@ -52,7 +57,7 @@ export class LoginComponent {
         if (this.inputID == val['employeeID'] && this.inputPassword ==
         val['password'] ){
 
-          if (val['posiiton'] == "employee"){
+          if (val['position'] == "employee"){
             this.flag = 1;
             throw BreakError
           } else if (val['position'] == "supervisor"){
@@ -78,7 +83,8 @@ export class LoginComponent {
       alert('wrong ID or password')
     } else {
       if (this.flag == 1){
-        alert('welcome employee')
+        alert('welcome employee');
+        this.router.navigate(['/reset']);
       } else if (this.flag == 2){
         alert('welcome supervisor')
       } else {

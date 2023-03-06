@@ -6,6 +6,10 @@ import { RegisterEmployeeComponent } from './register-employee/register-employee
 import { ReviewSchedulesComponent } from './review-schedules/review-schedules.component';
 import { SubmitRequestComponent } from './submit-request/submit-request.component';
 import { UpdateScheduleComponent } from './update-schedule/update-schedule.component';
+import { SideBarComponent } from "./side-bar/side-bar.component";
+import { LoginComponent } from './login/login.component';
+import { PasswordComponent } from './password/password.component';
+
 
 const routes: Routes = [
   {
@@ -32,6 +36,18 @@ const routes: Routes = [
   {
     path: 'update',
     component: UpdateScheduleComponent,
+  },
+  {
+    path: 'sidebar',
+    component: SideBarComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'reset',
+    component: PasswordComponent,
   },
 ];
 

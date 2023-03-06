@@ -9,6 +9,7 @@ import { UpdateScheduleComponent } from './update-schedule/update-schedule.compo
 import { SideBarComponent } from "./side-bar/side-bar.component";
 import { LoginComponent } from './login/login.component';
 import { PasswordComponent } from './password/password.component';
+import { ViewEmployeesComponent } from './view-employees/view-employees.component';
 
 
 const routes: Routes = [
@@ -37,7 +38,7 @@ const routes: Routes = [
     path: 'update',
     component: UpdateScheduleComponent,
   },
-  {
+{
     path: 'sidebar',
     component: SideBarComponent,
   },
@@ -49,7 +50,10 @@ const routes: Routes = [
     path: 'reset',
     component: PasswordComponent,
   },
-];
+{
+    path: 'view-emp',
+    component: ViewEmployeesComponent,
+  }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

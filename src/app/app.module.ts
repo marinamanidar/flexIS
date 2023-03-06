@@ -26,6 +26,8 @@ import { MatRadioModule } from "@angular/material/radio";
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatRippleModule} from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { ViewEmployeesComponent } from './view-employees/view-employees.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { FormsModule } from '@angular/forms';
     ReviewSchedulesComponent,
     SubmitRequestComponent,
     UpdateScheduleComponent,
-    PasswordComponent
+    PasswordComponent,
+    ViewEmployeesComponent
   ],
   imports: [
     BrowserModule,
@@ -53,15 +56,17 @@ import { FormsModule } from '@angular/forms';
     MatCardModule,
     MatInputModule,
     MatButtonModule,
-    MatGridListModule,
+    FormsModule,
+	HttpClientModul
+	MatGridListModule,
     MatDatepickerModule,
     MatRadioModule,
     MatStepperModule,
     MatRippleModule,
-    FormsModule,
-
-  ],
+    FormsModule  ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

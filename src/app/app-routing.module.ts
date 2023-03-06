@@ -6,6 +6,7 @@ import { RegisterEmployeeComponent } from './register-employee/register-employee
 import { ReviewSchedulesComponent } from './review-schedules/review-schedules.component';
 import { SubmitRequestComponent } from './submit-request/submit-request.component';
 import { UpdateScheduleComponent } from './update-schedule/update-schedule.component';
+import { ViewEmployeesComponent } from './view-employees/view-employees.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'update',
     component: UpdateScheduleComponent,
+  },
+  {
+    path: 'view-emp',
+    component: ViewEmployeesComponent,
   },
 ];
 

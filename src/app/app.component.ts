@@ -48,7 +48,7 @@ export class AppComponent {
       employeeID: "S100",
       password: "super",
       name : "supervisor",
-      position: "supervisor",
+      position: "Supervisor",
       email: "supervisor@supervisor.com",
       FWAstatus: "WFH",
       supervisorID: null,

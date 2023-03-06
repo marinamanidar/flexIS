@@ -8,5 +8,8 @@ export class Employee {
   supervisorID: string
   departmentID: string
 
+
+
 }
+
 

@@ -40,7 +40,7 @@ import { ViewEmployeesComponent } from './view-employees/view-employees.componen
     SubmitRequestComponent,
     UpdateScheduleComponent,
     PasswordComponent,
-    ViewEmployeesComponent
+    ViewEmployeesComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,7 +62,9 @@ import { ViewEmployeesComponent } from './view-employees/view-employees.componen
     MatRadioModule,
     MatStepperModule,
     MatRippleModule,
-    FormsModule  ],
+    FormsModule,
+    HttpClientModule  
+  ],
   providers: [],
   bootstrap: [
     AppComponent

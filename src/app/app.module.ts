@@ -28,7 +28,10 @@ import {MatRippleModule} from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ViewEmployeesComponent } from './view-employees/view-employees.component';
-import { HomePageComponent } from './home-page/home-page.component';
+import { ReviewRequestComponent } from './review-request/review-request.component';
+import {MatTableModule} from '@angular/material/table';
+import { ViewRequestComponent } from './view-request/view-request.component';import { HomePageComponent } from './home-page/home-page.component';
+import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { HomePageComponent } from './home-page/home-page.component';
     UpdateScheduleComponent,
     PasswordComponent,
     ViewEmployeesComponent,
-    HomePageComponent,
+	  ReviewRequestComponent,
+    ViewRequestComponent,
+	  HomePageComponent,
+    ViewScheduleComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +71,8 @@ import { HomePageComponent } from './home-page/home-page.component';
     MatStepperModule,
     MatRippleModule,
     FormsModule,
-    HttpClientModule  
+    HttpClientModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [

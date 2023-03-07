@@ -1,7 +1,7 @@
 export class FWARequest {
   employeeID: string
   requestID: string
-  requestDate: Date
+  requestDate: string
   workType: string
   description: string
   reason: string

@@ -37,7 +37,7 @@ export class RegisterEmployeeComponent {
     departmentID: new FormControl(null)
   });
 
-  constructor(private router: Router) { 
+  constructor(private router: Router) {
    }
 
   onSubmit(){
@@ -66,7 +66,7 @@ export class RegisterEmployeeComponent {
     }
     this.addEmployee(this.employee);
     this.employeeForm.reset();
-    this.router.navigate(['/view-emp']);
+    this.router.navigate(['/sidebar/view-emp']);
   }
 
   get id(){
@@ -87,7 +87,7 @@ export class RegisterEmployeeComponent {
 
   get position(){
     return this.employeeForm.get('position')
-  } 
+  }
 
   addEmployee(employee){
     let employees = [];
@@ -100,6 +100,6 @@ export class RegisterEmployeeComponent {
     localStorage.setItem('Employees', JSON.stringify(employees));
   }
 
-  
+
 }
-  
+

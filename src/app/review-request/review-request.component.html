@@ -1,0 +1,26 @@
+<div class="card text-white bg-primary mb-3">
+  <div class="card-body">
+    <h5 class="card-title">{{this.request.employeeID}} {{this.name}}</h5>
+  </div>
+</div>
+
+
+<form [formGroup]="form" (ngSubmit)="onSubmit($event.submitter.id)" #loginForm="ngForm">
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Work Type</mat-label>
+      <input type="text" matInput formControlName="username" [readonly]="true" [(ngModel)]="this.request.workType">
+    </mat-form-field>
+  </p>
+
+
+
+  <mat-card-actions class="button">
+      <button type="submit" mat-raised-button
+      color="primary"
+      id="reject"
+      >Reject</button>
+  </mat-card-actions>
+
+</form>
+

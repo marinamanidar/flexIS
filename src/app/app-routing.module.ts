@@ -10,6 +10,8 @@ import { SideBarComponent } from "./side-bar/side-bar.component";
 import { LoginComponent } from './login/login.component';
 import { PasswordComponent } from './password/password.component';
 import { ViewEmployeesComponent } from './view-employees/view-employees.component';
+import { ReviewRequestComponent } from './review-request/review-request.component';
+import { ViewRequestComponent } from "./view-request/view-request.component";
 
 
 const routes: Routes = [
@@ -50,10 +52,19 @@ const routes: Routes = [
     path: 'reset',
     component: PasswordComponent,
   },
-{
+  {
     path: 'view-emp',
     component: ViewEmployeesComponent,
-  }];
+  },
+  {
+    path: 'request/:id',
+    component: ReviewRequestComponent,
+  },
+  {
+    path: 'view-request',
+    component: ViewRequestComponent,
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

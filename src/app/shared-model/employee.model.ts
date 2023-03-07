@@ -7,9 +7,6 @@ export class Employee {
   FWAstatus: string
   supervisorID: string
   departmentID: string
-
-
-
 }
 
 

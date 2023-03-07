@@ -28,6 +28,7 @@ import {MatRippleModule} from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ViewEmployeesComponent } from './view-employees/view-employees.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { ViewEmployeesComponent } from './view-employees/view-employees.componen
     UpdateScheduleComponent,
     PasswordComponent,
     ViewEmployeesComponent,
+    HomePageComponent,
   ],
   imports: [
     BrowserModule,

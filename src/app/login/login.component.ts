@@ -84,7 +84,7 @@ export class LoginComponent {
     } else {
       if (this.flag == 1){
         alert('welcome employee');
-        this.router.navigate(['/reset']);
+        this.router.navigate(['/sidebar/home']);
       } else if (this.flag == 2){
         alert('welcome supervisor')
       } else {

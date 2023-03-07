@@ -66,6 +66,6 @@ export class ViewRequestComponent {
     //   }
     // }
 
-    this.router.navigate(['/request', data['reqID']]);
+    this.router.navigate(['/sidebar/request', data['reqID']]);
   }
 }

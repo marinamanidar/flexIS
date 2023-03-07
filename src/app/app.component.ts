@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Schedule } from './shared-model/daily-schedule.model';
 import { Department } from './shared-model/department.model';
 import { Employee } from './shared-model/employee.model';
 import { FWARequest } from "./shared-model/request.model";
@@ -13,10 +14,13 @@ export class AppComponent {
   title = 'assignment';
   public employee: Employee;
   public department: Department;
-  public request: FWARequest;
+	public schedule: Schedule;
+	public request: FWARequest;
+
 
   constructor() {
     localStorage.clear();
+    this.schedule = new Schedule();
     this.department = new Department();
     this.department = {
       departmentID: "D1",
@@ -69,7 +73,7 @@ export class AppComponent {
       departmentID: "D3"
     }
     this.addEmployee(this.employee);
-    this.employee = {
+	    this.employee = {
       employeeID: "E101",
       password: "employee",
       name : "employee1",
@@ -157,6 +161,20 @@ export class AppComponent {
       comment: "Please try to make it to the office",
     }
     this.addRequest(this.request);
+  
+
+	this.schedule = {
+      id: 1,
+      employeeID: "E100",
+      date: new Date().toLocaleDateString(),
+      workLocation : "Home",
+      workHours: "1",
+      workReport: "I will be having meetings and code review",
+      supervisorComments: null,
+      status: "Pending"
+    }
+    this.addSchedule(this.schedule);
+
   }
 
   addEmployee(employee){
@@ -168,6 +186,17 @@ export class AppComponent {
       employees = [employee];
     }
     localStorage.setItem('Employees', JSON.stringify(employees));
+  }
+
+  addSchedule(schedule){
+    let schedules = [];
+    if (localStorage.getItem('Schedules')){
+      schedules = JSON.parse(localStorage.getItem('Schedules'));
+      schedules = [...schedules, schedule]
+    }else{
+      schedules = [schedule];
+    }
+    localStorage.setItem('Schedules', JSON.stringify(schedules));
   }
 
   addDepartment(department){
@@ -191,7 +220,7 @@ export class AppComponent {
     }
     localStorage.setItem('Requests', JSON.stringify(requests));
   }
-
+  
 
 }
 

@@ -30,9 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ViewEmployeesComponent } from './view-employees/view-employees.component';
 import { ReviewRequestComponent } from './review-request/review-request.component';
 import {MatTableModule} from '@angular/material/table';
-import { ViewRequestComponent } from './view-request/view-request.component';
-
-
+import { ViewRequestComponent } from './view-request/view-request.component';import { HomePageComponent } from './home-page/home-page.component';
+import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
 
 @NgModule({
   declarations: [
@@ -46,8 +45,10 @@ import { ViewRequestComponent } from './view-request/view-request.component';
     UpdateScheduleComponent,
     PasswordComponent,
     ViewEmployeesComponent,
-    ReviewRequestComponent,
+	  ReviewRequestComponent,
     ViewRequestComponent,
+	  HomePageComponent,
+    ViewScheduleComponent,
   ],
   imports: [
     BrowserModule,

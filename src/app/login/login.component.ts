@@ -12,7 +12,8 @@ import { Router } from "@angular/router";
 export class LoginComponent {
   hide = true;
   form: FormGroup = new FormGroup({
-    comment: new FormControl(''),
+    username: new FormControl(''),
+    password: new FormControl(''),
   });
 
   Employees = JSON.parse(localStorage.getItem('Employees'));
@@ -83,7 +84,7 @@ export class LoginComponent {
     } else {
       if (this.flag == 1){
         alert('welcome employee');
-        this.router.navigate(['/sidebar']);
+        this.router.navigate(['/sidebar/home']);
       } else if (this.flag == 2){
         alert('welcome supervisor')
       } else {

@@ -66,7 +66,7 @@ export class RegisterEmployeeComponent {
     }
     this.addEmployee(this.employee);
     this.employeeForm.reset();
-    this.router.navigate(['/view-emp']);
+    this.router.navigate(['/sidebar/view-emp']);
   }
 
   get id(){

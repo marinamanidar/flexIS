@@ -36,7 +36,8 @@ const routes: Routes = [
       {path: 'home', component: HomePageComponent},
 	    {path: 'view-sch', component: ViewScheduleComponent},
 	    {path: 'request/:id',component: ReviewRequestComponent},
-      {path: 'view-request', component: ViewRequestComponent}
+      {path: 'view-request', component: ViewRequestComponent},
+      {path: 'update/:id',component: UpdateScheduleComponent}
     ]
   }];
 

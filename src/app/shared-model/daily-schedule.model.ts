@@ -1,5 +1,5 @@
 export class Schedule {
-    id: number
+    id: string
     employeeID: string
     date: string
     workLocation: string

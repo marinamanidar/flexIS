@@ -164,14 +164,14 @@ export class AppComponent {
   
 
 	this.schedule = {
-      id: 1,
+      id: '1',
       employeeID: "E100",
       date: new Date().toLocaleDateString(),
       workLocation : "Home",
       workHours: "1",
       workReport: "I will be having meetings and code review",
       supervisorComments: null,
-      status: "Pending"
+      status: "Approved"
     }
     this.addSchedule(this.schedule);
 

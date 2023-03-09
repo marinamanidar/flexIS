@@ -9,18 +9,74 @@
   <p>
     <mat-form-field appearance="outline">
       <mat-label>Work Type</mat-label>
-      <input type="text" matInput formControlName="username" [readonly]="true" [(ngModel)]="this.request.workType">
+      <input type="text" matInput formControlName="worktype" [readonly]="true" [(ngModel)]="this.request.workType">
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Date Requested</mat-label>
+      <input type="text" matInput formControlName="date" [readonly]="true" [(ngModel)]="this.request.requestDate">
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea  matInput formControlName="description" [readonly]="true" [(ngModel)]="this.request.description"></textarea>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Reason</mat-label>
+      <input type="text" matInput formControlName="reason" [readonly]="true" [(ngModel)]="this.request.reason">
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Comment</mat-label>
+      <input type="text" matInput formControlName="comment" >
     </mat-form-field>
   </p>
 
 
-
-  <mat-card-actions class="button">
+  <mat-card-actions class="button" class="pad">
       <button type="submit" mat-raised-button
-      color="primary"
+      color="warn"
       id="reject"
       >Reject</button>
   </mat-card-actions>
 
+  <mat-card-actions class="button">
+    <button type="submit" mat-raised-button
+    color="primary"
+    id="accept"
+    >Accept</button>
+</mat-card-actions>
+
 </form>
+<br>
+<br>
+<p>Past Requests</p>
+<mat-divider></mat-divider>
+
+<mat-accordion multi="true" *ngIf="pastRequests.length>0">
+  <mat-expansion-panel *ngFor="let past of pastRequests">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{past.requestDate}}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{past.workType}}
+      </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>{{past.description}}</p>
+      <p>{{past.status}}</p>
+    <!-- <mat-panel-description>{{past.workType}}</mat-panel-description> -->
+  </mat-expansion-panel>
+</mat-accordion>
+<br>
+<p class="info-text mat-body-1" *ngIf="pastRequests.length==0"> No past requests</p>
 

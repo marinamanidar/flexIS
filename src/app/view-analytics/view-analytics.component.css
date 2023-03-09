@@ -1,0 +1,15 @@
+.container {
+  display: grid;
+  justify-content: space-between;
+
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.grid{
+  display: grid;
+}
+
+.button-size{
+  height:fit-content
+}

@@ -161,7 +161,7 @@ export class AppComponent {
       comment: "Please try to make it to the office",
     }
     this.addRequest(this.request);
-  
+
 
 	this.schedule = {
       id: 1,
@@ -220,7 +220,7 @@ export class AppComponent {
     }
     localStorage.setItem('Requests', JSON.stringify(requests));
   }
-  
+
 
 }
 

@@ -42,7 +42,7 @@ export class SubmitRequestComponent {
   this.request.workType = this.type;
   this.request.description = this.secondFormGroup.get('secondCtrl').value;
   this.request.reason = this.thirdFormGroup.get('thirdCtrl').value;
-  this.request.status = 'pending';
+  this.request.status = 'Pending';
   this.request.comment = '';
 
   // this.requests.push(this.request);

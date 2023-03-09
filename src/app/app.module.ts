@@ -32,6 +32,8 @@ import { ReviewRequestComponent } from './review-request/review-request.componen
 import {MatTableModule} from '@angular/material/table';
 import { ViewRequestComponent } from './view-request/view-request.component';import { HomePageComponent } from './home-page/home-page.component';
 import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { ViewAnalyticsComponent } from './view-analytics/view-analytics.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
     ViewRequestComponent,
 	  HomePageComponent,
     ViewScheduleComponent,
+    ViewAnalyticsComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,8 @@ import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
     MatRippleModule,
     FormsModule,
     HttpClientModule,
-    MatTableModule
+    MatTableModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [

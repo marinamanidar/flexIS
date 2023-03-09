@@ -1,0 +1,50 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="" routerLink="/sidebar/view-sch">View Schedules</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Update Schedule</li>
+    </ol>
+  </nav>
+  
+  <div class="card text-white bg-primary mb-3">
+    <div class="card-body">
+      <h5 class="card-title">Update Daily Schedule</h5>
+    </div>
+  </div>
+  
+  <form [formGroup]="scheduleForm">
+
+    <div class="form-floating mb-3">
+        <input type="date" class="form-control input-lg mb-3" pattern="\d{4}-\d{1,2}-\d{1,2}" id="date" name="date" formControlName="date"/>
+        <label for="floatingInput">Date *</label>
+    </div>
+  
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control input-lg" id="workLocation" name="workLocation" formControlName="workLocation"/>
+      <label for="floatingInput">Work Location *</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <select name="position" class="form-select" id="workHours" aria-label="Floating label select example" formControlName="workHours" required >
+          <option class="text-muted" disabled [value]="null"></option>
+          <option value="1">8am - 4pm</option>
+          <option value="2">9am - 5pm</option>
+          <option value="3">10am - 6pm</option>
+        </select>
+        <label for="floatingInput">Work Hours *</label>
+    </div>
+  
+    <div class="form-floating mb-3">
+      <textarea type="text" class="form-control input-lg" id="workReport" formControlName="workReport" placeholder="name@example.com" rows="5" required></textarea>
+      <label for="floatingInput">Work Report *</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <textarea type="text" class="form-control input-lg" id="comments" formControlName="comments" rows="5"></textarea>
+      <label for="floatingInput">Comments *</label>
+    </div>
+  
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <button class="btn btn-lg btn-danger me-md-2" type="button" (click)="reject()">Reject</button>
+      <button class="btn btn-lg btn-primary" type="button" (click)="approve()">Approve</button>
+    </div>
+  </form>

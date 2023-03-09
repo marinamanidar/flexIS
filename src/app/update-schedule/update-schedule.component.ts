@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { Schedule } from '../shared-model/daily-schedule.model';
 
 @Component({
@@ -11,7 +10,7 @@ import { Schedule } from '../shared-model/daily-schedule.model';
 })
 export class UpdateScheduleComponent implements OnInit {
     requestArray: Schedule[] = [];
-    today = new Date(Date.now() + (3600 * 1000 * 24));
+    today = new Date(Date.now());
     max = new Date(Date.now() + (3600 * 1000 * 168));
     public schedule: Schedule;
     listOfSchedules = JSON.parse(localStorage.getItem("Schedules"));
@@ -20,6 +19,8 @@ export class UpdateScheduleComponent implements OnInit {
     reqID: string;
     exist : boolean = false;
     id: number;
+    curr = new Date()
+    week = []
 
     constructor(private router: Router, private route: ActivatedRoute) {}
 
@@ -27,13 +28,19 @@ export class UpdateScheduleComponent implements OnInit {
     date: new FormControl(null, Validators.required),
     workLocation: new FormControl(null, Validators.required),
     workHours: new FormControl(null, Validators.required),
-    workReport: new FormControl(null, Validators.required)
+    workReport: new FormControl(null, Validators.required),
+    comments: new FormControl(null)
   });
 
   ngOnInit(){
-    document.getElementById("date").setAttribute("min", this.today.toISOString().split('T')[0]);
-    document.getElementById("date").setAttribute("max", this.max.toISOString().split('T')[0]);
+    for (let i = 1; i <= 7; i++) {
+      let first = this.curr.getDate() - this.curr.getDay() + i 
+      let day = new Date(this.curr.setDate(first)).toISOString().slice(0, 10)
+      this.week.push(day)
+    }
 
+    document.getElementById("date").setAttribute("min", this.today.toISOString().split('T')[0]);
+    document.getElementById("date").setAttribute("max", this.week[6]);
 
     this.sub = this.route.params.subscribe(params => {
       if(params['id'] != undefined){
@@ -48,8 +55,11 @@ export class UpdateScheduleComponent implements OnInit {
         date : this.formatDate(date),
         workLocation : this.schedule.workLocation,
         workHours : this.schedule.workHours, 
-        workReport : this.schedule.workReport 
+        workReport : this.schedule.workReport,
+        comments: this.schedule.supervisorComments 
        })
+       document.getElementById("comments").setAttribute('style', 'pointer-events: none');
+        document.getElementById('condition').classList.remove('d-none');
        if(this.schedule.status == 'Approved'){
         document.getElementById("date").setAttribute('style', 'pointer-events: none');
         document.getElementById("workLocation").setAttribute('style', 'pointer-events: none');

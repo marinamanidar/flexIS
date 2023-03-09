@@ -14,6 +14,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
 import { ReviewRequestComponent } from './review-request/review-request.component';
 import { ViewRequestComponent } from './view-request/view-request.component';
+import { ViewEmpSchComponent } from './view-emp-sch/view-emp-sch.component';
 
 const routes: Routes = [
   {
@@ -37,7 +38,8 @@ const routes: Routes = [
 	    {path: 'view-sch', component: ViewScheduleComponent},
 	    {path: 'request/:id',component: ReviewRequestComponent},
       {path: 'view-request', component: ViewRequestComponent},
-      {path: 'update/:id',component: UpdateScheduleComponent}
+      {path: 'update/:id',component: UpdateScheduleComponent},
+      {path: 'view-emp-sch/:id',component: ViewEmpSchComponent}
     ]
   }];
 

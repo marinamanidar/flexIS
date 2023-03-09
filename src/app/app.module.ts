@@ -32,6 +32,7 @@ import { ReviewRequestComponent } from './review-request/review-request.componen
 import {MatTableModule} from '@angular/material/table';
 import { ViewRequestComponent } from './view-request/view-request.component';import { HomePageComponent } from './home-page/home-page.component';
 import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
+import { ViewEmpSchComponent } from './view-emp-sch/view-emp-sch.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
     ViewRequestComponent,
 	  HomePageComponent,
     ViewScheduleComponent,
+    ViewEmpSchComponent,
   ],
   imports: [
     BrowserModule,

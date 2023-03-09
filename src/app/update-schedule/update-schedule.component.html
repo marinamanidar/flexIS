@@ -38,6 +38,11 @@
       <label for="floatingInput">Work Report *</label>
     </div>
 
+    <div class="form-floating mb-3 d-none" id="condition">
+      <textarea type="text" class="form-control input-lg" id="comments" formControlName="comments" rows="5"></textarea>
+      <label for="floatingInput">Supervisor Comments *</label>
+    </div>
+
   
     <div class="d-grid gap-2">
         <button class="btn btn-lg btn-primary" id="button" [disabled]="this.scheduleForm.invalid" type="submit">Register</button>

@@ -32,7 +32,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <ng-container *ngFor="let item of listSchedules">
+                    <ng-container *ngFor="let item of mySchedules">
                     <tr *ngIf="item.date == selectedValue">
                         <td>
                             <span>{{ item.date | date:'dd/MM/yyyy' }}</span>

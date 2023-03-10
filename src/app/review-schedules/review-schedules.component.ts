@@ -7,7 +7,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./review-schedules.component.css']
 })
 export class ReviewSchedulesComponent {
+  user = sessionStorage.getItem('user');
   listSchedules = JSON.parse(localStorage.getItem('Schedules'));
+  listEmployees = JSON.parse(localStorage.getItem('Employees'));
+  myEmployees = this.listEmployees.find(i => i.supervisorID == this.user);
+  mySchedules = this.listSchedules.filter(i => i.employeeID == this.myEmployees.employeeID);
   curr = new Date()
   week = []
   selectedValue: any;

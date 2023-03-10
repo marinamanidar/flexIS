@@ -44,7 +44,7 @@ export class AppComponent {
       employeeID: "A100",
       password: "admin",
       name : "admin",
-      position: "admin",
+      position: "Admin",
       email: "admin@admin.com",
       FWAstatus: null,
       supervisorID: null,
@@ -59,51 +59,62 @@ export class AppComponent {
       email: "supervisor@supervisor.com",
       FWAstatus: "WFH",
       supervisorID: null,
-      departmentID: "D3"
+      departmentID: "D1"
+    }
+    this.addEmployee(this.employee);
+    this.employee = {
+      employeeID: "S200",
+      password: "super2",
+      name : "supervisor2",
+      position: "Supervisor",
+      email: "supervisor2@supervisor.com",
+      FWAstatus: "WFH",
+      supervisorID: null,
+      departmentID: "D2"
     }
     this.addEmployee(this.employee);
     this.employee = {
       employeeID: "E100",
       password: "employee",
       name : "employee",
-      position: "employee",
+      position: "Employee",
       email: "employee@employee.com",
       FWAstatus: "pending",
       supervisorID: "S100",
-      departmentID: "D3"
+      departmentID: "D1"
     }
     this.addEmployee(this.employee);
 	    this.employee = {
       employeeID: "E101",
       password: "employee",
       name : "employee1",
-      position: "employee",
+      position: "Employee",
       email: "employee@employee.com",
       FWAstatus: "pending",
       supervisorID: "S100",
-      departmentID: "D3"
+      departmentID: "D2"
     }
     this.addEmployee(this.employee);
     this.employee = {
       employeeID: "E102",
       password: "employee",
       name : "employee2",
-      position: "employee",
+      position: "Employee",
       email: "employee@employee.com",
       FWAstatus: "flexi-hour",
-      supervisorID: "S100",
-      departmentID: "D3"
+      supervisorID: "S200",
+      departmentID: "D2"
     }
     this.addEmployee(this.employee);
     this.employee = {
       employeeID: "E103",
       password: "employee",
       name : "employee3",
-      position: "employee",
+      position: "Employee",
       email: "employee@employee.com",
       FWAstatus: "Rejected",
-      supervisorID: "S100",
-      departmentID: "D3"
+      supervisorID: "S200",
+      departmentID: "D1"
     }
     this.addEmployee(this.employee);
     this.request = {
@@ -166,7 +177,7 @@ export class AppComponent {
 	this.schedule = {
       id: '1',
       employeeID: "E100",
-      date: new Date().toLocaleDateString(),
+      date: '2023-03-11',
       workLocation : "Home",
       workHours: "1",
       workReport: "I will be having meetings and code review",

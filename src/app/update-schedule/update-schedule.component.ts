@@ -13,6 +13,7 @@ export class UpdateScheduleComponent implements OnInit {
     today = new Date(Date.now());
     max = new Date(Date.now() + (3600 * 1000 * 168));
     public schedule: Schedule;
+    listEmployees = JSON.parse(localStorage.getItem('Employees'));
     listOfSchedules = JSON.parse(localStorage.getItem("Schedules"));
     arrayLength = this.listOfSchedules.length + 1;
     sub: any;
@@ -21,6 +22,7 @@ export class UpdateScheduleComponent implements OnInit {
     id: number;
     curr = new Date()
     week = []
+    user = sessionStorage.getItem('user');
 
     constructor(private router: Router, private route: ActivatedRoute) {}
 
@@ -108,7 +110,7 @@ export class UpdateScheduleComponent implements OnInit {
     if(this.scheduleForm.valid && this.exist == false){
       this.schedule = {
         id : this.arrayLength.toString(),
-        employeeID: "E100",
+        employeeID: this.user,
         date: this.scheduleForm.value.date,
         workLocation : this.scheduleForm.value.workLocation,
         workHours: this.scheduleForm.value.workHours,

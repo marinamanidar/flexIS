@@ -10,6 +10,7 @@ import { Schedule } from '../shared-model/daily-schedule.model';
 })
 export class ViewEmpSchComponent implements OnInit {
   listOfSchedules = JSON.parse(localStorage.getItem("Schedules"));
+  listEmployees = JSON.parse(localStorage.getItem('Employees'));
   sub: any;
   public schedule: Schedule;
   reqID: string;

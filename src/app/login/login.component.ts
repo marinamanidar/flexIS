@@ -1,7 +1,5 @@
-import { NgFor } from '@angular/common';
-import { Component, Input, EventEmitter, Output, ANALYZE_FOR_ENTRY_COMPONENTS } from '@angular/core';
+import { Component} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Employee } from '../shared-model/employee.model';
 import { Router } from "@angular/router";
 
 @Component({
@@ -84,12 +82,13 @@ export class LoginComponent {
     } else {
       if (this.flag == 1){
         alert('welcome employee');
-        this.router.navigate(['/sidebar/home']);
       } else if (this.flag == 2){
         alert('welcome supervisor')
       } else {
         alert('welcome admin')
       }
+      sessionStorage.setItem('user', this.inputID);
+      this.router.navigate(['/sidebar/home']);
     }
 
     }

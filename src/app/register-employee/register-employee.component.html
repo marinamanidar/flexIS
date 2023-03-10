@@ -12,16 +12,6 @@
 </div>
 
 <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
-  <div class="row g-3 mb-3">
-    <div class="form-floating col">
-      <select name="departmentID" [class.is-invalid]="(employeeForm.get('departmentID').touched || employeeForm.get('departmentID').dirty) && employeeForm.get('departmentID').invalid" class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="departmentID" required>
-        <option class="text-muted" disabled [value]="null"></option>
-        <option *ngFor="let dept of listDepartments" value={{dept.departmentID}}>{{dept.departmentID}} {{dept.departmentName}}</option>
-      </select>
-      <label for="floatingSelect">Department *</label>
-    </div>
-  </div>
-
 
   <div class="form-floating mb-3">
     <input type="text" class="form-control input-lg" id="floatingInput" name="id" formControlName="id" placeholder="B15265" [class.is-invalid]="(employeeForm.get('id').touched || employeeForm.get('id').dirty) && employeeForm.get('id').invalid"/>
@@ -55,6 +45,16 @@
       </ng-container> 
     </select>
     <label for="floatingInput">Supervisor</label>
+  </div>
+
+  <div class="row g-3 mb-3" id="dep">
+    <div class="form-floating col">
+      <select name="departmentID" [class.is-invalid]="(employeeForm.get('departmentID').touched || employeeForm.get('departmentID').dirty) && employeeForm.get('departmentID').invalid" class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="departmentID" required>
+        <option class="text-muted" disabled [value]="null"></option>
+        <option *ngFor="let dept of listDepartments" value={{dept.departmentID}}>{{dept.departmentID}} {{dept.departmentName}}</option>
+      </select>
+      <label for="floatingSelect">Department *</label>
+    </div>
   </div>
 
   <div class="d-grid gap-2">

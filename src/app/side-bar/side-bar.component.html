@@ -17,35 +17,35 @@
         src="https://source.unsplash.com/c_GmwfHBDzk/200x200"
       />
 
-      <div class="name">John Smith</div>
-      <p class="designation">Software Engineer</p>
+      <div class="name">{{empName}}</div>
+      <p class="designation">{{empPos}} - {{empDepName}}</p>
 
       <mat-divider></mat-divider>
 
       <button mat-button class="menu-button" routerLink="/sidebar/home">
         <span>Home</span>
       </button>
-      <button mat-button class="menu-button" routerLink="/sidebar/view-emp">
+      <button *ngIf="empPos.includes('Admin')" mat-button class="menu-button" routerLink="/sidebar/view-emp">
         <span>View Employees</span>
       </button>
-      <button mat-button class="menu-button" routerLink="/sidebar/fwa">
+      <button *ngIf="empPos.includes('Admin') || empPos.includes('Supervisor')" mat-button class="menu-button" routerLink="/sidebar/fwa">
         <span>FWA Analytics</span>
       </button>
-      <button mat-button class="menu-button" routerLink="/sidebar/review">
+      <button *ngIf="empPos.includes('Supervisor')" mat-button class="menu-button" routerLink="/sidebar/review">
         <span>Review Employee Schedules</span>
       </button>
-      <button mat-button class="menu-button" routerLink="/sidebar/submit">
+      <button *ngIf="empPos.includes('Employee')" mat-button class="menu-button" routerLink="/sidebar/submit">
         <span>Submit FWA Request</span>
       </button>
-      <button mat-button class="menu-button" routerLink="/sidebar/view-sch">
+      <button *ngIf="empPos.includes('Employee')" mat-button class="menu-button" routerLink="/sidebar/view-sch">
         <span>View Schedule</span>
       </button>
-      <button mat-button class="menu-button" routerLink="/sidebar/view-request">
+      <button *ngIf="empPos.includes('Supervisor')" mat-button class="menu-button" routerLink="/sidebar/view-request">
         <span>View Requests</span>
       </button>
 
 
-      <button mat-button class="menu-button logout" routerLink="/help">
+      <button mat-button class="menu-button logout" routerLink="/" (click)="logout()">
         <span>Log Out</span>
       </button>
 

@@ -7,13 +7,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./view-schedule.component.css']
 })
 export class ViewScheduleComponent {
+  user = sessionStorage.getItem('user');
   listSchedules = JSON.parse(localStorage.getItem('Schedules'));
 
   constructor(private router: Router){}
 
   review(data) {
     this.router.navigate(['/sidebar/update', data.id]);
-    console.log(data)
   }
   
 }

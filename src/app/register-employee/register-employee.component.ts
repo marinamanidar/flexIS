@@ -50,7 +50,8 @@ export class RegisterEmployeeComponent {
         email: this.employeeForm.value.email,
         FWAstatus: "New",
         supervisorID: this.employeeForm.value.supervisorID,
-        departmentID: this.employeeForm.value.departmentID
+        departmentID: this.employeeForm.value.departmentID,
+        status: 'New'
     }
     }else{
       this.employee = {
@@ -61,7 +62,8 @@ export class RegisterEmployeeComponent {
         email: this.employeeForm.value.email,
         FWAstatus: "New",
         supervisorID: null,
-        departmentID: this.employeeForm.value.departmentID
+        departmentID: this.employeeForm.value.departmentID,
+        status: 'New'
       }
     }
     this.addEmployee(this.employee);

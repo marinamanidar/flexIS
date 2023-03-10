@@ -48,7 +48,8 @@ export class AppComponent {
       email: "admin@admin.com",
       FWAstatus: null,
       supervisorID: null,
-      departmentID: null
+      departmentID: null,
+      status: 'New'
     }
     this.addEmployee(this.employee);
     this.employee = {
@@ -59,7 +60,8 @@ export class AppComponent {
       email: "supervisor@supervisor.com",
       FWAstatus: "WFH",
       supervisorID: null,
-      departmentID: "D1"
+      departmentID: "D1",
+      status: 'New'
     }
     this.addEmployee(this.employee);
     this.employee = {
@@ -70,7 +72,8 @@ export class AppComponent {
       email: "supervisor2@supervisor.com",
       FWAstatus: "WFH",
       supervisorID: null,
-      departmentID: "D2"
+      departmentID: "D2",
+      status: 'New'
     }
     this.addEmployee(this.employee);
     this.employee = {
@@ -81,7 +84,8 @@ export class AppComponent {
       email: "employee@employee.com",
       FWAstatus: "pending",
       supervisorID: "S100",
-      departmentID: "D1"
+      departmentID: "D1",
+      status: 'New'
     }
     this.addEmployee(this.employee);
 	    this.employee = {
@@ -92,7 +96,8 @@ export class AppComponent {
       email: "employee@employee.com",
       FWAstatus: "pending",
       supervisorID: "S100",
-      departmentID: "D2"
+      departmentID: "D2",
+      status: 'New'
     }
     this.addEmployee(this.employee);
     this.employee = {
@@ -103,7 +108,8 @@ export class AppComponent {
       email: "employee@employee.com",
       FWAstatus: "flexi-hour",
       supervisorID: "S200",
-      departmentID: "D2"
+      departmentID: "D2",
+      status: 'None'
     }
     this.addEmployee(this.employee);
     this.employee = {
@@ -114,7 +120,8 @@ export class AppComponent {
       email: "employee@employee.com",
       FWAstatus: "Rejected",
       supervisorID: "S200",
-      departmentID: "D1"
+      departmentID: "D1",
+      status: 'New'
     }
     this.addEmployee(this.employee);
     this.request = {

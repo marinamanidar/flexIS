@@ -62,7 +62,7 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
-    <button mat-raised-button color="primary" style="margin-top: 10px;" (click)="submit()">Submit Request</button>
+    <button mat-raised-button color="primary" style="margin-top: 10px;" (click)="submit(); stepper.reset()">Submit Request</button>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>

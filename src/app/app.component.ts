@@ -184,7 +184,7 @@ export class AppComponent {
 	this.schedule = {
       id: '1',
       employeeID: "E100",
-      date: '2023-03-11',
+      date: '3/11/2023',
       workLocation : "Home",
       workHours: "1",
       workReport: "I will be having meetings and code review",

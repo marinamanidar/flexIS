@@ -35,7 +35,7 @@ export class AnalyticsSummaryComponent {
   depID: string;
   depName: string;
 
-  sum: summary 
+  sum: summary
 
   dateRange: any[];
 
@@ -54,8 +54,9 @@ export class AnalyticsSummaryComponent {
     public dialog: MatDialog
     ) {}
 
-  
+
   ngOnInit() {
+    //Retrieve departmentID from previous page
     this.sub = this.route.params.subscribe(params => {
       this.depID = params['id']
       this.depName = this.listDepartments.find(x => x.departmentID == this.depID);
@@ -63,29 +64,32 @@ export class AnalyticsSummaryComponent {
   }
 
   openDialog(): void {
+    //opens dialog to view number of schedules for each date
+    this.sumTable = [];
+    this.table.renderRows()
     this.dialogRef = this.dialog.open(SumDialogComponent, {
       data: {departmentID: this.depID},
     });
 
+    //retrieves earliest date and latest date after closing the dialog to populate the table
     this.dialogRef.afterClosed().subscribe(result => {
       const first = result.data[0]
-
       const second = result.data[1]
-
-      if (second < first){
-        this.first = first['0']
-        this.second = second['0'] 
-      } else {
-        this.second = first['0']
-        this.first = second['0']
+      const first2 = result.data[0]
+      const second2 = result.data[1]
+      if (new Date(second['0']) <= new Date(first['0'])){
+        this.first = second2['0']
+        this.second = first2['0']
+      } else if (new Date(first['0'])<= new Date(second['0'])) {
+        this.second = second2['0']
+        this.first = first2['0']
       }
-
       Object.values(this.listEmployees).forEach(emp => {
         if (emp['departmentID'] == this.depID){
 
           Object.values(this.listSchedules).forEach(sch => {
             if (emp['employeeID'] == sch['employeeID']){
-              if (new Date(sch['date']) >= new Date(this.first) 
+              if (new Date(sch['date']) >= new Date(this.first)
               && (new Date(sch['date']) <= new Date(this.second))){
                 this.sum = {
                   date: sch['date'],
@@ -96,19 +100,24 @@ export class AnalyticsSummaryComponent {
                 }
                 this.sumTable.push(this.sum)
                 this.dataSource = this.sumTable
-                console.log(this.dataSource)
                 this.table.renderRows()
               }
             }
           })
         }
-      
+
       }
     );
-  }
+  },
+
+  //clicking outside of the dialog cancels the date selection
+      this.dialogRef.backdropClick().subscribe(() => {
+        this.dataSource = []
+        this.table.renderRows()
+      })
   )}
 
-  
+
   columnsToDisplay: string[] = ['date', 'ID', 'Name', 'Location', 'Hours'];
   dataSource = this.sumTable;
 }

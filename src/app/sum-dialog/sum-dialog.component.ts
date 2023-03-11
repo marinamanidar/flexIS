@@ -37,36 +37,20 @@ export class SumDialogComponent {
   dateList: dateList[] = [];
   dList: dateList;
 
-  // closeDialog(){
-  //   this.dialogRef.close({data: 'cock'})
-  // }
-
-  // save(){
-  //   this.dialogRef.close({data: this.dateRange})
-  // }
 
   ngOnInit(){
+    //populates an array full of schedules
     Object.values(this.listEmployees).forEach(emp => {
       if (emp['departmentID'] == this.departmentID){
-        //6
         Object.values(this.listSchedules).forEach(sch => {
           if (emp['employeeID'] == sch['employeeID']){
-
             this.listDate.push(new Date(sch['date']))
-            // if (this.early > new Date(sch['date'])){
-            //   this.early = new Date(sch['date'])
-            // }
-            // if (this.late < new Date(sch['date'])){
-            //   this.late = new Date(sch['date'])
-            // }
-          }
-        })
+            }
+          })
+        }
       }
-    },
-  )
-
-
-
+    )
+    //counts the number of schedules made for each date and sorts them from earliest to latest
   this.bblSort(this.listDate)
   const counts = {};
   for (const num of this.listDate) {
@@ -82,30 +66,26 @@ export class SumDialogComponent {
   })
 }
 
+//returns selected dates outside of dialog for the table
 selected(){
-  this.dialogRef.close({data: this.dateRange})
+  if(this.dateRange.length != 2){
+    alert('please select two dates')
+  } else (
+    this.dialogRef.close({data: this.dateRange})
+  )
 }
 
-
+//saves selected date into array
 onSelection(event: MatSelectionListChange){
   const date = event.options.filter(o => o.selected).map(o => o.value)
   this.dateRange.push(date)
-  // console.log(this.dateRange)
 }
 
-
+//bubble sort algorithm
 bblSort(arr){
-
   for(var i = 0; i < arr.length; i++){
-
-    // Last i elements are already in place
     for(var j = 0; j < ( arr.length - i -1 ); j++){
-
-      // Checking if the item at present iteration
-      // is greater than the next iteration
       if(arr[j] > arr[j+1]){
-
-        // If the condition is true then swap them
         var temp = arr[j]
         arr[j] = arr[j + 1]
         arr[j+1] = temp

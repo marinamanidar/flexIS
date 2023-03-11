@@ -1,13 +1,14 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { SumDialogComponent } from '../sum-dialog/sum-dialog.component';
+import {MatTable} from '@angular/material/table';
+
 
 export class summary{
   date: string
-  count: number
   employeeID: string
   name: string
   location: string
@@ -28,22 +29,32 @@ export class AnalyticsSummaryComponent {
 
   listDepartments = JSON.parse(localStorage.getItem('Departments'));
   listEmployees = JSON.parse(localStorage.getItem('Employees'));
+  listSchedules = JSON.parse(localStorage.getItem('Schedules'));
 
   sub: any;
   depID: string;
   depName: string;
 
+  sum: summary 
+
   dateRange: any[];
 
   sumTable: summary[] = [];
+
+  dialogRef: any;
+
+  first: string
+  second: string
+
+  @ViewChild(MatTable) table: MatTable<summary>;
+
 
   constructor(
     private route: ActivatedRoute,
     public dialog: MatDialog
     ) {}
 
-  columnsToDisplay: string[] = ['date', 'ID', 'Name', 'Location', 'Hours'];
-  dataSource = this.sumTable;
+  
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.depID = params['id']
@@ -52,16 +63,52 @@ export class AnalyticsSummaryComponent {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(SumDialogComponent, {
+    this.dialogRef = this.dialog.open(SumDialogComponent, {
       data: {departmentID: this.depID},
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.dateRange = result;
-      console.log(result)
-    });
+    this.dialogRef.afterClosed().subscribe(result => {
+      const first = result.data[0]
+
+      const second = result.data[1]
+
+      if (second < first){
+        this.first = first['0']
+        this.second = second['0'] 
+      } else {
+        this.second = first['0']
+        this.first = second['0']
+      }
+
+      Object.values(this.listEmployees).forEach(emp => {
+        if (emp['departmentID'] == this.depID){
+
+          Object.values(this.listSchedules).forEach(sch => {
+            if (emp['employeeID'] == sch['employeeID']){
+              if (new Date(sch['date']) >= new Date(this.first) 
+              && (new Date(sch['date']) <= new Date(this.second))){
+                this.sum = {
+                  date: sch['date'],
+                  employeeID: sch['employeeID'],
+                  name: emp['name'],
+                  location: sch['workLocation'],
+                  hours: sch['workHours'],
+                }
+                this.sumTable.push(this.sum)
+                this.dataSource = this.sumTable
+                console.log(this.dataSource)
+                this.table.renderRows()
+              }
+            }
+          })
+        }
+      
+      }
+    );
   }
+  )}
 
-
+  
+  columnsToDisplay: string[] = ['date', 'ID', 'Name', 'Location', 'Hours'];
+  dataSource = this.sumTable;
 }

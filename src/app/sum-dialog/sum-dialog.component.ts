@@ -30,20 +30,20 @@ export class SumDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<SumDialogComponent>
+    public dialogRef: MatDialogRef<SumDialogComponent>
  ) { }
 
   departmentID: string = this.data['departmentID'];
   dateList: dateList[] = [];
   dList: dateList;
 
-  closeDialog(){
-    this.dialogRef.close({data: 'cock'})
-  }
+  // closeDialog(){
+  //   this.dialogRef.close({data: 'cock'})
+  // }
 
-  save(){
-    this.dialogRef.close({data: 'cock'})
-  }
+  // save(){
+  //   this.dialogRef.close({data: this.dateRange})
+  // }
 
   ngOnInit(){
     Object.values(this.listEmployees).forEach(emp => {
@@ -83,8 +83,9 @@ export class SumDialogComponent {
 }
 
 selected(){
-  this.dialogRef.close()
+  this.dialogRef.close({data: this.dateRange})
 }
+
 
 onSelection(event: MatSelectionListChange){
   const date = event.options.filter(o => o.selected).map(o => o.value)

@@ -19,12 +19,12 @@
     </div>
   
     <div class="form-floating mb-3">
-      <input type="text" class="form-control input-lg" id="floatingInput" name="workLocation" formControlName="workLocation" [class.is-invalid]="(scheduleForm.get('workLocation').touched || scheduleForm.get('workLocation').dirty) && scheduleForm.get('workLocation').invalid"/>
+      <input type="text" class="form-control input-lg" id="workLocation" name="workLocation" formControlName="workLocation" [class.is-invalid]="(scheduleForm.get('workLocation').touched || scheduleForm.get('workLocation').dirty) && scheduleForm.get('workLocation').invalid"/>
       <label for="floatingInput">Work Location *</label>
     </div>
 
     <div class="form-floating mb-3">
-        <select name="position" class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="workHours" [class.is-invalid]="(scheduleForm.get('workHours').touched || scheduleForm.get('workHours').dirty) && scheduleForm.get('workHours').invalid" required>
+        <select name="position" class="form-select" id="workHours" aria-label="Floating label select example" formControlName="workHours" [class.is-invalid]="(scheduleForm.get('workHours').touched || scheduleForm.get('workHours').dirty) && scheduleForm.get('workHours').invalid" required >
           <option class="text-muted" disabled [value]="null"></option>
           <option value="1">8am - 4pm</option>
           <option value="2">9am - 5pm</option>
@@ -34,12 +34,17 @@
     </div>
   
     <div class="form-floating mb-3">
-      <textarea type="text" class="form-control input-lg" id="floatingInput" formControlName="workReport" placeholder="name@example.com" rows="5" [class.is-invalid]="(scheduleForm.get('workReport').touched || scheduleForm.get('workReport').dirty) && scheduleForm.get('workReport').invalid" required></textarea>
+      <textarea type="text" class="form-control input-lg" id="workReport" formControlName="workReport" placeholder="name@example.com" rows="5" [class.is-invalid]="(scheduleForm.get('workReport').touched || scheduleForm.get('workReport').dirty) && scheduleForm.get('workReport').invalid" required></textarea>
       <label for="floatingInput">Work Report *</label>
+    </div>
+
+    <div class="form-floating mb-3 d-none" id="condition">
+      <textarea type="text" class="form-control input-lg" id="comments" formControlName="comments" rows="5"></textarea>
+      <label for="floatingInput">Supervisor Comments *</label>
     </div>
 
   
     <div class="d-grid gap-2">
-        <button class="btn btn-lg btn-primary" [disabled]="this.scheduleForm.invalid" type="submit">Register</button>
-      </div>
+        <button class="btn btn-lg btn-primary" id="button" [disabled]="this.scheduleForm.invalid" type="submit">Register</button>
+    </div>
   </form>

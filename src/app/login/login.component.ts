@@ -54,17 +54,22 @@ export class LoginComponent {
     try {
       Object.values(this.Employees).forEach(val => {
 
-        if (this.inputID == val['employeeID'] && this.inputPassword ==
-        val['password'] ){
+        if (this.inputID == val['employeeID'] && this.inputPassword == val['password'] ){
 
-          if (val['position'] == "employee"){
+          if (val['position'] == "Employee" && val['status'] == "New"){
             this.flag = 1;
             throw BreakError
-          } else if (val['position'] == "supervisor"){
+          } else if (val['position'] == "Supervisor" && val['status'] == "New"){
             this.flag = 2;
             throw BreakError
-          } else {
+          } else if(val['position'] == "Employee"){
             this.flag = 3;
+            throw BreakError
+          } else if (val['position'] == "Supervisor"){
+            this.flag = 4;
+            throw BreakError
+          } else {
+            this.flag = 5;
             console.log(this.flag)
             throw BreakError
           }
@@ -83,13 +88,16 @@ export class LoginComponent {
       alert('wrong ID or password')
     } else {
       if (this.flag == 1){
-        alert('welcome employee');
-        this.router.navigate(['/sidebar/home']);
+        alert('welcome new employee');
+        this.router.navigate(['/reset']);
       } else if (this.flag == 2){
-        alert('welcome supervisor')
+        alert('welcome new supervisor');
+        this.router.navigate(['/reset']);
       } else {
-        alert('welcome admin')
+        alert('welcome back')
+        this.router.navigate(['/sidebar/home']);
       }
+      sessionStorage.setItem('user', this.inputID);
     }
 
     }

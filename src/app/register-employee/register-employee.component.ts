@@ -21,10 +21,10 @@ export class RegisterEmployeeComponent {
 		this.selectedTeam = value;
     if(value == "Supervisor"){
       document.getElementById('condition').classList.add('d-none');
-      document.getElementById("position").setAttribute("required", "");
+      document.getElementById('dep').classList.remove('d-none');
     }else{
       document.getElementById('condition').classList.remove('d-none');
-      document.getElementById("position").removeAttribute("required");
+      document.getElementById('dep').classList.add('d-none');
     }
 	}
 
@@ -50,8 +50,9 @@ export class RegisterEmployeeComponent {
         email: this.employeeForm.value.email,
         FWAstatus: "New",
         supervisorID: this.employeeForm.value.supervisorID,
-        departmentID: this.employeeForm.value.departmentID
-      }
+        departmentID: this.employeeForm.value.departmentID,
+        status: 'New'
+    }
     }else{
       this.employee = {
         employeeID: this.employeeForm.value.id,
@@ -61,7 +62,8 @@ export class RegisterEmployeeComponent {
         email: this.employeeForm.value.email,
         FWAstatus: "New",
         supervisorID: null,
-        departmentID: this.employeeForm.value.departmentID
+        departmentID: this.employeeForm.value.departmentID,
+        status: 'New'
       }
     }
     this.addEmployee(this.employee);

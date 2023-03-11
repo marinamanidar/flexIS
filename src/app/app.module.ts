@@ -38,6 +38,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
 import { SumDialogComponent } from './sum-dialog/sum-dialog.component';
 import {MatListModule} from '@angular/material/list';
+import { ViewEmpSchComponent } from './view-emp-sch/view-emp-sch.component';
 
 @NgModule({
   declarations: [
@@ -55,8 +56,9 @@ import {MatListModule} from '@angular/material/list';
     ViewRequestComponent,
 	  HomePageComponent,
     ViewScheduleComponent,
-    AnalyticsSummaryComponent,
-    SumDialogComponent,
+	 ViewEmpSchComponent,
+	AnalyticsSummaryComponent,
+    SumDialogComponent
   ],
   imports: [
     BrowserModule,

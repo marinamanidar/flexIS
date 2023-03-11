@@ -1,0 +1,36 @@
+<div class="card text-white bg-primary mb-3">
+  <div class="card-body">
+    <h5 class="card-title">{{depName['departmentName']}}</h5>
+  </div>
+</div>
+
+<button mat-raised-button (click)="openDialog()">Pick one</button>
+<table mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef> date </th>
+    <td mat-cell *matCellDef="let ana"> {{ana.date}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="ID">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let ana"> {{ana.employeeID}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let ana"> {{ana.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Location">
+    <th mat-header-cell *matHeaderCellDef> Location </th>
+    <td mat-cell *matCellDef="let ana"> {{ana.location}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Hours">
+    <th mat-header-cell *matHeaderCellDef> Hours </th>
+    <td mat-cell *matCellDef="let ana"> {{ana.hours}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+</table>

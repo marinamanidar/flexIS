@@ -14,7 +14,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
 import { ReviewRequestComponent } from './review-request/review-request.component';
 import { ViewRequestComponent } from './view-request/view-request.component';
-import { ViewAnalyticsComponent } from './view-analytics/view-analytics.component';
+import { AnalyticsSummaryComponent } from './analytics-summary/analytics-summary.component';
 
 const routes: Routes = [
   {
@@ -37,8 +37,8 @@ const routes: Routes = [
       {path: 'home', component: HomePageComponent},
 	    {path: 'view-sch', component: ViewScheduleComponent},
 	    {path: 'request/:id',component: ReviewRequestComponent},
+	    {path: 'summary/:id',component: AnalyticsSummaryComponent},
       {path: 'view-request', component: ViewRequestComponent},
-      {path: 'view-analytics', component: ViewAnalyticsComponent},
     ]
   }];
 

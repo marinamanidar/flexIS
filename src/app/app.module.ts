@@ -33,7 +33,11 @@ import {MatTableModule} from '@angular/material/table';
 import { ViewRequestComponent } from './view-request/view-request.component';import { HomePageComponent } from './home-page/home-page.component';
 import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { ViewAnalyticsComponent } from './view-analytics/view-analytics.component';
+import { AnalyticsSummaryComponent } from './analytics-summary/analytics-summary.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
+import { SumDialogComponent } from './sum-dialog/sum-dialog.component';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -51,7 +55,8 @@ import { ViewAnalyticsComponent } from './view-analytics/view-analytics.componen
     ViewRequestComponent,
 	  HomePageComponent,
     ViewScheduleComponent,
-    ViewAnalyticsComponent,
+    AnalyticsSummaryComponent,
+    SumDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +81,10 @@ import { ViewAnalyticsComponent } from './view-analytics/view-analytics.componen
     FormsModule,
     HttpClientModule,
     MatTableModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [

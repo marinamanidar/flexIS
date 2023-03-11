@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewAnalyticsComponent } from './view-analytics.component';
+import { SumDialogComponent } from './sum-dialog.component';
 
-describe('ViewAnalyticsComponent', () => {
-  let component: ViewAnalyticsComponent;
-  let fixture: ComponentFixture<ViewAnalyticsComponent>;
+describe('SumDialogComponent', () => {
+  let component: SumDialogComponent;
+  let fixture: ComponentFixture<SumDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewAnalyticsComponent ]
+      declarations: [ SumDialogComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ViewAnalyticsComponent);
+    fixture = TestBed.createComponent(SumDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

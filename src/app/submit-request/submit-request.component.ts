@@ -35,7 +35,7 @@ export class SubmitRequestComponent {
 
  submit() {
   this.request = new FWARequest();
-  this.today = formatDate(new Date(), 'yyyy/MM/dd', 'en');
+  this.today = new Date().toLocaleDateString();
   this.request.employeeID = 'E100';
   this.request.requestDate = this.today;
   this.request.requestID = 'R001';

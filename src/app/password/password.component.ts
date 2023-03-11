@@ -26,6 +26,7 @@ export class PasswordComponent {
     }else if(this.form.valid) {
       this.index = this.listEmployees.findIndex(id => id.employeeID == this.user);
       this.listEmployees[this.index].password = this.form.value.password
+      this.listEmployees[this.index].status = "None"
       localStorage.setItem('Employees', JSON.stringify(this.listEmployees));
       this.router.navigate(['/sidebar/home']);
     }

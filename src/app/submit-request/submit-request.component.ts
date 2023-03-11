@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import { MatRadioChange } from '@angular/material/radio';
-import { formatDate } from "@angular/common";
 import { FWARequest } from "../shared-model/request.model";
 import { Router } from "@angular/router";
 
@@ -16,7 +15,9 @@ export class SubmitRequestComponent {
     private router: Router
     ) {}
 
+  user = sessionStorage.getItem('user');
 
+  //form
   firstFormGroup: FormGroup = this.formBuilder.group({firstCtrl: ['']});
   secondFormGroup: FormGroup = this.formBuilder.group({secondCtrl: ['']});
   thirdFormGroup: FormGroup = this.formBuilder.group({thirdCtrl: ['']});
@@ -29,31 +30,30 @@ export class SubmitRequestComponent {
   listRequests = JSON.parse(localStorage.getItem('Requests'));
 
 
-  radioChange(event: MatRadioChange){
+  radioChange(event: MatRadioChange){ //select work type
     this.type = event.value;
   }
-
- submit() {
+ submit() { //submit request
+  const count = this.listRequests.length;
   this.request = new FWARequest();
   this.today = new Date().toLocaleDateString();
-  this.request.employeeID = 'E100';
+  this.request.employeeID = this.user
+  this.request.requestID = 'R'+ count ;
   this.request.requestDate = this.today;
-  this.request.requestID = 'R001';
   this.request.workType = this.type;
   this.request.description = this.secondFormGroup.get('secondCtrl').value;
   this.request.reason = this.thirdFormGroup.get('thirdCtrl').value;
   this.request.status = 'Pending';
   this.request.comment = '';
 
-  // this.requests.push(this.request);
-  // localStorage.setItem('Requests', JSON.stringify(this.requests));
 
   this.addRequest(this.request);
 
   alert('Your request has been submitted');
+  this.listRequests = JSON.parse(localStorage.getItem('Requests'));
 }
 
-addRequest(request){
+addRequest(request){ //adds the request into local storage
   let requests = [];
   if (localStorage.getItem('Requests')){
     requests = JSON.parse(localStorage.getItem('Requests'));

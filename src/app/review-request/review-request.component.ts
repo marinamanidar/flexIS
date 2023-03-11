@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { findIndex } from 'rxjs';
 import { Employee } from '../shared-model/employee.model';
 import { FWARequest } from "../shared-model/request.model";
 
@@ -12,11 +11,6 @@ import { FWARequest } from "../shared-model/request.model";
   styleUrls: ['./review-request.component.css']
 })
 export class ReviewRequestComponent {
-  // test: string;
-  // constructor(private route: ActivatedRoute) {
-  //   this.route.queryParams.subscribe(params => {
-  //     console.log(params['id'])
-  //   });
 
   listEmployees = JSON.parse(localStorage.getItem('Employees'));
   listRequests = JSON.parse(localStorage.getItem('Requests'));
@@ -49,23 +43,24 @@ export class ReviewRequestComponent {
   pastRequests: FWARequest[] = [];
 
   ngOnInit() {
+
+    //retrives request ID from previous page to find request and populate the form
     this.sub = this.route.params.subscribe(params => {
       this.reqID = params['id'];
       this.empTable = Object.values(this.listEmployees)
-      // Object.values(this.listEmployees).forEach(val => {
-      //   this.emp = new Employee;
-      //   this.emp.employeeID = val['employeeID'];
-      //   this.emp.name = val['name'];
-      //   this.empTable.push(this.emp);
-      // })
       this.requestArray = Object.values(this.listRequests);
+
       this.request = this.requestArray.find(x => x.requestID == this.reqID);
       this.requestIndex = (Object.keys(this.listRequests) as (keyof typeof this.listRequests)[]).find((key) => {
         return this.listRequests[key] === this.request;
       });
+
+      //display ID and name of employee on title card
       const empName = this.empTable.find(x => x.employeeID == this.request.employeeID);
       this.name = empName['name'];
 
+
+      //Creates array of past requests to be displayed
       Object.values(this.listRequests).forEach(val => {
         if (val['employeeID'] == this.request.employeeID){
           if (val['status'] != 'Pending'){
@@ -89,6 +84,7 @@ export class ReviewRequestComponent {
 
   onSubmit(event) :void
   {
+    //updates the request's status and comment
     this.request.comment = this.form.get('comment').value;
     if (event == 'reject'){
       alert('request rejected');
@@ -106,20 +102,5 @@ export class ReviewRequestComponent {
     }
 
   }
-
-//   this.pastRequests = this.listRequests.filter('myFilter', function () {
-//     return function (items, search) {
-//         var result = [];
-//         angular.forEach(items, function (value, key) {
-//             angular.forEach(value, function (value2, key2) {
-//                 if (value2 === search) {
-//                     result.push(value2);
-//                 }
-//             })
-//         });
-//         return result;
-
-//     }
-// });
 
 }

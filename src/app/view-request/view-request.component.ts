@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { retryWhen } from 'rxjs';
-import { Employee } from '../shared-model/employee.model';
-import { Router, NavigationExtras } from "@angular/router";
-
+import { Router } from "@angular/router";
 
 export class requestTable {
   ID: string
@@ -27,6 +24,7 @@ export class ViewRequestComponent {
 
   listRequests = JSON.parse(localStorage.getItem('Requests'));
   listEmployees = JSON.parse(localStorage.getItem('Employees'));
+  user = sessionStorage.getItem('user');
 
   emp: empList;
   empTable: empList[] = [];
@@ -35,13 +33,17 @@ export class ViewRequestComponent {
   reqTable: requestTable[] = [];
 
   ngOnInit() {
+    //creates array of employees under the logged in supervisor
     Object.values(this.listEmployees).forEach(val => {
-      this.emp = new empList();
-      this.emp.empID = val['employeeID'];
-      this.emp.name = val['name'];
-      this.empTable.push(this.emp);
+      if(val['supervisorID'] == this.user){
+        this.emp = new empList();
+        this.emp.empID = val['employeeID'];
+        this.emp.name = val['name'];
+        this.empTable.push(this.emp);
+      }
     })
 
+    //creates array of requests under the employees under the supervisor
     Object.values(this.listRequests).forEach(val => {
       this.req = new requestTable();
       this.req.ID = val['employeeID'];
@@ -49,23 +51,20 @@ export class ViewRequestComponent {
       this.req.reqID = val['requestID']
       if (this.req.status == 'Pending'){
         const emp = this.empTable.find(x => x.empID == this.req.ID);
-        this.req.name = emp.name;
-        this.reqTable.push(this.req);
+        if (emp != undefined){
+          this.req.name = emp.name;
+          this.reqTable.push(this.req);
+        }
       }
     })
   }
+
+  //variables for the table
   columnsToDisplay: string[] = ['ID', 'Name', 'Status'];
   dataSource = this.reqTable;
 
+  //navigates to page to accept or reject request
   review(data) {
-    // alert('test')
-
-    // let navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     id: 'test'
-    //   }
-    // }
-
     this.router.navigate(['/sidebar/request', data['reqID']]);
   }
 }

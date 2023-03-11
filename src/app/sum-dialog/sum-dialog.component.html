@@ -2,17 +2,12 @@
 <mat-selection-list #pick (selectionChange)="onSelection($event)">
   <mat-list-option *ngFor="let date of dateList"
   [disabled]="pick.selectedOptions.selected.length == 2"
-  [value]="date.date">
+  [value]="date.date"
+  >
     Date: {{date.date}} | Count: {{date.count}}
   </mat-list-option>
 </mat-selection-list>
 
-<button (click)="selected()">
+<button mat-raised-button color="primary" (click)="selected()">
   select
 </button>
-<!-- <p>Selected:</p>
-<ul>
-  <li *ngFor="let i of pick.selectedOptions.selected">
-    {{ i.value }}
-  </li>
-</ul> -->

@@ -127,7 +127,7 @@ export class AppComponent {
     this.request = {
       employeeID: "E100",
       requestID: "R001",
-      requestDate: "2022/12/03",
+      requestDate: "12/03/2022",
       workType: "hybrid",
       description: "I would like to work from home on the weekdays and in the office on the weekends",
       reason: "I do not have transportation",
@@ -138,7 +138,7 @@ export class AppComponent {
     this.request = {
       employeeID: "E100",
       requestID: "R002",
-      requestDate: "2023/2/01",
+      requestDate: "01/02/2023",
       workType: "flexi-hour",
       description: "I would like to work from the office full time",
       reason: "I have bought a car",
@@ -149,7 +149,7 @@ export class AppComponent {
     this.request = {
       employeeID: "E101",
       requestID: "R003",
-      requestDate: "2023/01/14",
+      requestDate: "14/01/2023",
       workType: "work-from-home",
       description: "I would like to work form home full time",
       reason: "I need to take care of my mother",
@@ -160,7 +160,7 @@ export class AppComponent {
     this.request = {
       employeeID: "E102",
       requestID: "R004",
-      requestDate: "2023/02/03",
+      requestDate: "03/02/2023",
       workType: "flexi-hour",
       description: "I will work in the office most of the time",
       reason: "no reason",
@@ -171,7 +171,7 @@ export class AppComponent {
     this.request = {
       employeeID: "E103",
       requestID: "R005",
-      requestDate: "2023/1/15",
+      requestDate: "15/1/2023",
       workType: "Hybrid",
       description: "I will mostly be working from home",
       reason: "Lazy to commute",
@@ -179,7 +179,7 @@ export class AppComponent {
       comment: "Please try to make it to the office",
     }
     this.addRequest(this.request);
-  
+
 
 	this.schedule = {
       id: '1',
@@ -193,6 +193,77 @@ export class AppComponent {
     }
     this.addSchedule(this.schedule);
 
+    this.schedule = {
+      id: '2',
+      employeeID: "E101",
+      date: "4/4/2023",
+      workLocation : "Home",
+      workHours: "1",
+      workReport: "I will be having meetings and code review",
+      supervisorComments: null,
+      status: "Pending"
+    }
+    this.addSchedule(this.schedule);
+
+    this.schedule = {
+      id: '3',
+      employeeID: "E103",
+      date: "1/2/2023",
+      workLocation : "Office",
+      workHours: "1",
+      workReport: "I will be having meetings and code review",
+      supervisorComments: null,
+      status: "Pending"
+    }
+    this.addSchedule(this.schedule);
+
+    this.schedule = {
+      id: '4',
+      employeeID: "E102",
+      date: "12/21/2023",
+      workLocation : "Home",
+      workHours: "1",
+      workReport: "I will be having meetings and code review",
+      supervisorComments: null,
+      status: "Pending"
+    }
+    this.addSchedule(this.schedule);
+
+    this.schedule = {
+      id: '5',
+      employeeID: "E103",
+      date: "4/11/2023",
+      workLocation : "Home",
+      workHours: "1",
+      workReport: "I will be having meetings and code review",
+      supervisorComments: null,
+      status: "Pending"
+    }
+    this.addSchedule(this.schedule);
+
+    this.schedule = {
+      id: '6',
+      employeeID: "E101",
+      date: "4/11/2023",
+      workLocation : "Office",
+      workHours: "1",
+      workReport: "I will be having meetings and code review",
+      supervisorComments: null,
+      status: "Pending"
+    }
+    this.addSchedule(this.schedule);
+
+    this.schedule = {
+      id: '7',
+      employeeID: "E102",
+      date: "4/6/2023",
+      workLocation : "Home",
+      workHours: "1",
+      workReport: "I will be having meetings and code review",
+      supervisorComments: null,
+      status: "Pending"
+    }
+    this.addSchedule(this.schedule);
   }
 
   addEmployee(employee){
@@ -238,7 +309,7 @@ export class AppComponent {
     }
     localStorage.setItem('Requests', JSON.stringify(requests));
   }
-  
+
 
 }
 

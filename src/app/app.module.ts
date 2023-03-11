@@ -32,6 +32,12 @@ import { ReviewRequestComponent } from './review-request/review-request.componen
 import {MatTableModule} from '@angular/material/table';
 import { ViewRequestComponent } from './view-request/view-request.component';import { HomePageComponent } from './home-page/home-page.component';
 import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { AnalyticsSummaryComponent } from './analytics-summary/analytics-summary.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
+import { SumDialogComponent } from './sum-dialog/sum-dialog.component';
+import {MatListModule} from '@angular/material/list';
 import { ViewEmpSchComponent } from './view-emp-sch/view-emp-sch.component';
 
 @NgModule({
@@ -50,7 +56,9 @@ import { ViewEmpSchComponent } from './view-emp-sch/view-emp-sch.component';
     ViewRequestComponent,
 	  HomePageComponent,
     ViewScheduleComponent,
-    ViewEmpSchComponent,
+	 ViewEmpSchComponent,
+	AnalyticsSummaryComponent,
+    SumDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +82,11 @@ import { ViewEmpSchComponent } from './view-emp-sch/view-emp-sch.component';
     MatRippleModule,
     FormsModule,
     HttpClientModule,
-    MatTableModule
+    MatTableModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [

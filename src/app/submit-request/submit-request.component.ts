@@ -35,14 +35,14 @@ export class SubmitRequestComponent {
 
  submit() {
   this.request = new FWARequest();
-  this.today = formatDate(new Date(), 'yyyy/MM/dd', 'en');
+  this.today = new Date().toLocaleDateString();
   this.request.employeeID = 'E100';
   this.request.requestDate = this.today;
   this.request.requestID = 'R001';
   this.request.workType = this.type;
   this.request.description = this.secondFormGroup.get('secondCtrl').value;
   this.request.reason = this.thirdFormGroup.get('thirdCtrl').value;
-  this.request.status = 'pending';
+  this.request.status = 'Pending';
   this.request.comment = '';
 
   // this.requests.push(this.request);

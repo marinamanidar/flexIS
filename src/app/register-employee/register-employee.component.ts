@@ -16,6 +16,7 @@ export class RegisterEmployeeComponent {
   public employee: Employee;
   selectedTeam = '';
   btn = document.querySelector('button')
+  empDept: any;
 
 	onSelected(value:string): void {
 		this.selectedTeam = value;
@@ -41,7 +42,13 @@ export class RegisterEmployeeComponent {
    }
 
   onSubmit(){
-    if(this.employeeForm.valid && this.employeeForm.value.position == "Employee"){
+    for(let emp of this.listEmployees){
+      if(emp.employeeID == this.employeeForm.value.supervisorID){
+        this.empDept = emp.departmentID;
+      }   
+    }
+    if(this.employeeForm.value.position == "Employee"){
+      console.log("gwregre")
       this.employee = {
         employeeID: this.employeeForm.value.id,
         password: this.employeeForm.value.id + "123",
@@ -50,7 +57,7 @@ export class RegisterEmployeeComponent {
         email: this.employeeForm.value.email,
         FWAstatus: "New",
         supervisorID: this.employeeForm.value.supervisorID,
-        departmentID: this.employeeForm.value.departmentID,
+        departmentID: this.empDept,
         status: 'New'
     }
     }else{

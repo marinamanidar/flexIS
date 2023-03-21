@@ -1,4 +1,12 @@
-<mat-vertical-stepper [linear]="true" #stepper>
+<div *ngIf="pastReq != undefined">
+  <p>Work type: {{pastReq.workType}}</p>
+  <p>Description: {{pastReq.description}}</p>
+  <p>Reason: {{pastReq.reason}}</p>
+  <p>Request date: {{pastReq.requestDate}}</p>
+  <p>Status: {{pastReq.status}}</p>
+</div>
+
+<mat-vertical-stepper [linear]="true" #stepper *ngIf="pastReq == undefined">
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Select your work type</ng-template>
@@ -62,7 +70,7 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
-    <button mat-raised-button color="primary" style="margin-top: 10px;" (click)="submit(); stepper.reset()">Submit Request</button>
+    <button mat-raised-button color="primary" style="margin-top: 10px;" matStepperNext (click)="submit()">Submit Request</button>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>

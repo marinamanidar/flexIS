@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Employee } from '../shared-model/employee.model';
 import { Router } from "@angular/router";
+import { employeesService } from '../employee.service';
 
 @Component({
   selector: 'app-register-employee',
@@ -37,7 +38,8 @@ export class RegisterEmployeeComponent {
     departmentID: new FormControl(null)
   });
 
-  constructor(private router: Router) {
+
+  constructor(public empService: employeesService ,private router: Router) {
    }
 
   onSubmit(){
@@ -66,7 +68,20 @@ export class RegisterEmployeeComponent {
         status: 'New'
       }
     }
+
+
     this.addEmployee(this.employee);
+    this.empService.addEmployee(
+      'test',
+      // this.employeeForm.value.id + "123",
+      this.employeeForm.value.name,
+      this.employeeForm.value.position,
+      this.employeeForm.value.email,
+      'New',
+      this.employeeForm.value.supervisorID,
+      this.employeeForm.value.departmentID,
+      'New',
+      );
     this.employeeForm.reset();
     this.router.navigate(['/sidebar/view-emp']);
   }

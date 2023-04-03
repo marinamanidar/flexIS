@@ -1,12 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-// const Post = require('./models/post');
+
 const mongoose = require('mongoose');
+const employee = require('./models/employee');
 
 
 const app = express();
 
-mongoose.connect("mongodb+srv://chwung:chwungpassword@cluster0.jmxyj3v.mongodb.net/node-angular?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://weichung:NS4ZOCstkSqBgsDh@flexis.exovldf.mongodb.net/flexIS?retryWrites=true&w=majority")
   .then(()=> {
     console.log('connected to database');
   })
@@ -24,32 +25,41 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/api/posts", (req, res, next) => {
-  const post = new Post({
-    title: req.body.title,
-    content: req.body.content
+app.post("/api/employees", (req, res, next) => {
+  const emp = new employee({
+    password : req.body.employee.password,
+    name: req.body.employee.name,
+    position : req.body.employee.position,
+    email: req.body.employee.email,
+    FWAstatus : req.body.employee.FWAstatus,
+    supervisorID : req.body.employee.supervisorID,
+    departmentID: req.body.employee.departmentID,
+    status : req.body.employee.status
   });
 
-  post.save();
-
-  console.log(post);
-  res.status(201).json({
-    message: "Post added successfully"
+  employee.save().then((createdEmp)=> {
+    res.status(201).json({
+      message: "Employee added successfully",
+      empId: createdEmp._id
+    });
   });
+  // console.log(employee);
+
 });
 
-// app.use('/api/posts' ,(req, res, next) => {
+// app.use('/api/employees' ,(req, res, next) => {
 //   // Add dummy posts content. Later should get from database
-//   const posts = [
-//     {id: 'flakdl',
-//     title: "Firsst server side post",
-//     content: "This is coming from the server"
+//   const employee = [
+//     {
+//         password : 'test',
+//         name: 'test',
+//         position : 'test',
+//         email: 'test',
+//         FWAstatus : 'test',
+//         supervisorID : 'test',
+//         departmentID: 'test',
+//         status : 'test',
 //     },
-
-//     {id: 'o8odif',
-//     title: "Second server side post",
-//     content: "This is coming from the server"
-//     }
 //   ];
 
 //   res.status(200).json({
@@ -59,14 +69,14 @@ app.post("/api/posts", (req, res, next) => {
 //     posts: posts
 //   })
 
-//   //res.send('Hello from express')
+//   res.send('Hello from express')
 // });
 
-app.get('/api/posts', (req, res, next) => {
-  Post.find().then(documents => {
+app.get('/api/employees', (req, res, next) => {
+  employee.find().then(documents => {
     res.status(200).json({
-      message: 'Post fetched successfully',
-      posts: documents
+      message: 'Employees fetched successfully',
+      employee: documents
     })
   })
 })

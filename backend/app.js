@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Employee = require('./models/employee');
 const Department = require('./models/department');
+const Schedule = require('./models/schedule');
 
 
 const app = express();
@@ -81,7 +82,33 @@ app.get('/api/departments', (req, res, next) => {
 
 //Department -- End
 
+//Schedule -- Start
+app.post("/api/schedules", (req, res, next) => {
+  const schedule = new Schedule({
+    employeeID : req.body.employeeID,
+    date: req.body.date,
+    workLocation : req.body.workLocation,
+    workHours: req.body.workHours,
+    workReport : req.body.workReport,
+    supervisorComments : req.body.supervisorComments,
+    status : req.body.status
+  });
+  schedule.save().then((createdPost)=> {
+    res.status(201).json({
+      message : 'Schedule added successfully-',
+      });
+    });
+});
 
+app.get('/api/schedules', (req, res, next) => {
+  Schedule.find().then(documents => {
+    res.status(200).json({
+      message: 'Schedules fetched successfully',
+      schedule: documents
+    })
+  })
+})
+//Schedule -- End
 
 
 module.exports = app;

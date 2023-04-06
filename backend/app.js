@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 });
 
 // app.post("/api/employees", (req, res, next) => {
-//   var employee = new EmployeeModel(req.body)
+//   var employee = new Employee(req.body)
 //   res.status(201).json({
 //     message: 'Post added successfully'
 //   });
@@ -38,15 +38,16 @@ app.use((req, res, next) => {
 app.post("/api/employees", (req, res, next) => {
   const employee = new Employee({
     password : req.body.password,
-    name: req.body.password,
-    position : req.body.password,
-    email: req.body.password,
-    FWAstatus : req.body.password,
-    supervisorID : req.body.password,
-    departmentID: req.body.password,
-    status : req.body.password
+    name: req.body.name,
+    position : req.body.position,
+    email: req.body.email,
+    FWAstatus : req.body.FWAstatus,
+    supervisorID : req.body.supervisorID,
+    departmentID: req.body.departmentID,
+    status : req.body.status
   });
-  employee.save(function(){}).then((createdPost)=> {
+
+  employee.save().then((createdPost)=> {
     res.status(201).json({
       message : 'Employee added successfully-',
       employeeId : createdPost.id
@@ -65,6 +66,40 @@ app.get('/api/employees', (req, res, next) => {
     })
   })
 })
+
+// app.use('/api/employees', (req,res,next)=> {
+//   const employee= [
+//     {
+//       id: 'admin',
+//       password: 'admin',
+//       name: "",
+//       position: "",
+//       email: "",
+//       FWAstatus: "",
+//       supervisorID: "",
+//       departmentID: "",
+//       status: "",
+
+//     },
+
+//     {
+//       id: 'S100',
+//       password: "super",
+//       name: "supervisor",
+//       position: "Supervisor",
+//       email: "supervisor@supervisor.com",
+//       FWAstatus: "WFH",
+//       supervisorID: "",
+//       departmentID: "D1",
+//       status: "New",
+//     }
+//   ];
+
+//   res.status(200).json({
+//     message: 'Employees fetched successfully',
+//     employees: employee
+//   });
+// });
 
 
 

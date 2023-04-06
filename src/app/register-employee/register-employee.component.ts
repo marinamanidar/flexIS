@@ -44,7 +44,7 @@ export class RegisterEmployeeComponent {
 
   onSubmit(){
     if(this.employeeForm.value.position == "Employee"){
-      this.empService.addEmployee(this.employeeForm.value.name + "123", this.employeeForm.value.name, "Employee", this.employeeForm.value.email, "New", this.employeeForm.value.supervisorID, this.employeeForm.value.departmentID, 'New');
+      this.empService.addEmployee(this.employeeForm.value.name + "123", this.employeeForm.value.name, "Employee", this.employeeForm.value.email, "New", this.employeeForm.value.supervisorID, 'department id', 'New');
     }else{
       this.employee = {
         employeeID: this.employeeForm.value.id,
@@ -61,18 +61,6 @@ export class RegisterEmployeeComponent {
 
 
     this.addEmployee(this.employee);
-    this.empService.addEmployee(
-      'test',
-      // this.employeeForm.value.id + "123",
-      this.employeeForm.value.name,
-      this.employeeForm.value.position,
-      this.employeeForm.value.email,
-      'New',
-      this.employeeForm.value.supervisorID,
-      this.employeeForm.value.departmentID,
-      'New',
-      );
-    this.employeeForm.reset();
     this.router.navigate(['/sidebar/view-emp']);
   }
 

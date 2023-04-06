@@ -5,7 +5,7 @@ import {Subject} from 'rxjs';
 
 import { HttpClient } from '@angular/common/http';
 import {Router} from '@angular/router'
-
+import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 
 @Injectable({providedIn:'root'})
@@ -42,16 +42,15 @@ addEmployee(password:string, name:string, position:string, email:string, FWAstat
     this.employees.push(employee);
     this.employeeUpdated.next([...this.employees]);
     //this.router.navigate(['/']);
-    console.log("Post added sucessfully " , employee);
+    console.log("Employee added sucessfully " , employee);
   }
   );
 }
 
 getEmployees(){
-this.http.get<{message: string , employeelist : any}>('http://localhost:3000/api/employees')
-        .pipe( map ((employeeData) => {
-          return employeeData.employeelist.map( employee => {
-
+this.http.get<{message: string , employee : any}>('http://localhost:3000/api/employees')
+        .pipe(map((employeeData) => {
+          return employeeData.employee.map( employee => {
             return {
               employeeID: employee._id,
               password: employee.password,
@@ -63,7 +62,6 @@ this.http.get<{message: string , employeelist : any}>('http://localhost:3000/api
               departmentID: employee.departmentID,
               status: employee.status,
             }
-
           }
 
           );

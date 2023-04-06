@@ -60,7 +60,7 @@ export class RegisterEmployeeComponent {
     }
 
 
-    this.addEmployee(this.employee);
+    // this.addEmployee(this.employee);
     this.router.navigate(['/sidebar/view-emp']);
   }
 

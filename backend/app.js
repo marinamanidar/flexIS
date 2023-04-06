@@ -50,9 +50,9 @@ app.post("/api/employees", (req, res, next) => {
   employee.save().then((createdPost)=> {
     res.status(201).json({
       message : 'Employee added successfully-',
-      employeeId : createdPost.id
+      // employeeId : createdPost.employeeId
     });
-    console.log(employeeId);
+    // console.log(employeeId);
   });
 
 });

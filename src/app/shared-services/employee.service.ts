@@ -25,8 +25,9 @@ getEmployee(id:string){
 
 addEmployee(password:string, name:string, position:string, email:string, FWAstatus:string, supervisorID:string, departmentID:string, status:string) {
   const employee: Employee = {employeeID:'null', password: password, name: name, position: position, email: email, FWAstatus: FWAstatus, supervisorID: supervisorID, departmentID: departmentID, status: status};
-  this.http.post<{message: string, employeeId:string}>('http://localhost:3000/api/employees',employee).subscribe(
+  this.http.post<{message: string, employeeId:string}>('http://localhost:3000/api/employees/signup',employee).subscribe(
   (responseData)=> {
+    console.log(responseData)
     const id = responseData.employeeId;
     employee.employeeID = id;
     this.employees.push(employee);

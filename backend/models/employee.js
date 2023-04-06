@@ -1,4 +1,5 @@
 const mongoose = require ('mongoose');
+const uniqueValidator = require('mongoose-unique-validator')
 
 const employeeSchema = mongoose.Schema({
   password : { type:String , required : true},
@@ -9,7 +10,8 @@ const employeeSchema = mongoose.Schema({
   supervisorID : { type:String , required : true},
   departmentID: {type: String, required: true},
   status : { type:String , required : true}
-
 });
+
+employeeSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('Employee', employeeSchema );

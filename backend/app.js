@@ -1,10 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const Employee = require('./models/employee');
 const Department = require('./models/department');
 const Schedule = require('./models/schedule');
+const bcrypt = require("bcrypt");
 
 
 const app = express();
@@ -29,30 +30,97 @@ app.use((req, res, next) => {
 
 //Employee -- Start
 
-app.post("/api/employees", (req, res, next) => {
-  const employee = new Employee({
-    password : req.body.password,
-    name: req.body.name,
-    position : req.body.position,
-    email: req.body.email,
-    FWAstatus : req.body.FWAstatus,
-    supervisorID : req.body.supervisorID,
-    departmentID: req.body.departmentID,
-    status : req.body.status
-  });
-  employee.save().then((createdPost)=> {
-    res.status(201).json({
-      message : 'Employee added successfully-',
+app.post('/api/employees/signup', (req,res,next) => {
+  bcrypt.hash(req.body.password,10)
+  .then(hash => {
+    const employee = new Employee({
+      password : hash,
+      name: req.body.name,
+      position : req.body.position,
+      email: req.body.email,
+      FWAstatus : req.body.FWAstatus,
+      supervisorID : req.body.supervisorID,
+      departmentID: req.body.departmentID,
+      status : req.body.status
+    });
+    employee.save().then((createdPost)=> {
+      res.status(201).json({
+        message : 'Employee added successfully-',
+      });
+    })
+    .catch(err=> {
+      res.status(500).json({
+        error : err
+      });
     });
   });
 });
+
+app.post('/api/employees/login' , (req,res,next) =>{
+  let fetchedEmployee ;
+  
+  Employee.findOne({email:req.body.email})
+  .then ( employee=>{
+    if(!employee) {
+      return res.status(401).json ({
+        message : 'Auth failed - user does not exist'
+      });
+    }
+    fetchedEmployee = employee;
+    return bcrypt.compare(req.body.password, employee.password)
+  })
+  .then (result => {
+    if(!result) {
+      return res.status(401).json({
+        message : 'Auth failed-- password didnt match'
+      });
+    }
+  const token = jwt.sign(
+    {email:fetchedEmployee.email , employeeID : fetchedEmployee._id},
+    'pkey',
+    {expiresIn: '1h' }
+  );
+  res.status(200).json({
+    token : token
+  })
+  })
+  .catch(err => {
+    return res.status(401).json({
+      message : ' Auth failed'
+    });
+  })
+  
+  });
+
+// app.post("/api/employees", (req, res, next) => {
+//   const employee = new Employee({
+//     password : req.body.password,
+//     name: req.body.name,
+//     position : req.body.position,
+//     email: req.body.email,
+//     FWAstatus : req.body.FWAstatus,
+//     supervisorID : req.body.supervisorID,
+//     departmentID: req.body.departmentID,
+//     status : req.body.status
+//   });
+//   employee.save().then((createdPost)=> {
+//     res.status(201).json({
+//       message : 'Employee added successfully-',
+//     });
+//   })
+//   .catch(err => {
+//     res.status(500).json({
+//       error:err
+//     });
+//   });
+// });
 
 app.get('/api/employees', (req, res, next) => {
   Employee.find().then(documents => {
     res.status(200).json({
       message: 'Employees fetched successfully',
       employee: documents
-    })
+    });
   })
 })
 

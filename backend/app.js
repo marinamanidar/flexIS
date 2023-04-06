@@ -2,7 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
-const employee = require('./models/employee');
+const Employee = require('./models/employee');
+
+const checkAuth = require('./middleware/check-auth');
 
 
 const app = express();
@@ -26,54 +28,35 @@ app.use((req, res, next) => {
 });
 
 app.post("/api/employees", (req, res, next) => {
-  const emp = new employee({
-    password : req.body.employee.password,
-    name: req.body.employee.name,
-    position : req.body.employee.position,
-    email: req.body.employee.email,
-    FWAstatus : req.body.employee.FWAstatus,
-    supervisorID : req.body.employee.supervisorID,
-    departmentID: req.body.employee.departmentID,
-    status : req.body.employee.status
+  const employee = req.body;
+  res.status(201).json({
+    message: 'Post added successfully'
   });
-
-  employee.save().then((createdEmp)=> {
-    res.status(201).json({
-      message: "Employee added successfully",
-      empId: createdEmp._id
-    });
-  });
-  // console.log(employee);
-
 });
 
-// app.use('/api/employees' ,(req, res, next) => {
-//   // Add dummy posts content. Later should get from database
-//   const employee = [
-//     {
-//         password : 'test',
-//         name: 'test',
-//         position : 'test',
-//         email: 'test',
-//         FWAstatus : 'test',
-//         supervisorID : 'test',
-//         departmentID: 'test',
-//         status : 'test',
-//     },
-//   ];
 
-//   res.status(200).json({
-//     //message property
-//     message: 'Post fetched successfully',
-//     //post property that get the dummy data above
-//     posts: posts
-//   })
+// app.post("/api/employees", checkAuth, (req, res, next) => {
+//   const employee = new Employee({
+//     password: req.body.password, 
+//     name: req.body.name, 
+//     position: req.body.position, 
+//     email: req.body.email, 
+//     FWAstatus: req.body.FWAstatus, 
+//     supervisorID: req.body.supervisorID, 
+//     departmentID: req.body.departmentID, 
+//     status: req.body.status});
+//   post.save().then((createdPost)=> {
+//     res.status(201).json({
+//       message : 'Employee added successfully-',
+//       employeeId : createdPost.id
+//     });
+//   });
 
-//   res.send('Hello from express')
 // });
 
+
 app.get('/api/employees', (req, res, next) => {
-  employee.find().then(documents => {
+  Employee.find().then(documents => {
     res.status(200).json({
       message: 'Employees fetched successfully',
       employee: documents
@@ -81,5 +64,4 @@ app.get('/api/employees', (req, res, next) => {
   })
 })
 
-//export for other module can import
 module.exports = app;

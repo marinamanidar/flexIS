@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Employee } from '../shared-model/employee.model';
 import { Router } from "@angular/router";
-import { employeesService } from '../employee.service';
+import { employeesService } from '../shared-services/employee.service';
 
 @Component({
   selector: 'app-register-employee',
@@ -43,18 +43,8 @@ export class RegisterEmployeeComponent {
    }
 
   onSubmit(){
-    if(this.employeeForm.valid && this.employeeForm.value.position == "Employee"){
-      this.employee = {
-        employeeID: this.employeeForm.value.id,
-        password: this.employeeForm.value.id + "123",
-        name : this.employeeForm.value.name,
-        position: this.employeeForm.value.position,
-        email: this.employeeForm.value.email,
-        FWAstatus: "New",
-        supervisorID: this.employeeForm.value.supervisorID,
-        departmentID: this.employeeForm.value.departmentID,
-        status: 'New'
-    }
+    if(this.employeeForm.value.position == "Employee"){
+      this.empService.addEmployee(this.employeeForm.value.name + "123", this.employeeForm.value.name, "Employee", this.employeeForm.value.email, "New", this.employeeForm.value.supervisorID, this.employeeForm.value.departmentID, 'New');
     }else{
       this.employee = {
         employeeID: this.employeeForm.value.id,

@@ -22,37 +22,39 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   console.log("app.use set header n nove nxt");
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
   next();
 });
 
-app.post("/api/employees", (req, res, next) => {
-  const employee = req.body;
-  res.status(201).json({
-    message: 'Post added successfully'
-  });
-});
-
-
-// app.post("/api/employees", checkAuth, (req, res, next) => {
-//   const employee = new Employee({
-//     password: req.body.password, 
-//     name: req.body.name, 
-//     position: req.body.position, 
-//     email: req.body.email, 
-//     FWAstatus: req.body.FWAstatus, 
-//     supervisorID: req.body.supervisorID, 
-//     departmentID: req.body.departmentID, 
-//     status: req.body.status});
-//   post.save().then((createdPost)=> {
-//     res.status(201).json({
-//       message : 'Employee added successfully-',
-//       employeeId : createdPost.id
-//     });
+// app.post("/api/employees", (req, res, next) => {
+//   var employee = new EmployeeModel(req.body)
+//   res.status(201).json({
+//     message: 'Post added successfully'
 //   });
-
 // });
+
+
+app.post("/api/employees", (req, res, next) => {
+  const employee = new Employee({
+    password : req.body.password,
+    name: req.body.password,
+    position : req.body.password,
+    email: req.body.password,
+    FWAstatus : req.body.password,
+    supervisorID : req.body.password,
+    departmentID: req.body.password,
+    status : req.body.password
+  });
+  employee.save(function(){}).then((createdPost)=> {
+    res.status(201).json({
+      message : 'Employee added successfully-',
+      employeeId : createdPost.id
+    });
+    console.log(employeeId);
+  });
+
+});
 
 
 app.get('/api/employees', (req, res, next) => {
@@ -63,5 +65,7 @@ app.get('/api/employees', (req, res, next) => {
     })
   })
 })
+
+
 
 module.exports = app;

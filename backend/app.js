@@ -3,8 +3,7 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 const Employee = require('./models/employee');
-
-const checkAuth = require('./middleware/check-auth');
+const Department = require('./models/department');
 
 
 const app = express();
@@ -27,13 +26,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.post("/api/employees", (req, res, next) => {
-//   var employee = new Employee(req.body)
-//   res.status(201).json({
-//     message: 'Post added successfully'
-//   });
-// });
-
+//Employee -- Start
 
 app.post("/api/employees", (req, res, next) => {
   const employee = new Employee({
@@ -46,17 +39,12 @@ app.post("/api/employees", (req, res, next) => {
     departmentID: req.body.departmentID,
     status : req.body.status
   });
-
   employee.save().then((createdPost)=> {
     res.status(201).json({
       message : 'Employee added successfully-',
-      // employeeId : createdPost.employeeId
     });
-    // console.log(employeeId);
   });
-
 });
-
 
 app.get('/api/employees', (req, res, next) => {
   Employee.find().then(documents => {
@@ -67,39 +55,32 @@ app.get('/api/employees', (req, res, next) => {
   })
 })
 
-// app.use('/api/employees', (req,res,next)=> {
-//   const employee= [
-//     {
-//       id: 'admin',
-//       password: 'admin',
-//       name: "",
-//       position: "",
-//       email: "",
-//       FWAstatus: "",
-//       supervisorID: "",
-//       departmentID: "",
-//       status: "",
+//Employee -- End
 
-//     },
 
-//     {
-//       id: 'S100',
-//       password: "super",
-//       name: "supervisor",
-//       position: "Supervisor",
-//       email: "supervisor@supervisor.com",
-//       FWAstatus: "WFH",
-//       supervisorID: "",
-//       departmentID: "D1",
-//       status: "New",
-//     }
-//   ];
+//Department -- Start
+app.post("/api/departments", (req, res, next) => {
+  const department = new Department({
+    departmentName : req.body.departmentName,
+  });
+  department.save().then((createdPost)=> {
+    res.status(201).json({
+      message : 'Department added successfully-',
+      });
+    });
+});
 
-//   res.status(200).json({
-//     message: 'Employees fetched successfully',
-//     employees: employee
-//   });
-// });
+app.get('/api/departments', (req, res, next) => {
+  Department.find().then(documents => {
+    res.status(200).json({
+      message: 'Departments fetched successfully',
+      department: documents
+    })
+  })
+})
+
+//Department -- End
+
 
 
 

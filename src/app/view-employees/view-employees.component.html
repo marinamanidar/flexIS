@@ -20,7 +20,6 @@
             <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Position</th>
                     <th scope="col">Email</th>
@@ -31,9 +30,6 @@
                 <tbody>
                     <tr *ngFor="let item of employees">
                         <td>
-                            <!-- <span>{{ item.employeeID }}</span> -->
-                        </td>
-                        <td>
                             <span>{{ item.name}}</span>
                         </td>
                         <td>
@@ -43,14 +39,14 @@
                             <span>{{ item.email}}</span>
                         </td>
                         <td>
-                            <!-- <ng-container *ngFor="let dep of listDepartments">
+                            <ng-container *ngFor="let dep of departments">
                             <span *ngIf="dep.departmentID.includes(item.departmentID)">{{dep.departmentName}}</span>
-                            </ng-container> -->
+                            </ng-container>
                         </td>
                         <td>
-                            <!-- <ng-container *ngFor="let emp of listEmployees">
-                            <span *ngIf="emp.employeeID.includes(item.supervisorID)">{{emp.name}}</span>
-                            </ng-container> -->
+                            <ng-container *ngFor="let emp of employees">
+                            <span *ngIf="emp.employeeID == item.supervisorID">{{emp.name}}</span>
+                            </ng-container>
                         </td>
                     </tr>
                     <tr *ngIf="employees.length == 0">

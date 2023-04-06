@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Employee } from '../shared-model/employee.model';
+import { Department } from '../shared-model/department.model';
 import { Router } from "@angular/router";
 import { employeesService } from '../shared-services/employee.service';
+import { departmentsService } from '../shared-services/department.services';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register-employee',
@@ -12,8 +15,30 @@ import { employeesService } from '../shared-services/employee.service';
 
 export class RegisterEmployeeComponent {
 
-  listDepartments = JSON.parse(localStorage.getItem('Departments'));
-  listEmployees = JSON.parse(localStorage.getItem('Employees'));
+  private employeesSub : Subscription | undefined;
+  private departmentsSub : Subscription | undefined;
+
+  employees : Employee[] = [] ;
+  departments : Department[] = [] ;
+  emp : Employee;
+  dep : Department;
+
+  constructor(public employeesService: employeesService , public departmentsService: departmentsService, private router: Router) {
+  }
+
+  ngOnInit(){
+    this.employeesService.getEmployees();
+    this.departmentsService.getDepartments();
+    this.employeesSub = this.employeesService.getEmployeesUpdateListener()
+    .subscribe((employees:Employee[])=> {
+      this.employees = employees;
+    });
+    this.departmentsSub = this.departmentsService.getDepartmentUpdateListener()
+    .subscribe((departments:Department[])=> {
+      this.departments = departments;
+    });
+  }
+
   public employee: Employee;
   selectedTeam = '';
   btn = document.querySelector('button')
@@ -38,25 +63,13 @@ export class RegisterEmployeeComponent {
     departmentID: new FormControl(null)
   });
 
-
-  constructor(public empService: employeesService ,private router: Router) {
-   }
-
   onSubmit(){
     if(this.employeeForm.value.position == "Employee"){
-      this.empService.addEmployee(this.employeeForm.value.name + "123", this.employeeForm.value.name, "Employee", this.employeeForm.value.email, "New", this.employeeForm.value.supervisorID, 'department id', 'New');
+      this.emp = this.employeesService.getEmployee(this.employeeForm.value.supervisorID);
+      this.dep = this.departmentsService.getDepartment(this.emp.departmentID);
+      this.employeesService.addEmployee(this.employeeForm.value.name + "123", this.employeeForm.value.name, "Employee", this.employeeForm.value.email, "New", this.employeeForm.value.supervisorID, this.dep.departmentID, 'New');
     }else{
-      this.employee = {
-        employeeID: this.employeeForm.value.id,
-        password: this.employeeForm.value.id + "123",
-        name : this.employeeForm.value.name,
-        position: this.employeeForm.value.position,
-        email: this.employeeForm.value.email,
-        FWAstatus: "New",
-        supervisorID: null,
-        departmentID: this.employeeForm.value.departmentID,
-        status: 'New'
-      }
+      this.employeesService.addEmployee(this.employeeForm.value.name + "123", this.employeeForm.value.name, "Supervisor", this.employeeForm.value.email, "New", " ", this.employeeForm.value.departmentID, 'New');
     }
 
 
@@ -64,37 +77,9 @@ export class RegisterEmployeeComponent {
     this.router.navigate(['/sidebar/view-emp']);
   }
 
-  get id(){
-    return this.employeeForm.get('id');
-  }
-
-  get name(){
-    return this.employeeForm.get('name');
-  }
-
-  get email(){
-    return this.employeeForm.get('email');
-  }
-
-  get departmentID(){
-    return this.employeeForm.get('departmentID')
-  }
-
   get position(){
     return this.employeeForm.get('position')
   }
-
-  addEmployee(employee){
-    let employees = [];
-    if (localStorage.getItem('Employees')){
-      employees = JSON.parse(localStorage.getItem('Employees'));
-      employees = [...employees, employee]
-    }else{
-      employees = [employee];
-    }
-    localStorage.setItem('Employees', JSON.stringify(employees));
-  }
-
 
 }
 

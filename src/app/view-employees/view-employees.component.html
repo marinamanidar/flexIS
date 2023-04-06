@@ -29,9 +29,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of listEmployees">
+                    <tr *ngFor="let item of employees">
                         <td>
-                            <span>{{ item.employeeID }}</span>
+                            <!-- <span>{{ item.employeeID }}</span> -->
                         </td>
                         <td>
                             <span>{{ item.name}}</span>
@@ -43,17 +43,17 @@
                             <span>{{ item.email}}</span>
                         </td>
                         <td>
-                            <ng-container *ngFor="let dep of listDepartments">
+                            <!-- <ng-container *ngFor="let dep of listDepartments">
                             <span *ngIf="dep.departmentID.includes(item.departmentID)">{{dep.departmentName}}</span>
-                            </ng-container>
+                            </ng-container> -->
                         </td>
                         <td>
-                            <ng-container *ngFor="let emp of listEmployees">
+                            <!-- <ng-container *ngFor="let emp of listEmployees">
                             <span *ngIf="emp.employeeID.includes(item.supervisorID)">{{emp.name}}</span>
-                            </ng-container>
+                            </ng-container> -->
                         </td>
                     </tr>
-                    <tr *ngIf="listEmployees.length == 0">
+                    <tr *ngIf="employees.length == 0">
                         <td colspan="6" class="text-center align-middle">
                             <span class="text-muted font-medium">No Record(s) Found.</span>
                         </td>

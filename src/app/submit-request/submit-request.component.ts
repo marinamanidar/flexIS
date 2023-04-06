@@ -15,6 +15,10 @@ export class SubmitRequestComponent {
     private router: Router
     ) {}
 
+
+
+
+
   user = sessionStorage.getItem('user');
 
   //form
@@ -28,6 +32,14 @@ export class SubmitRequestComponent {
   requests: FWARequest[] = [];
   employeeID: string;
   listRequests = JSON.parse(localStorage.getItem('Requests'));
+  pastReq: any;
+  isLinear = true;
+
+  ngOnInit(){
+    this.pastReq = this.listRequests.find(x => x.employeeID == this.user && x.requestDate == new Date().toLocaleDateString());
+    console.log(this.pastReq)
+
+  }
 
 
   radioChange(event: MatRadioChange){ //select work type
@@ -51,6 +63,7 @@ export class SubmitRequestComponent {
 
   alert('Your request has been submitted');
   this.listRequests = JSON.parse(localStorage.getItem('Requests'));
+  this.router.navigate(['/sidebar/home']);
 }
 
 addRequest(request){ //adds the request into local storage

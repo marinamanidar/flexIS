@@ -39,7 +39,7 @@ export class AppComponent {
       departmentName: "Production"
     }
     this.addDepartment(this.department);
-    this.employee = new Employee();
+    //this.employee = new Employee();
     this.employee = {
       employeeID: "A100",
       password: "admin",

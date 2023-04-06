@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="employeeForm" (submit)="onSubmit()">
 
   <div class="form-floating mb-3">
     <input type="text" class="form-control input-lg" id="floatingInput" name="id" formControlName="id" placeholder="B15265" [class.is-invalid]="(employeeForm.get('id').touched || employeeForm.get('id').dirty) && employeeForm.get('id').invalid"/>
@@ -40,9 +40,9 @@
   <div class="form-floating mb-3" id="condition">
     <select name="supervisorID" id="position" [class.is-invalid]="(employeeForm.get('supervisorID').touched || employeeForm.get('supervisorID').dirty) && employeeForm.get('supervisorID').invalid" class="form-select" aria-label="Floating label select example" formControlName="supervisorID">*ngIf="emp.position.includes('Supervisor')"
       <option class="text-muted" disabled [value]="null"></option>
-      <ng-container *ngFor="let emp of listEmployees"> 
+      <ng-container *ngFor="let emp of listEmployees">
         <option *ngIf="emp.position.includes('Supervisor')" value={{emp.employeeID}}>{{emp.employeeID}} {{emp.name}}</option>
-      </ng-container> 
+      </ng-container>
     </select>
     <label for="floatingInput">Supervisor</label>
   </div>

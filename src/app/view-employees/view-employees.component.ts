@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { employeesService } from '../shared-services/employee.service';
+import { Employee } from '../shared-model/employee.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-view-employees',
@@ -6,6 +9,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./view-employees.component.css']
 })
 export class ViewEmployeesComponent {
-  listEmployees = JSON.parse(localStorage.getItem('Employees'));
-  listDepartments = JSON.parse(localStorage.getItem('Departments'));
+
+  private employeesSub : Subscription | undefined;
+
+  employees : Employee[] = [] ;
+
+  constructor(public employeesService: employeesService){
+  }
+  
+  ngOnInit(){
+    this.employeesService.getEmployees();
+    this.employeesSub = this.employeesService.getEmployeesUpdateListener()
+    .subscribe((employees:Employee[])=> {
+      this.employees = employees;
+    });
+  }
 }

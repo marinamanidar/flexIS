@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import { MatRadioChange } from '@angular/material/radio';
 import { FWARequest } from "../shared-model/request.model";
 import { Router } from "@angular/router";
+import { requestService } from '../shared-services/request.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-submit-request',
@@ -11,13 +13,12 @@ import { Router } from "@angular/router";
 })
 export class SubmitRequestComponent {
   constructor(
-    private formBuilder: FormBuilder,
-    private router: Router
-    ) {}
+    private formBuilder: FormBuilder,  public reqService: requestService, private router: Router) {}
 
 
 
 
+  private requestSub : Subscription | undefined;
 
   user = sessionStorage.getItem('user');
 
@@ -36,7 +37,14 @@ export class SubmitRequestComponent {
   isLinear = true;
 
   ngOnInit(){
-    this.pastReq = this.listRequests.find(x => x.employeeID == this.user && x.requestDate == new Date().toLocaleDateString());
+    this.reqService.getRequests()
+    this.requestSub = this.reqService.getRequestUpdateListener()
+    .subscribe((request: FWARequest[])=> {
+      this.requests = request;
+    });
+
+    this.pastReq = this.requests.find(x => x.employeeID == this.user && x.requestDate == new Date().toLocaleDateString());
+    console.log(new Date().toLocaleDateString())
     console.log(this.pastReq)
 
   }
@@ -59,6 +67,10 @@ export class SubmitRequestComponent {
   this.request.comment = '';
 
 
+  this.reqService.addRequest(
+    this.user, this.today, this.type, this.secondFormGroup.get('secondCtrl').value, this.thirdFormGroup.get('thirdCtrl').value, 'Pending', ''
+  );
+  this.reqService.getRequestUpdateListener();
   this.addRequest(this.request);
 
   alert('Your request has been submitted');

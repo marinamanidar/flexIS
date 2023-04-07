@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 const Employee = require('./models/employee');
+const Request = require('./models/request')
 
 const checkAuth = require('./middleware/check-auth');
 
@@ -27,13 +28,15 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.post("/api/employees", (req, res, next) => {
-//   var employee = new Employee(req.body)
-//   res.status(201).json({
-//     message: 'Post added successfully'
-//   });
-// });
 
+app.get('/api/employees', (req, res, next) => {
+  Employee.find().then(documents => {
+    res.status(200).json({
+      message: 'Employees fetched successfully',
+      employee: documents
+    })
+  })
+})
 
 app.post("/api/employees", (req, res, next) => {
   const employee = new Employee({
@@ -57,15 +60,36 @@ app.post("/api/employees", (req, res, next) => {
 
 });
 
-
-app.get('/api/employees', (req, res, next) => {
-  Employee.find().then(documents => {
+app.get('/api/requests', (req, res, next) => {
+  Request.find().then(documents => {
     res.status(200).json({
-      message: 'Employees fetched successfully',
-      employee: documents
+      message: 'Requests fetched successfully',
+      requests: documents
     })
   })
 })
+
+app.post("/api/requests", (req, res, next) => {
+  const request = new Request({
+    employeeID: req.body.employeeID,
+    requestID: req.body._id,
+    requestDate: req.body.requestDate,
+    workType: req.body.workType,
+    description: req.body.description,
+    reason: req.body.reason,
+    status: req.body.status,
+    comment: req.body.comment
+  });
+  request.save().then((createdPost)=> {
+    res.status(201).json({
+      message : 'Request added successfully-',
+      // employeeId : createdPost.employeeId
+    });
+    // console.log(employeeId);
+  });
+
+});
+
 
 // app.use('/api/employees', (req,res,next)=> {
 //   const employee= [

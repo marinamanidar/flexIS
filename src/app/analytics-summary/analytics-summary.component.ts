@@ -5,6 +5,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { SumDialogComponent } from '../sum-dialog/sum-dialog.component';
 import {MatTable} from '@angular/material/table';
+import { employeesService } from '../shared-services/employee.service';
+import { requestService } from '../shared-services/request.service';
+import { Employee } from '../shared-model/employee.model';
+import { FWARequest } from '../shared-model/request.model';
+import { Department } from '../shared-model/department.model';
+import { departmentsService } from '../shared-services/department.services';
+import { Subscription } from 'rxjs';
 
 
 export class summary{
@@ -31,6 +38,7 @@ export class AnalyticsSummaryComponent {
   listEmployees = JSON.parse(localStorage.getItem('Employees'));
   listSchedules = JSON.parse(localStorage.getItem('Schedules'));
 
+
   sub: any;
   depID: string;
   depName: string;
@@ -38,6 +46,18 @@ export class AnalyticsSummaryComponent {
   sum: summary
 
   dateRange: any[];
+
+  employees: Employee[] = [];
+
+  requests: FWARequest[] = [];
+
+  departments: Department[] = [];
+
+  request: FWARequest;
+
+  employee: Employee;
+
+  department: Department;
 
   sumTable: summary[] = [];
 
@@ -48,19 +68,27 @@ export class AnalyticsSummaryComponent {
 
   @ViewChild(MatTable) table: MatTable<summary>;
 
+  private depSub : Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public empService: employeesService,
+    public reqService: requestService,
+    public depService: departmentsService
     ) {}
-
 
   ngOnInit() {
     //Retrieve departmentID from previous page
     this.sub = this.route.params.subscribe(params => {
       this.depID = params['id']
-      this.depName = this.listDepartments.find(x => x.departmentID == this.depID);
     })
+    this.depService.getDepartments();
+      this.depService.getDepartmentUpdateListener()
+      .subscribe((department: Department[]) => {
+        this.departments = department
+        this.depName = this.departments.find(x => x.departmentID == this.depID).departmentName;
+      })
   }
 
   openDialog(): void {

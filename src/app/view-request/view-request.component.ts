@@ -35,6 +35,8 @@ export class ViewRequestComponent {
   request : FWARequest[] = [];
   employee: Employee[] = [];
 
+  supervisor: Employee;
+
   listRequests = JSON.parse(localStorage.getItem('Requests'));
   listEmployees = JSON.parse(localStorage.getItem('Employees'));
   user = sessionStorage.getItem('user');
@@ -54,9 +56,9 @@ export class ViewRequestComponent {
     this.employeeSub = this.empService.getEmployeesUpdateListener()
     .subscribe((employees : Employee[]) => {
       this.employee = employees;
-
+      this.supervisor = this.empService.getEmployeeByEmail(this.user)
       Object.values(this.employee).forEach(val => {
-        if(val['supervisorID'] == this.user){
+        if(val['supervisorID'] == this.supervisor.employeeID){
           this.emp = new empList();
           this.emp.empID = val['employeeID'];
           this.emp.name = val['name'];
@@ -99,3 +101,6 @@ export class ViewRequestComponent {
     this.router.navigate(['/sidebar/request', data['reqID']]);
   }
 }
+
+
+

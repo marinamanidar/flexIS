@@ -59,8 +59,9 @@ app.post('/api/employees/signup',checkAuth, (req,res,next) => {
         error : err
       });
     });
-  })
-})
+  });
+});
+
 
 app.get('/api/employees', (req, res, next) => {
   Employee.find().then(documents => {
@@ -85,9 +86,9 @@ app.post("/api/employees", (req, res, next) => {
   });
 });
 
-app.post('/api/employee/login', (req,res,next) =>{
+app.post('/api/employees/login', (req,res,next) =>{
   let fetchedUser ;
-  
+
   User.findOne({email:req.body.email})
   .then ( user=>{
     console.log(user)
@@ -97,13 +98,15 @@ app.post('/api/employee/login', (req,res,next) =>{
       });
     }
     fetchedUser = user;
-    return bcrypt.compare(req.body.password, user.password)
+    return bcrypt.compare(req.body.password, user.password);
   })
   .then (result => {
     if(!result) {
-      console.log("fail")
+      console.log("fail");
+      console.log('wrong password');
       return res.status(401).json("Password is wrong");
     }
+    console.log('correct')
   const token = jwt.sign(
     {email:fetchedUser.email , employeeID : fetchedUser._id},
     'pkey',
@@ -118,7 +121,7 @@ app.post('/api/employee/login', (req,res,next) =>{
       message : ' Auth failed'
     });
   })
-  
+
   });
 
 
@@ -154,6 +157,37 @@ app.get('/api/employees', (req, res, next) => {
   })
 })
 
+
+app.put("/api/employees/:employeeID", (req, res, next) => {
+  console.log('updating employee')
+  bcrypt.hash(req.body.password,10)
+  .then(hash => {
+    const employee = new Employee({
+      _id: req.body.employeeID,
+      password: hash,
+      name: req.body.name,
+      position: req.body.position,
+      email: req.body.email,
+      FWAstatus: req.body.FWAstatus,
+      supervisorID: req.body.supervisorID,
+      departmentID: req.body.departmentID,
+      status: req.body.status
+    });
+    Employee.updateOne({ _id: req.params.employeeID}, employee).then(result => {
+      console.log(result);
+      res.status(200).json({message: "Employee updated", response: result});
+    })
+    .catch(err=> {
+      res.status(500).json({
+        error : err
+      });
+    });
+  });
+
+
+
+});
+
 //Employee -- End
 
 
@@ -174,10 +208,10 @@ app.get('/api/departments', (req, res, next) => {
     res.status(200).json({
       message: 'Departments fetched successfully',
       department: documents
+
     });
   })
 })
-
 
 
 

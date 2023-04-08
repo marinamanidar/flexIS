@@ -49,6 +49,8 @@ export class ReviewRequestComponent {
   requestIndex: any;
   req: FWARequest;
 
+  employee: Employee;
+
   requestArray: FWARequest[] = [];
   pastRequests: FWARequest[] = [];
 
@@ -70,8 +72,8 @@ export class ReviewRequestComponent {
         .subscribe((employee: Employee[]) => {
           this.empTable = employee
 
-          const empName = this.empTable.find(x => x.employeeID == this.request.employeeID);
-          this.name = empName['name'];
+          this.employee = this.empTable.find(x => x.employeeID == this.request.employeeID);
+          this.name = this.employee['name'];
         })
 
         //Creates array of past requests to be displayed
@@ -129,6 +131,7 @@ export class ReviewRequestComponent {
       // this.listRequests[this.requestIndex].comment = this.request.comment;
       // localStorage.setItem("Requests",JSON.stringify(this.listRequests));
       this.reqService.updateRequest(this.request.requestID, this.request.employeeID, this.request.requestDate, this.request.workType, this.request.description, this.request.reason, 'Accepted', this.request.comment)
+      this.empService.updateEmployee(this.employee.employeeID, this.employee.password,this.employee.name, this.employee.position, this.employee.email, this.request.workType, this.employee.supervisorID, this.employee.departmentID, this.employee.status)
       this.router.navigate(['/sidebar/view-request']);
     }
 

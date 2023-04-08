@@ -18,9 +18,11 @@ constructor(private http:HttpClient , private router : Router){}
 
 
 getEmployee(id:string){
-
   return {...this.employees.find(p=>p.employeeID === id)};
+}
 
+getEmployeeByEmail(email:string){
+  return {...this.employees.find(p=>p.email === email)};
 }
 
 addEmployee(password:string, name:string, position:string, email:string, FWAstatus:string, supervisorID:string, departmentID:string, status:string) {

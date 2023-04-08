@@ -71,8 +71,6 @@ export class RegisterEmployeeComponent {
     }else{
       this.employeesService.addEmployee(this.employeeForm.value.name + "123", this.employeeForm.value.name, "Supervisor", this.employeeForm.value.email, "New", " ", this.employeeForm.value.departmentID, 'New');
     }
-
-
     // this.addEmployee(this.employee);
     this.router.navigate(['/sidebar/view-emp']);
   }

@@ -7,7 +7,7 @@ import { ReviewSchedulesComponent } from './review-schedules/review-schedules.co
 import { SubmitRequestComponent } from './submit-request/submit-request.component';
 import { UpdateScheduleComponent } from './update-schedule/update-schedule.component';
 import { SideBarComponent } from "./side-bar/side-bar.component";
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { PasswordComponent } from './password/password.component';
 import { ViewEmployeesComponent } from './view-employees/view-employees.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -39,9 +39,10 @@ const routes: Routes = [
 	    {path: 'view-sch', component: ViewScheduleComponent},
 	    {path: 'request/:id',component: ReviewRequestComponent},
       {path: 'view-request', component: ViewRequestComponent},
-		{path: 'summary/:id',component: AnalyticsSummaryComponent},
-{path: 'update/:id',component: UpdateScheduleComponent},
-      {path: 'view-emp-sch/:id',component: ViewEmpSchComponent}
+		  {path: 'summary/:id',component: AnalyticsSummaryComponent},
+      {path: 'update/:id',component: UpdateScheduleComponent},
+      {path: 'view-emp-sch/:id',component: ViewEmpSchComponent},
+      {path: 'view-sch', component: ViewScheduleComponent}
     ]
   }];
 

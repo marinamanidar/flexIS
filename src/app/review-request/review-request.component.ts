@@ -3,6 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from '../shared-model/employee.model';
 import { FWARequest } from "../shared-model/request.model";
+import { requestService } from '../shared-services/request.service';
+import { Subscription } from 'rxjs';
+import { employeesService } from '../shared-services/employee.service';
 
 
 @Component({
@@ -26,11 +29,18 @@ export class ReviewRequestComponent {
   // emp: Employee;
   empTable: Employee[] = [];
 
+  private requestSub : Subscription | undefined;
+
+  private empSub : Subscription | undefined;
+
+
   sub: any;
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public reqService: requestService,
+    public empService: employeesService
     ) { }
 
   reqID: string;
@@ -47,21 +57,25 @@ export class ReviewRequestComponent {
     //retrives request ID from previous page to find request and populate the form
     this.sub = this.route.params.subscribe(params => {
       this.reqID = params['id'];
-      this.empTable = Object.values(this.listEmployees)
-      this.requestArray = Object.values(this.listRequests);
 
-      this.request = this.requestArray.find(x => x.requestID == this.reqID);
-      this.requestIndex = (Object.keys(this.listRequests) as (keyof typeof this.listRequests)[]).find((key) => {
-        return this.listRequests[key] === this.request;
-      });
+      this.reqService.getRequests();
+      this.requestSub = this.reqService.getRequestUpdateListener()
+      .subscribe((request : FWARequest[]) => {
+        this.requestArray = request;
 
-      //display ID and name of employee on title card
-      const empName = this.empTable.find(x => x.employeeID == this.request.employeeID);
-      this.name = empName['name'];
+        this.request = this.requestArray.find(x => x.requestID == this.reqID);
 
+        this.empService.getEmployees();
+        this.empSub = this.empService.getEmployeesUpdateListener()
+        .subscribe((employee: Employee[]) => {
+          this.empTable = employee
 
-      //Creates array of past requests to be displayed
-      Object.values(this.listRequests).forEach(val => {
+          const empName = this.empTable.find(x => x.employeeID == this.request.employeeID);
+          this.name = empName['name'];
+        })
+
+        //Creates array of past requests to be displayed
+      Object.values(this.requestArray).forEach(val => {
         if (val['employeeID'] == this.request.employeeID){
           if (val['status'] != 'Pending'){
             this.req = {
@@ -79,6 +93,18 @@ export class ReviewRequestComponent {
           }
         }
       })
+      })
+
+      // this.empTable = Object.values(this.listEmployees)
+      // this.requestArray = Object.values(this.listRequests);
+
+      // this.request = this.requestArray.find(x => x.requestID == this.reqID);
+      // this.requestIndex = (Object.keys(this.listRequests) as (keyof typeof this.listRequests)[]).find((key) => {
+      //   return this.listRequests[key] === this.request;
+      // });
+
+      //display ID and name of employee on title card
+
     });
   }
 
@@ -87,17 +113,22 @@ export class ReviewRequestComponent {
     //updates the request's status and comment
     this.request.comment = this.form.get('comment').value;
     if (event == 'reject'){
+
       alert('request rejected');
-      this.listRequests[this.requestIndex].status = 'Rejected';
-      this.listRequests[this.requestIndex].comment = this.request.comment;
-      localStorage.setItem("Requests",JSON.stringify(this.listRequests));
+      // this.listRequests[this.requestIndex].status = 'Rejected';
+
+      // this.listRequests[this.requestIndex].comment = this.request.comment;
+      // localStorage.setItem("Requests",JSON.stringify(this.listRequests));
+      console.log(this.request.requestID)
+      this.reqService.updateRequest(this.request.requestID, this.request.employeeID, this.request.requestDate, this.request.workType, this.request.description, this.request.reason, 'Rejected', this.request.comment)
       this.router.navigate(['/sidebar/view-request']);
     } else if(event == 'accept'){
       alert('request accepted');
       this.request.comment = this.form.get('comment').value;
-      this.listRequests[this.requestIndex].status = 'Accepted';
-      this.listRequests[this.requestIndex].comment = this.request.comment;
-      localStorage.setItem("Requests",JSON.stringify(this.listRequests));
+      // this.listRequests[this.requestIndex].status = 'Accepted';
+      // this.listRequests[this.requestIndex].comment = this.request.comment;
+      // localStorage.setItem("Requests",JSON.stringify(this.listRequests));
+      this.reqService.updateRequest(this.request.requestID, this.request.employeeID, this.request.requestDate, this.request.workType, this.request.description, this.request.reason, 'Accepted', this.request.comment)
       this.router.navigate(['/sidebar/view-request']);
     }
 

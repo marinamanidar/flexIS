@@ -20,13 +20,14 @@ export class ViewEmployeesComponent {
 
   constructor(public employeesService: employeesService, public departmentsService: departmentsService){
   }
-  
+
   ngOnInit(){
     this.employeesService.getEmployees();
     this.departmentsService.getDepartments();
     this.employeesSub = this.employeesService.getEmployeesUpdateListener()
     .subscribe((employees:Employee[])=> {
       this.employees = employees;
+      console.log(this.employees)
     });
     this.departmentsSub = this.departmentsService.getDepartmentUpdateListener()
     .subscribe((departments:Department[])=> {

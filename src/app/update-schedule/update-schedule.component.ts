@@ -30,7 +30,7 @@ export class UpdateScheduleComponent implements OnInit {
     employees : Employee[] = [] ;
     schedules : Schedule[] = [] ;
     emp: Employee;
-  
+
 
     constructor(private router: Router, private route: ActivatedRoute, public employeesService: employeesService , public schedulesService: schedulesService) {}
 
@@ -57,7 +57,7 @@ export class UpdateScheduleComponent implements OnInit {
     this.arrayLength = this.schedules.length + 1;
 
     for (let i = 1; i <= 7; i++) {
-      let first = this.curr.getDate() - this.curr.getDay() + i 
+      let first = this.curr.getDate() - this.curr.getDay() + i
       let day = new Date(this.curr.setDate(first)).toISOString().slice(0, 10)
       this.week.push(day)
     }
@@ -78,9 +78,9 @@ export class UpdateScheduleComponent implements OnInit {
           this.scheduleForm.patchValue({
             date : this.schedule.date,
             workLocation : this.schedule.workLocation,
-            workHours : this.schedule.workHours, 
+            workHours : this.schedule.workHours,
             workReport : this.schedule.workReport,
-            comments: this.schedule.supervisorComments 
+            comments: this.schedule.supervisorComments
            })
 
         });
@@ -141,7 +141,7 @@ export class UpdateScheduleComponent implements OnInit {
     }
     this.scheduleForm.reset();
     this.router.navigate(['/sidebar/view-sch']);
-  }  
+  }
 }
 
 

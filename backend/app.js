@@ -246,7 +246,7 @@ app.get('/api/schedules', (req, res, next) => {
 })
 
 app.put("/api/schedules/:id", (req, res, next) => {
-  console.log(":here")
+
   const schedule = new Schedule({
     _id: req.body.id,
     employeeID : req.body.employeeID,
@@ -257,7 +257,7 @@ app.put("/api/schedules/:id", (req, res, next) => {
     supervisorComments : req.body.supervisorComments,
     status : req.body.status
   });
-  Request.updateOne({ _id: req.params.scheduleID}, schedule).then(result => {
+  Schedule.updateOne({ _id: req.params.id}, schedule).then(result => {
     console.log(result);
     res.status(200).json({message: "Schedule updated", response: result});
   });

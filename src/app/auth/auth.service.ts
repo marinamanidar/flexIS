@@ -23,8 +23,9 @@ return this.authStatusListener.asObservable();
 
 login (email:string , password : string){
   const authData : AuthData = {email : email , password :password};
+  console.log('match')
   console.log(authData)
-  this.http.post<{token:string}>('http://localhost:3000/api/employee/login' , authData)
+  this.http.post<{token:string}>('http://localhost:3000/api/employees/login' , authData)
   .subscribe(response => {
     const token = response.token;
     this.token = token

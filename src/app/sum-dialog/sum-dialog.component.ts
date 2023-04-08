@@ -2,6 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { MatOptionSelectionChange } from '@angular/material/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { employeesService } from '../shared-services/employee.service';
+import { Employee } from '../shared-model/employee.model';
+import { Schedule } from '../shared-model/daily-schedule.model';
+import { schedulesService } from '../shared-services/schedule.services';
 
 export class dateList {
   date: string
@@ -28,9 +32,15 @@ export class SumDialogComponent {
   counts = {};
   dateRange = [];
 
+  employees:  Employee[] = [];
+
+  schedules: Schedule[] = [];
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<SumDialogComponent>
+    public dialogRef: MatDialogRef<SumDialogComponent>,
+    public empService: employeesService,
+    public schedService: schedulesService
  ) { }
 
   departmentID: string = this.data['departmentID'];
@@ -40,30 +50,48 @@ export class SumDialogComponent {
 
   ngOnInit(){
     //populates an array full of schedules
-    Object.values(this.listEmployees).forEach(emp => {
-      if (emp['departmentID'] == this.departmentID){
-        Object.values(this.listSchedules).forEach(sch => {
-          if (emp['employeeID'] == sch['employeeID']){
-            this.listDate.push(new Date(sch['date']))
-            }
-          })
+    this.schedService.getSchedules();
+    this.empService.getEmployees();
+    this.empService.getEmployeesUpdateListener()
+    .subscribe((employee: Employee[])=> {
+      this.employees = employee;
+
+      Object.values(this.employees).forEach(emp => {
+        if (emp['departmentID'] == this.departmentID){
+          //change to schedule from database
+          this.schedService.getSchedulesUpdateListener()
+          .subscribe((schedules: Schedule[]) => {
+            this.schedules = schedules;
+            Object.values(this.schedules).forEach(sch => {
+              if (emp['employeeID'] == sch['employeeID']){
+                this.listDate.push(new Date(sch.date))
+
+                //counts the number of schedules made for each date and sorts them from earliest to latest
+        this.bblSort(this.listDate)
+        const counts = {};
+        for (const num of this.listDate) {
+          counts[num] = counts[num] ? counts[num] + 1 : 1;
         }
-      }
-    )
-    //counts the number of schedules made for each date and sorts them from earliest to latest
-  this.bblSort(this.listDate)
-  const counts = {};
-  for (const num of this.listDate) {
-    counts[num] = counts[num] ? counts[num] + 1 : 1;
-  }
-  Object.keys(counts).forEach(val => {
-    const convert = new Date(val)
-    this.dList = {
-      date: convert.toLocaleDateString(),
-      count: counts[val]
-    }
-    this.dateList.push(this.dList)
-  })
+        Object.keys(counts).forEach(val => {
+          const convert = new Date(val)
+          this.dList = {
+            date: convert.toLocaleDateString(),
+            count: counts[val]
+          }
+          this.dateList.push(this.dList)
+        })
+                }
+              })
+            //change to schedule from database
+
+          })
+
+          }
+
+        })
+
+    })
+
 }
 
 //returns selected dates outside of dialog for the table

@@ -59,7 +59,7 @@ this.http.get<{message: string , employee : any}>('http://localhost:3000/api/emp
         }))
         .subscribe(transformedEmployees => {
           this.employees = transformedEmployees;
-          
+
           this.employeeUpdated.next([...this.employees]);
         }
         );
@@ -68,6 +68,23 @@ this.http.get<{message: string , employee : any}>('http://localhost:3000/api/emp
 
 getEmployeesUpdateListener(){
   return this.employeeUpdated.asObservable();
+}
+
+updateEmployee( employeeID: string, password: string, name: string, position: string, email: string, FWAstatus:string, supervisorID: string, departmentID: string, status: string){
+  const emp : Employee = {
+  employeeID: employeeID,
+  password: password,
+  name: name,
+  position: position,
+  email: email,
+  FWAstatus: FWAstatus,
+  supervisorID: supervisorID,
+  departmentID: departmentID,
+  status: status
+  };
+  this.http.put('http://localhost:3000/api/employees/' + employeeID , emp)
+  .subscribe(response => console.log (response));
+  this.router.navigate(['/']);
 }
 
 }

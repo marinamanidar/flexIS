@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
+import { requestService } from "../shared-services/request.service";
+import { Subscription } from 'rxjs';
+import { FWARequest } from '../shared-model/request.model';
+import { employeesService } from '../shared-services/employee.service';
+import { Employee } from '../shared-model/employee.model';
+
 
 export class requestTable {
-  ID: string
+  empID: string
   name: string
   status: string
   reqID: string
@@ -20,7 +26,14 @@ export class empList {
 })
 export class ViewRequestComponent {
 
-  constructor(private router: Router) {}
+  constructor(public reqService: requestService, public empService: employeesService ,private router: Router) {}
+
+
+  private requestSub : Subscription | undefined;
+  private employeeSub : Subscription | undefined;
+
+  request : FWARequest[] = [];
+  employee: Employee[] = [];
 
   listRequests = JSON.parse(localStorage.getItem('Requests'));
   listEmployees = JSON.parse(localStorage.getItem('Employees'));
@@ -32,39 +45,57 @@ export class ViewRequestComponent {
   req: requestTable;
   reqTable: requestTable[] = [];
 
-  ngOnInit() {
-    //creates array of employees under the logged in supervisor
-    Object.values(this.listEmployees).forEach(val => {
-      if(val['supervisorID'] == this.user){
-        this.emp = new empList();
-        this.emp.empID = val['employeeID'];
-        this.emp.name = val['name'];
-        this.empTable.push(this.emp);
-      }
-    })
-
-    //creates array of requests under the employees under the supervisor
-    Object.values(this.listRequests).forEach(val => {
-      this.req = new requestTable();
-      this.req.ID = val['employeeID'];
-      this.req.status = val['status'];
-      this.req.reqID = val['requestID']
-      if (this.req.status == 'Pending'){
-        const emp = this.empTable.find(x => x.empID == this.req.ID);
-        if (emp != undefined){
-          this.req.name = emp.name;
-          this.reqTable.push(this.req);
-        }
-      }
-    })
-  }
-
   //variables for the table
   columnsToDisplay: string[] = ['ID', 'Name', 'Status'];
   dataSource = this.reqTable;
 
+  ngOnInit() {
+    this.empService.getEmployees();
+    this.employeeSub = this.empService.getEmployeesUpdateListener()
+    .subscribe((employees : Employee[]) => {
+      this.employee = employees;
+
+      Object.values(this.employee).forEach(val => {
+        if(val['supervisorID'] == this.user){
+          this.emp = new empList();
+          this.emp.empID = val['employeeID'];
+          this.emp.name = val['name'];
+          // console.log(this.emp)
+          this.empTable.push(this.emp);
+        }
+      })
+    })
+
+
+    this.reqService.getRequests();
+    this.requestSub = this.reqService.getRequestUpdateListener()
+    .subscribe((requests : FWARequest[]) => {
+      this.request = requests;
+      // console.log(this.request)
+
+      Object.values(this.request).forEach(val => {
+        this.req = new requestTable();
+        this.req.empID = val['employeeID'];
+        this.req.status = val['status'];
+        this.req.reqID = val['requestID']
+        if (this.req.status == 'Pending'){
+          const emp = this.empTable.find(x => x.empID == this.req.empID);
+          if (emp != undefined){
+            // console.log('found')
+            this.req.name = emp.name;
+            this.reqTable.push(this.req);
+            // console.log(this.reqTable)
+          }
+        }
+      })
+
+    })
+  }
+
+
   //navigates to page to accept or reject request
   review(data) {
+    console.log(data)
     this.router.navigate(['/sidebar/request', data['reqID']]);
   }
 }

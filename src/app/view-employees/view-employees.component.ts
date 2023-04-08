@@ -16,12 +16,13 @@ export class ViewEmployeesComponent {
 
   constructor(public employeesService: employeesService){
   }
-  
+
   ngOnInit(){
     this.employeesService.getEmployees();
     this.employeesSub = this.employeesService.getEmployeesUpdateListener()
     .subscribe((employees:Employee[])=> {
       this.employees = employees;
+      console.log(this.employees)
     });
   }
 }

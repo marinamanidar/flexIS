@@ -13,7 +13,8 @@ import { Subscription } from 'rxjs';
 })
 export class SubmitRequestComponent {
   constructor(
-    private formBuilder: FormBuilder,  public reqService: requestService, private router: Router) {}
+
+    public reqService: requestService, private formBuilder: FormBuilder,   private router: Router) {}
 
 
 
@@ -37,22 +38,21 @@ export class SubmitRequestComponent {
   isLinear = true;
 
   ngOnInit(){
-    this.reqService.getRequests()
+    this.reqService.getRequests();
+
     this.requestSub = this.reqService.getRequestUpdateListener()
     .subscribe((request: FWARequest[])=> {
       this.requests = request;
-    });
-
     this.pastReq = this.requests.find(x => x.employeeID == this.user && x.requestDate == new Date().toLocaleDateString());
-    console.log(new Date().toLocaleDateString())
-    console.log(this.pastReq)
 
+    });
   }
-
 
   radioChange(event: MatRadioChange){ //select work type
     this.type = event.value;
+    console.log(this.pastReq)
   }
+
  submit() { //submit request
   const count = this.listRequests.length;
   this.request = new FWARequest();

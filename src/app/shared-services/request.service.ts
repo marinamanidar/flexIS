@@ -25,10 +25,6 @@ constructor(private http:HttpClient , private router : Router){}
 
 // }
 
-getRequest(reqID: string, date: string){
-  return {...this.requests.find(p=>p.requestID === reqID)};
-  //convert date to date and find too
-}
 
 addRequest(employeeID:string, requestDate: string, workType:string, description:string, reason:string, status:string, comment:string) {
   const request: FWARequest = {requestID:'null', employeeID: employeeID, requestDate: requestDate, workType: workType, description: description, reason: reason , status: status, comment: comment};
@@ -46,18 +42,18 @@ addRequest(employeeID:string, requestDate: string, workType:string, description:
 }
 
 getRequests(){
-this.http.get<{message: string , request : any}>('http://localhost:3000/api/requests')
+this.http.get<{message: string , requests : any}>('http://localhost:3000/api/requests')
         .pipe(map((requestData) => {
-          return requestData.request.map( req => {
+          return requestData.requests.map( request => {
             return {
-              employeeID:  req.employeeID,
-              requestID:   req._id,
-              requestDate: req.requestDate,
-              workType:    req.workType,
-              description: req.description,
-              reason:      req.reason,
-              status:      req.status,
-              comment:     req.comment
+              employeeID: request.employeeID,
+              requestID: request._id,
+              requestDate: request.requestDate,
+              workType: request.workType,
+              description: request.description,
+              reason: request.reason,
+              status: request.status,
+              comment: request.comment
             }
           }
           );
@@ -89,25 +85,27 @@ getRequestUpdateListener(){
 //   );
 // }
 
-
-// updatePost(id:string, password:string, name:string,
-//   position:string, email:string, FWAstatus:string,
-//   supervisorID:string, departmentID:string, status:string){
-//   const emp : Employee = {
-//     employeeID:id,
-//     password: password,
-//     name: name,
-//     position:position,
-//     email: email,
-//     FWAstatus: FWAstatus,
-//     supervisorID: supervisorID,
-//     departmentID: departmentID,
-//     status: status
-//   };
-//   this.http.put('http://localhost:3000/api/posts/' + id , emp)
-//   .subscribe(response => console.log (response));
-//   this.router.navigate(['/']);
+// getPastRequest(empID: string, date: string){
+//   return {...this.requests.find(p=>p.employeeID === empID && p.requestDate == date)};
+//   //convert date to date and find too
 // }
+
+updateRequest( requestID: string, employeeID:string, requestDate: string, workType:string, description:string, reason:string, status:string, comment:string,){
+  const req : FWARequest = {
+    requestID: requestID,
+    employeeID: employeeID,
+    requestDate: requestDate,
+    workType: workType,
+    description: description,
+    reason: reason,
+    status: status,
+    comment: comment
+  };
+  console.log(req)
+  this.http.put('http://localhost:3000/api/requests/' + requestID , req)
+  .subscribe(response => console.log (response));
+  this.router.navigate(['/']);
+}
 
 
 

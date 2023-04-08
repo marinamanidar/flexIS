@@ -6,9 +6,11 @@ const Employee = require('./models/employee');
 const Request = require('./models/request')
 
 const checkAuth = require('./middleware/check-auth');
+const cors = require('cors');
 
 
 const app = express();
+app.use(cors());
 
 mongoose.connect("mongodb+srv://weichung:NS4ZOCstkSqBgsDh@flexis.exovldf.mongodb.net/flexIS?retryWrites=true&w=majority")
   .then(()=> {
@@ -24,7 +26,7 @@ app.use((req, res, next) => {
   console.log("app.use set header n nove nxt");
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
   next();
 });
 
@@ -88,6 +90,25 @@ app.post("/api/requests", (req, res, next) => {
     // console.log(employeeId);
   });
 
+});
+
+app.put("/api/requests/:requestID", (req, res, next) => {
+  console.log('does it reach here')
+
+  const request = new Request({
+    _id: req.body.requestID,
+    employeeID: req.body.employeeID,
+    requestDate: req.body.requestDate,
+    workType: req.body.workType,
+    description: req.body.description,
+    reason: req.body.reason,
+    status: req.body.status,
+    comment: req.body.comment
+  });
+  Request.updateOne({ _id: req.params.requestID}, request).then(result => {
+    console.log(result);
+    res.status(200).json({message: "Request updated", response: result});
+  });
 });
 
 

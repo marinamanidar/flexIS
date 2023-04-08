@@ -59,6 +59,7 @@ this.http.get<{message: string , employee : any}>('http://localhost:3000/api/emp
         }))
         .subscribe(transformedEmployees => {
           this.employees = transformedEmployees;
+          
           this.employeeUpdated.next([...this.employees]);
         }
         );

@@ -4,11 +4,16 @@ const jwt = require('jsonwebtoken');
 const checkAuth = require("./middleware/check-auth");
 const mongoose = require('mongoose');
 const Employee = require('./models/employee');
-const User = require('./models/employee');
-const Department = require('./models/department');
+const User = require('./models/employee');const Department = require('./models/department');
 const Schedule = require('./models/schedule');
 const bcrypt = require("bcrypt");
 const cors = require('cors');
+const Request = require('./models/request')
+
+const checkAuth = require('./middleware/check-auth');
+const cors = require('cors');
+
+
 
 const app = express();
 app.use(cors());
@@ -27,9 +32,10 @@ app.use((req, res, next) => {
   console.log("app.use set header n nove nxt");
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
   next();
 });
+
 
 //Employee -- Start
 
@@ -56,6 +62,28 @@ app.post('/api/employees/signup', checkAuth, (req,res,next) => {
         error : err
       });
     });
+
+
+app.get('/api/employees', (req, res, next) => {
+  Employee.find().then(documents => {
+    res.status(200).json({
+      message: 'Employees fetched successfully',
+      employee: documents
+    })
+  })
+})
+
+app.post("/api/employees", (req, res, next) => {
+  const employee = new Employee({
+    password : req.body.password,
+    name: req.body.name,
+    position : req.body.position,
+    email: req.body.email,
+    FWAstatus : req.body.FWAstatus,
+    supervisorID : req.body.supervisorID,
+    departmentID: req.body.departmentID,
+    status : req.body.status
+
   });
 });
 
@@ -94,6 +122,7 @@ app.post('/api/employee/login', (req,res,next) =>{
   })
   
   });
+
 
 // app.post("/api/employees", (req, res, next) => {
 //   const employee = new Employee({
@@ -147,9 +176,11 @@ app.get('/api/departments', (req, res, next) => {
     res.status(200).json({
       message: 'Departments fetched successfully',
       department: documents
-    })
-  })
-})
+=======
+});
+
+
+
 
 //Department -- End
 
@@ -171,6 +202,42 @@ app.post("/api/schedules", checkAuth, (req, res, next) => {
     });
 });
 
+
+
+// app.use('/api/employees', (req,res,next)=> {
+//   const employee= [
+//     {
+//       id: 'admin',
+//       password: 'admin',
+//       name: "",
+//       position: "",
+//       email: "",
+//       FWAstatus: "",
+//       supervisorID: "",
+//       departmentID: "",
+//       status: "",
+
+//     },
+
+//     {
+//       id: 'S100',
+//       password: "super",
+//       name: "supervisor",
+//       position: "Supervisor",
+//       email: "supervisor@supervisor.com",
+//       FWAstatus: "WFH",
+//       supervisorID: "",
+//       departmentID: "D1",
+//       status: "New",
+//     }
+//   ];
+
+//   res.status(200).json({
+//     message: 'Employees fetched successfully',
+//     employees: employee
+//   });
+// });
+
 app.get('/api/schedules', (req, res, next) => {
   Schedule.find().then(documents => {
     res.status(200).json({
@@ -182,4 +249,56 @@ app.get('/api/schedules', (req, res, next) => {
 //Schedule -- End
 
 
+//Request -- Start
+
+app.get('/api/requests', (req, res, next) => {
+  Request.find().then(documents => {
+    res.status(200).json({
+      message: 'Requests fetched successfully',
+      requests: documents
+    })
+  })
+})
+
+app.post("/api/requests", (req, res, next) => {
+  const request = new Request({
+    employeeID: req.body.employeeID,
+    requestID: req.body._id,
+    requestDate: req.body.requestDate,
+    workType: req.body.workType,
+    description: req.body.description,
+    reason: req.body.reason,
+    status: req.body.status,
+    comment: req.body.comment
+  });
+  request.save().then((createdPost)=> {
+    res.status(201).json({
+      message : 'Request added successfully-',
+      // employeeId : createdPost.employeeId
+    });
+    // console.log(employeeId);
+  });
+
+});
+
+app.put("/api/requests/:requestID", (req, res, next) => {
+  console.log('does it reach here')
+
+  const request = new Request({
+    _id: req.body.requestID,
+    employeeID: req.body.employeeID,
+    requestDate: req.body.requestDate,
+    workType: req.body.workType,
+    description: req.body.description,
+    reason: req.body.reason,
+    status: req.body.status,
+    comment: req.body.comment
+  });
+  Request.updateOne({ _id: req.params.requestID}, request).then(result => {
+    console.log(result);
+    res.status(200).json({message: "Request updated", response: result});
+  });
+});
+
+//Request -- End
 module.exports = app;

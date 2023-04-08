@@ -1,58 +1,58 @@
 <mat-toolbar class="mat-elevation-z8">
-    <button
-      mat-icon-button
-      *ngIf="sidenav.mode === 'over'"
-      (click)="sidenav.toggle()"
-    >
-      <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
-      <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+  <button
+    mat-icon-button
+    *ngIf="sidenav.mode === 'over'"
+    (click)="sidenav.toggle()"
+  >
+    <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+    <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+  </button>
+  FlexIS
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+    <img
+      class="avatar mat-elevation-z8"
+      src="https://source.unsplash.com/c_GmwfHBDzk/200x200"
+    />
+
+    <div class="name">{{empName}}</div>
+    <p class="designation">{{empPos}} - {{empDepName}}</p>
+
+    <mat-divider></mat-divider>
+
+    <button mat-button class="menu-button" routerLink="/sidebar/home">
+      <span>Home</span>
     </button>
-    FlexIS
-  </mat-toolbar>
-
-  <mat-sidenav-container>
-    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-      <img
-        class="avatar mat-elevation-z8"
-        src="https://source.unsplash.com/c_GmwfHBDzk/200x200"
-      />
-
-      <div class="name">{{empName}}</div>
-      <p class="designation">{{empPos}} - {{empDepName}}</p>
-
-      <mat-divider></mat-divider>
-
-      <button mat-button class="menu-button" routerLink="/sidebar/home">
-        <span>Home</span>
-      </button>
-      <button *ngIf="empPos.includes('Admin')" mat-button class="menu-button" routerLink="/sidebar/view-emp">
-        <span>View Employees</span>
-      </button>
-      <button *ngIf="empPos.includes('Admin') || empPos.includes('Supervisor')" mat-button class="menu-button" routerLink="/sidebar/fwa">
-        <span>FWA Analytics</span>
-      </button>
-      <button *ngIf="empPos.includes('Supervisor')" mat-button class="menu-button" routerLink="/sidebar/review">
-        <span>Review Employee Schedules</span>
-      </button>
-      <button *ngIf="empPos.includes('Employee')" mat-button class="menu-button" routerLink="/sidebar/submit">
-        <span>Submit FWA Request</span>
-      </button>
-      <button *ngIf="empPos.includes('Employee')" mat-button class="menu-button" routerLink="/sidebar/view-sch">
-        <span>View Schedule</span>
-      </button>
-      <button *ngIf="empPos.includes('Supervisor')" mat-button class="menu-button" routerLink="/sidebar/view-request">
-        <span>View Requests</span>
-      </button>
+    <button *ngIf="empPos.includes('Admin')" mat-button class="menu-button" routerLink="/sidebar/view-emp">
+      <span>View Employees</span>
+    </button>
+    <button *ngIf="empPos.includes('Admin') || empPos.includes('Supervisor')" mat-button class="menu-button" routerLink="/sidebar/fwa">
+      <span>FWA Analytics</span>
+    </button>
+    <button *ngIf="empPos.includes('Supervisor')" mat-button class="menu-button" routerLink="/sidebar/review">
+      <span>Review Employee Schedules</span>
+    </button>
+    <button *ngIf="empPos.includes('Employee')" mat-button class="menu-button" routerLink="/sidebar/submit">
+      <span>Submit FWA Request</span>
+    </button>
+    <button *ngIf="empPos.includes('Employee')" mat-button class="menu-button" routerLink="/sidebar/view-sch">
+      <span>View Schedule</span>
+    </button>
+    <button *ngIf="empPos.includes('Supervisor')" mat-button class="menu-button" routerLink="/sidebar/view-request">
+      <span>View Requests</span>
+    </button>
 
 
-      <button mat-button class="menu-button logout" routerLink="/" (click)="logout()">
-        <span>Log Out</span>
-      </button>
+    <button mat-button class="menu-button logout" routerLink="/" (click)="logout()">
+      <span>Log Out</span>
+    </button>
 
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <div class="content mat-elevation-z8">
-        <router-outlet></router-outlet>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z8">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

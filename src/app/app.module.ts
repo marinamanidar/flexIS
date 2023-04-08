@@ -30,7 +30,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ViewEmployeesComponent } from './view-employees/view-employees.component';
 import { ReviewRequestComponent } from './review-request/review-request.component';
 import {MatTableModule} from '@angular/material/table';
-import { ViewRequestComponent } from './view-request/view-request.component';import { HomePageComponent } from './home-page/home-page.component';
+import { ViewRequestComponent } from './view-request/view-request.component';
+import { HomePageComponent } from './home-page/home-page.component';
 import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AnalyticsSummaryComponent } from './analytics-summary/analytics-summary.component';
@@ -57,9 +58,10 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     ViewRequestComponent,
 	  HomePageComponent,
     ViewScheduleComponent,
-	 ViewEmpSchComponent,
-	AnalyticsSummaryComponent,
-    SumDialogComponent
+	  ViewEmpSchComponent,
+	  AnalyticsSummaryComponent,
+    SumDialogComponent,
+    ViewScheduleComponent,
   ],
   imports: [
     BrowserModule,

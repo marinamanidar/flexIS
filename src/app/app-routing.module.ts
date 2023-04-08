@@ -39,9 +39,10 @@ const routes: Routes = [
 	    {path: 'view-sch', component: ViewScheduleComponent},
 	    {path: 'request/:id',component: ReviewRequestComponent},
       {path: 'view-request', component: ViewRequestComponent},
-		{path: 'summary/:id',component: AnalyticsSummaryComponent},
-{path: 'update/:id',component: UpdateScheduleComponent},
-      {path: 'view-emp-sch/:id',component: ViewEmpSchComponent}
+		  {path: 'summary/:id',component: AnalyticsSummaryComponent},
+      {path: 'update/:id',component: UpdateScheduleComponent},
+      {path: 'view-emp-sch/:id',component: ViewEmpSchComponent},
+      {path: 'view-sch', component: ViewScheduleComponent}
     ]
   }];
 

@@ -7,7 +7,7 @@ import { ReviewSchedulesComponent } from './review-schedules/review-schedules.co
 import { SubmitRequestComponent } from './submit-request/submit-request.component';
 import { UpdateScheduleComponent } from './update-schedule/update-schedule.component';
 import { SideBarComponent } from "./side-bar/side-bar.component";
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { PasswordComponent } from './password/password.component';
 import { ViewEmployeesComponent } from './view-employees/view-employees.component';
 import { HomePageComponent } from './home-page/home-page.component';

@@ -6,7 +6,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatCardModule } from "@angular/material/card";
 import { MatInputModule } from "@angular/material/input";
@@ -26,7 +26,7 @@ import { MatRadioModule } from "@angular/material/radio";
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatRippleModule} from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ViewEmployeesComponent } from './view-employees/view-employees.component';
 import { ReviewRequestComponent } from './review-request/review-request.component';
 import {MatTableModule} from '@angular/material/table';
@@ -39,6 +39,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { SumDialogComponent } from './sum-dialog/sum-dialog.component';
 import {MatListModule} from '@angular/material/list';
 import { ViewEmpSchComponent } from './view-emp-sch/view-emp-sch.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,7 @@ import { ViewEmpSchComponent } from './view-emp-sch/view-emp-sch.component';
     MatDialogModule,
     MatListModule
   ],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS, useClass : AuthInterceptor, multi:true}],
   bootstrap: [
     AppComponent
   ]

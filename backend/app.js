@@ -1,14 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
+const checkAuth = require("./middleware/check-auth");
 const mongoose = require('mongoose');
 const Employee = require('./models/employee');
+const User = require('./models/employee');
 const Department = require('./models/department');
 const Schedule = require('./models/schedule');
 const bcrypt = require("bcrypt");
-
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 
 mongoose.connect("mongodb+srv://weichung:NS4ZOCstkSqBgsDh@flexis.exovldf.mongodb.net/flexIS?retryWrites=true&w=majority")
   .then(()=> {
@@ -30,7 +33,7 @@ app.use((req, res, next) => {
 
 //Employee -- Start
 
-app.post('/api/employees/signup', (req,res,next) => {
+app.post('/api/employees/signup', checkAuth, (req,res,next) => {
   bcrypt.hash(req.body.password,10)
   .then(hash => {
     const employee = new Employee({
@@ -56,27 +59,27 @@ app.post('/api/employees/signup', (req,res,next) => {
   });
 });
 
-app.post('/api/employees/login' , (req,res,next) =>{
-  let fetchedEmployee ;
+app.post('/api/employee/login', (req,res,next) =>{
+  let fetchedUser ;
   
-  Employee.findOne({email:req.body.email})
-  .then ( employee=>{
-    if(!employee) {
+  User.findOne({email:req.body.email})
+  .then ( user=>{
+    console.log(user)
+    if(!user) {
       return res.status(401).json ({
         message : 'Auth failed - user does not exist'
       });
     }
-    fetchedEmployee = employee;
-    return bcrypt.compare(req.body.password, employee.password)
+    fetchedUser = user;
+    return bcrypt.compare(req.body.password, user.password)
   })
   .then (result => {
     if(!result) {
-      return res.status(401).json({
-        message : 'Auth failed-- password didnt match'
-      });
+      console.log("fail")
+      return res.status(401).json("Password is wrong");
     }
   const token = jwt.sign(
-    {email:fetchedEmployee.email , employeeID : fetchedEmployee._id},
+    {email:fetchedUser.email , employeeID : fetchedUser._id},
     'pkey',
     {expiresIn: '1h' }
   );
@@ -128,7 +131,7 @@ app.get('/api/employees', (req, res, next) => {
 
 
 //Department -- Start
-app.post("/api/departments", (req, res, next) => {
+app.post("/api/departments", checkAuth, (req, res, next) => {
   const department = new Department({
     departmentName : req.body.departmentName,
   });
@@ -151,7 +154,7 @@ app.get('/api/departments', (req, res, next) => {
 //Department -- End
 
 //Schedule -- Start
-app.post("/api/schedules", (req, res, next) => {
+app.post("/api/schedules", checkAuth, (req, res, next) => {
   const schedule = new Schedule({
     employeeID : req.body.employeeID,
     date: req.body.date,

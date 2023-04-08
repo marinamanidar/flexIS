@@ -1,11 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
   styleUrls: ['./side-bar.component.css']
 })
-export class SideBarComponent {
+export class SideBarComponent implements OnInit {
+  userIsAurhenticated = false;
+  private authListenerSubs: Subscription;
+  constructor(private authService: AuthService){}
   public sidebarShow: boolean = false;
   user = sessionStorage.getItem('user');
   listEmployees = JSON.parse(localStorage.getItem('Employees'));
@@ -20,19 +25,10 @@ export class SideBarComponent {
   }
 
   ngOnInit(){
-    for(let emp of this.listEmployees){
-      if(emp.employeeID == this.user){
-        this.empName = emp.name;
-        this.empPos = emp.position;
-        this.empDepID = emp.departmentID;
-      }
-      for(let dep of this.listDepartments){
-        if(this.empDepID == dep.departmentID){
-          this.empDepName = dep.departmentName;
-        }
-      }
-      
-    }
-    console.log(this.empName)
+    this.authListenerSubs = this.authService
+    .getAuthStatusListener()
+    .subscribe(isAuthenticated => {
+      this.userIsAurhenticated = isAuthenticated;
+    })
   }
 }

@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Schedule } from '../shared-model/daily-schedule.model';
+import { Employee } from '../shared-model/employee.model';
+import { employeesService } from '../shared-services/employee.service';
+import { schedulesService } from '../shared-services/schedule.services';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-update-schedule',
@@ -13,9 +17,7 @@ export class UpdateScheduleComponent implements OnInit {
     today = new Date(Date.now());
     max = new Date(Date.now() + (3600 * 1000 * 168));
     public schedule: Schedule;
-    listEmployees = JSON.parse(localStorage.getItem('Employees'));
-    listOfSchedules = JSON.parse(localStorage.getItem("Schedules"));
-    arrayLength = this.listOfSchedules.length + 1;
+    arrayLength: any;
     sub: any;
     reqID: string;
     exist : boolean = false;
@@ -23,8 +25,14 @@ export class UpdateScheduleComponent implements OnInit {
     curr = new Date()
     week = []
     user = sessionStorage.getItem('user');
+    private employeesSub : Subscription | undefined;
+    private schedulesSub : Subscription | undefined;
+    employees : Employee[] = [] ;
+    schedules : Schedule[] = [] ;
+    emp: Employee;
+  
 
-    constructor(private router: Router, private route: ActivatedRoute) {}
+    constructor(private router: Router, private route: ActivatedRoute, public employeesService: employeesService , public schedulesService: schedulesService) {}
 
   scheduleForm = new FormGroup({
     date: new FormControl(null, Validators.required),
@@ -35,6 +43,19 @@ export class UpdateScheduleComponent implements OnInit {
   });
 
   ngOnInit(){
+    this.employeesService.getEmployees();
+    this.schedulesService.getSchedules();
+    this.employeesSub = this.employeesService.getEmployeesUpdateListener()
+    .subscribe((employees:Employee[])=> {
+      this.employees = employees;
+    });
+    this.schedulesSub = this.schedulesService.getSchedulesUpdateListener()
+    .subscribe((schedules:Schedule[])=> {
+      this.schedules = schedules;
+    });
+
+    this.arrayLength = this.schedules.length + 1;
+
     for (let i = 1; i <= 7; i++) {
       let first = this.curr.getDate() - this.curr.getDay() + i 
       let day = new Date(this.curr.setDate(first)).toISOString().slice(0, 10)
@@ -46,29 +67,37 @@ export class UpdateScheduleComponent implements OnInit {
 
     this.sub = this.route.params.subscribe(params => {
       if(params['id'] != undefined){
+        document.getElementById("button").innerHTML = "Update";
         this.exist = true;
         this.reqID = params['id'];
-        this.requestArray = Object.values(this.listOfSchedules);
-        this.schedule = this.requestArray.find(x => x.id == this.reqID);
-        const date = new Date(this.schedule.date);
-        this.formatDate(date);
-        document.getElementById("button").innerHTML = "Update";
-        this.scheduleForm.patchValue({
-        date : this.formatDate(date),
-        workLocation : this.schedule.workLocation,
-        workHours : this.schedule.workHours, 
-        workReport : this.schedule.workReport,
-        comments: this.schedule.supervisorComments 
-       })
-       document.getElementById("comments").setAttribute('style', 'pointer-events: none');
+        this.schedulesSub = this.schedulesService.getSchedulesUpdateListener()
+        .subscribe((schedules:Schedule[])=> {
+          this.schedules = schedules;
+          this.schedule = this.schedules.find(x => x.id == this.reqID);
+          console.log(this.schedule);
+          this.scheduleForm.patchValue({
+            date : this.schedule.date,
+            workLocation : this.schedule.workLocation,
+            workHours : this.schedule.workHours, 
+            workReport : this.schedule.workReport,
+            comments: this.schedule.supervisorComments 
+           })
+
+        });
+        document.getElementById("comments").setAttribute('style', 'pointer-events: none');
         document.getElementById('condition').classList.remove('d-none');
-       if(this.schedule.status == 'Approved'){
-        document.getElementById("date").setAttribute('style', 'pointer-events: none');
-        document.getElementById("workLocation").setAttribute('style', 'pointer-events: none');
-        document.getElementById("workHours").setAttribute('style', 'pointer-events: none');
-        document.getElementById("workReport").setAttribute('style', 'pointer-events: none');
-        document.getElementById("button").innerHTML = "Back";
-       }
+        this.schedulesSub = this.schedulesService.getSchedulesUpdateListener()
+        .subscribe((schedules:Schedule[])=> {
+          this.schedules = schedules;
+
+          if(this.schedule.status == 'Approved'){
+            document.getElementById("date").setAttribute('style', 'pointer-events: none');
+            document.getElementById("workLocation").setAttribute('style', 'pointer-events: none');
+            document.getElementById("workHours").setAttribute('style', 'pointer-events: none');
+            document.getElementById("workReport").setAttribute('style', 'pointer-events: none');
+            document.getElementById("button").innerHTML = "Back";
+           }
+        });
       }
     });
   }
@@ -101,41 +130,18 @@ export class UpdateScheduleComponent implements OnInit {
 
   onSubmit(){
     if(this.exist == true && this.scheduleForm.valid){
-      this.listOfSchedules[Number(this.reqID) - 1].date = this.scheduleForm.value.date
-      this.listOfSchedules[Number(this.reqID) - 1].workLocation = this.scheduleForm.value.workLocation
-      this.listOfSchedules[Number(this.reqID) - 1].workHours = this.scheduleForm.value.workHours
-      this.listOfSchedules[Number(this.reqID) - 1].workReport = this.scheduleForm.value.workReport
-      localStorage.setItem('Schedules', JSON.stringify(this.listOfSchedules));
+      this.sub = this.route.params.subscribe(params => {
+        this.schedulesService.updateSchedule(params['id'], this.employeesService.getEmployeeByEmail(this.user).employeeID, this.scheduleForm.value.date, this.scheduleForm.value.workLocation, this.scheduleForm.value.workHours, this.scheduleForm.value.workReport, " ", "Pending");
+      });
+      this.router.navigate(['/sidebar/view-sch']);
+      //localStorage.setItem('Schedules', JSON.stringify(this.listOfSchedules));
     }
     if(this.scheduleForm.valid && this.exist == false){
-      this.schedule = {
-        id : this.arrayLength.toString(),
-        employeeID: this.user,
-        date: this.scheduleForm.value.date,
-        workLocation : this.scheduleForm.value.workLocation,
-        workHours: this.scheduleForm.value.workHours,
-        workReport: this.scheduleForm.value.workReport,
-        supervisorComments: null,
-        status: "Pending"
-      }
-      this.addSchedule(this.schedule);
+      this.schedulesService.addSchedules(this.employeesService.getEmployeeByEmail(this.user).employeeID, this.scheduleForm.value.date, this.scheduleForm.value.workLocation, this.scheduleForm.value.workHours, this.scheduleForm.value.workReport, " ", "Pending")
     }
     this.scheduleForm.reset();
     this.router.navigate(['/sidebar/view-sch']);
-  }
-
-  addSchedule(schedule){
-    let schedules = [];
-    if (localStorage.getItem('Schedules')){
-      schedules = JSON.parse(localStorage.getItem('Schedules'));
-      schedules = [...schedules, schedule]
-    }else{
-      schedules = [schedule];
-    }
-    localStorage.setItem('Schedules', JSON.stringify(schedules));
-  }
-
-  
+  }  
 }
 
 

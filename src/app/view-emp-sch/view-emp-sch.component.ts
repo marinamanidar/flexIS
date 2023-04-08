@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Employee } from '../shared-model/employee.model';
 import { Schedule } from '../shared-model/daily-schedule.model';
+import { employeesService } from '../shared-services/employee.service';
+import { schedulesService } from '../shared-services/schedule.services';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-view-emp-sch',
@@ -9,15 +13,19 @@ import { Schedule } from '../shared-model/daily-schedule.model';
   styleUrls: ['./view-emp-sch.component.css']
 })
 export class ViewEmpSchComponent implements OnInit {
-  listOfSchedules = JSON.parse(localStorage.getItem("Schedules"));
-  listEmployees = JSON.parse(localStorage.getItem('Employees'));
   sub: any;
   public schedule: Schedule;
   reqID: string;
   requestArray: Schedule[] = [];
+  private employeesSub : Subscription | undefined;
+  private schedulesSub : Subscription | undefined;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  employees : Employee[] = [] ;
+  schedules : Schedule[] = [] ;
+  filterSchedule: Schedule[] = [];
 
+  constructor(private route: ActivatedRoute, private router: Router, public employeesService: employeesService , public schedulesService: schedulesService) {}
+  user = sessionStorage.getItem('user');
   scheduleForm = new FormGroup({
     date: new FormControl(null, Validators.required),
     workLocation: new FormControl(null, Validators.required),
@@ -27,19 +35,35 @@ export class ViewEmpSchComponent implements OnInit {
   });
 
   ngOnInit(){
+    this.employeesService.getEmployees();
+    this.schedulesService.getSchedules();
+    this.employeesSub = this.employeesService.getEmployeesUpdateListener()
+    .subscribe((employees:Employee[])=> {
+      this.employees = employees.filter(i => i.supervisorID == this.employeesService.getEmployeeByEmail(this.user).employeeID);
+    });
+    this.schedulesSub = this.schedulesService.getSchedulesUpdateListener()
+    .subscribe((schedules:Schedule[])=> {
+      this.schedules = schedules;
+    });
+
+
     this.sub = this.route.params.subscribe(params => {
       if(params['id'] != undefined){
         this.reqID = params['id'];
-        this.requestArray = Object.values(this.listOfSchedules);
-        this.schedule = this.requestArray.find(x => x.id == this.reqID);
-        const date = new Date(this.schedule.date);
-        this.formatDate(date);
-        this.scheduleForm.patchValue({
-        date : this.formatDate(date),
-        workLocation : this.schedule.workLocation,
-        workHours : this.schedule.workHours, 
-        workReport : this.schedule.workReport 
-       })
+
+        this.schedulesSub = this.schedulesService.getSchedulesUpdateListener()
+        .subscribe((schedules:Schedule[])=> {
+          this.schedules = schedules;
+          this.schedule = this.schedules.find(x => x.id == this.reqID);
+          console.log(this.schedule);
+          this.scheduleForm.patchValue({
+            date : this.schedule.date,
+            workLocation : this.schedule.workLocation,
+            workHours : this.schedule.workHours, 
+            workReport : this.schedule.workReport 
+           })
+        });
+
       document.getElementById("date").setAttribute('style', 'pointer-events: none');
       document.getElementById("workLocation").setAttribute('style', 'pointer-events: none');
       document.getElementById("workHours").setAttribute('style', 'pointer-events: none');
@@ -49,17 +73,17 @@ export class ViewEmpSchComponent implements OnInit {
   }
 
   reject(){
-    this.listOfSchedules[Number(this.reqID) - 1].status = "Rejected"
-    this.listOfSchedules[Number(this.reqID) - 1].supervisorComments = this.scheduleForm.value.comments
-    localStorage.setItem('Schedules', JSON.stringify(this.listOfSchedules));
+    this.schedules[Number(this.reqID) - 1].status = "Rejected"
+    this.schedules[Number(this.reqID) - 1].supervisorComments = this.scheduleForm.value.comments
+    localStorage.setItem('Schedules', JSON.stringify(this.schedules));
     this.scheduleForm.reset();
     this.router.navigate(['/sidebar/review']);
   }
 
   approve(){
-    this.listOfSchedules[Number(this.reqID) - 1].status = "Approved"
-    this.listOfSchedules[Number(this.reqID) - 1].supervisorComments = this.scheduleForm.value.comments
-    localStorage.setItem('Schedules', JSON.stringify(this.listOfSchedules));
+    this.schedules[Number(this.reqID) - 1].status = "Approved"
+    this.schedules[Number(this.reqID) - 1].supervisorComments = this.scheduleForm.value.comments
+    localStorage.setItem('Schedules', JSON.stringify(this.schedules));
     this.scheduleForm.reset();
     this.router.navigate(['/sidebar/review']);
   }

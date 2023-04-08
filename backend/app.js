@@ -185,7 +185,7 @@ app.get('/api/departments', (req, res, next) => {
 //Department -- End
 
 //Schedule -- Start
-app.post("/api/schedules", checkAuth, (req, res, next) => {
+app.post("/api/schedules", (req, res, next) => {
   const schedule = new Schedule({
     employeeID : req.body.employeeID,
     date: req.body.date,
@@ -202,42 +202,6 @@ app.post("/api/schedules", checkAuth, (req, res, next) => {
     });
 });
 
-
-
-// app.use('/api/employees', (req,res,next)=> {
-//   const employee= [
-//     {
-//       id: 'admin',
-//       password: 'admin',
-//       name: "",
-//       position: "",
-//       email: "",
-//       FWAstatus: "",
-//       supervisorID: "",
-//       departmentID: "",
-//       status: "",
-
-//     },
-
-//     {
-//       id: 'S100',
-//       password: "super",
-//       name: "supervisor",
-//       position: "Supervisor",
-//       email: "supervisor@supervisor.com",
-//       FWAstatus: "WFH",
-//       supervisorID: "",
-//       departmentID: "D1",
-//       status: "New",
-//     }
-//   ];
-
-//   res.status(200).json({
-//     message: 'Employees fetched successfully',
-//     employees: employee
-//   });
-// });
-
 app.get('/api/schedules', (req, res, next) => {
   Schedule.find().then(documents => {
     res.status(200).json({
@@ -246,6 +210,24 @@ app.get('/api/schedules', (req, res, next) => {
     })
   })
 })
+
+app.put("/api/schedules/scheduleID", (req, res, next) => {
+  console.log(":here")
+  const schedule = new Schedule({
+    _id: req.body.scheduleID,
+    employeeID : req.body.employeeID,
+    date: req.body.date,
+    workLocation : req.body.workLocation,
+    workHours: req.body.workHours,
+    workReport : req.body.workReport,
+    supervisorComments : req.body.supervisorComments,
+    status : req.body.status
+  });
+  Request.updateOne({ _id: req.params.scheduleID}, schedule).then(result => {
+    console.log(result);
+    res.status(200).json({message: "Schedule updated", response: result});
+  });
+});
 //Schedule -- End
 
 

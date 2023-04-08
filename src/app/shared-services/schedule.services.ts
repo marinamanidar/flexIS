@@ -60,6 +60,13 @@ this.http.get<{message: string , schedule : any}>('http://localhost:3000/api/sch
         );
 }
 
+updateSchedule(id:string, employeeID:string, date:string, workLocation:string, workHours:string, workReport:string, supervisorComments:string, status:string){
+  const schedule : Schedule = { id:id, employeeID:employeeID, date:date, workLocation:workLocation, workHours:workHours, workReport:workReport, supervisorComments:supervisorComments, status:status};
+  this.http.put('http://localhost:3000/api/schedules/' + id , schedule)
+  .subscribe(response => console.log (response));
+  this.router.navigate(['/']);
+}
+
 
 getSchedulesUpdateListener(){
   return this.scheduleUpdated.asObservable();

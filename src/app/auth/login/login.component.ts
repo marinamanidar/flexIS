@@ -33,9 +33,11 @@ export class LoginComponent {
       this.router.navigate(['/reset']);
     }else if(this.employee.position == "Employee" && this.employee.status == "New"){
       this.router.navigate(['/reset']);
-    }else{
-      console.log(this.employee)
+    }else if(this.employee.position == "admin" || this.employee.position == "Supervisor" && this.employee.status != "New" || this.employee.position == "Employee" && this.employee.status != "New"){
       this.router.navigate(['/sidebar/home']);
+    }else{
+      alert("Invalid password or email")
+      return;
     }
   }
 

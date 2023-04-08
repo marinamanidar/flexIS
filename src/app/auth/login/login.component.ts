@@ -26,14 +26,13 @@ export class LoginComponent {
     this.authService.login(form.value.email, form.value.password);
     sessionStorage.setItem('user', form.value.email);
     this.employee = this.employeesService.getEmployeeByEmail(form.value.email);
-    console.log(this.employee)
 
-
+    console.log(form.value.email);
     if(this.employee.position == "Supervisor" && this.employee.status == "New"){
       this.router.navigate(['/reset']);
     }else if(this.employee.position == "Employee" && this.employee.status == "New"){
       this.router.navigate(['/reset']);
-    }else if(this.employee.position == "admin" || this.employee.position == "Supervisor" && this.employee.status != "New" || this.employee.position == "Employee" && this.employee.status != "New"){
+    }else if(this.employee.status != "New"){
       this.router.navigate(['/sidebar/home']);
     }else{
       alert("Invalid password or email")

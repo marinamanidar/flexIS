@@ -29,8 +29,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <ng-container *ngFor="let item of listSchedules">
-                    <tr *ngIf="item.employeeID == user">
+                    <ng-container *ngFor="let item of schedules">
+                    <tr *ngIf="item.employeeID == id">
                         <td>
                             <span>{{ item.date | date:'dd/MM/yyyy' }}</span>
                         </td>
@@ -63,7 +63,7 @@
                         </td>
                     </tr>
                     </ng-container>
-                    <tr *ngIf="listSchedules.length == 0">
+                    <tr *ngIf="schedules.length == 0">
                         <td colspan="6" class="text-center align-middle">
                             <span class="text-muted font-medium">No Record(s) Found.</span>
                         </td>

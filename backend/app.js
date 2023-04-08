@@ -245,10 +245,10 @@ app.get('/api/schedules', (req, res, next) => {
   })
 })
 
-app.put("/api/schedules/scheduleID", (req, res, next) => {
+app.put("/api/schedules/:id", (req, res, next) => {
   console.log(":here")
   const schedule = new Schedule({
-    _id: req.body.scheduleID,
+    _id: req.body.id,
     employeeID : req.body.employeeID,
     date: req.body.date,
     workLocation : req.body.workLocation,

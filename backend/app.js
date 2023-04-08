@@ -8,10 +8,7 @@ const User = require('./models/employee');const Department = require('./models/d
 const Schedule = require('./models/schedule');
 const bcrypt = require("bcrypt");
 const cors = require('cors');
-const Request = require('./models/request')
-
-const checkAuth = require('./middleware/check-auth');
-const cors = require('cors');
+const Request = require('./models/request');
 
 
 
@@ -39,7 +36,7 @@ app.use((req, res, next) => {
 
 //Employee -- Start
 
-app.post('/api/employees/signup', checkAuth, (req,res,next) => {
+app.post('/api/employees/signup',checkAuth, (req,res,next) => {
   bcrypt.hash(req.body.password,10)
   .then(hash => {
     const employee = new Employee({
@@ -62,7 +59,8 @@ app.post('/api/employees/signup', checkAuth, (req,res,next) => {
         error : err
       });
     });
-
+  })
+})
 
 app.get('/api/employees', (req, res, next) => {
   Employee.find().then(documents => {
@@ -176,8 +174,10 @@ app.get('/api/departments', (req, res, next) => {
     res.status(200).json({
       message: 'Departments fetched successfully',
       department: documents
-=======
-});
+    });
+  })
+})
+
 
 
 
@@ -302,3 +302,4 @@ app.put("/api/requests/:requestID", (req, res, next) => {
 
 //Request -- End
 module.exports = app;
+

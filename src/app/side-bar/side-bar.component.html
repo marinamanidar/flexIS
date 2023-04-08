@@ -25,22 +25,22 @@
     <button mat-button class="menu-button" routerLink="/sidebar/home">
       <span>Home</span>
     </button>
-    <button *ngIf="empPos.includes('Admin')" mat-button class="menu-button" routerLink="/sidebar/view-emp">
+    <button *ngIf="empPos == 'admin'" mat-button class="menu-button" routerLink="/sidebar/view-emp">
       <span>View Employees</span>
     </button>
-    <button *ngIf="empPos.includes('Admin') || empPos.includes('Supervisor')" mat-button class="menu-button" routerLink="/sidebar/fwa">
+    <button *ngIf="empPos == 'admin' || empPos == 'Supervisor'" mat-button class="menu-button" routerLink="/sidebar/fwa">
       <span>FWA Analytics</span>
     </button>
-    <button *ngIf="empPos.includes('Supervisor')" mat-button class="menu-button" routerLink="/sidebar/review">
+    <button *ngIf="empPos == 'Supervisor'" mat-button class="menu-button" routerLink="/sidebar/review">
       <span>Review Employee Schedules</span>
     </button>
-    <button *ngIf="empPos.includes('Employee')" mat-button class="menu-button" routerLink="/sidebar/submit">
+    <button *ngIf="empPos == 'Employee'" mat-button class="menu-button" routerLink="/sidebar/submit">
       <span>Submit FWA Request</span>
     </button>
-    <button *ngIf="empPos.includes('Employee')" mat-button class="menu-button" routerLink="/sidebar/view-sch">
+    <button *ngIf="empPos == 'Employee'" mat-button class="menu-button" routerLink="/sidebar/view-sch">
       <span>View Schedule</span>
     </button>
-    <button *ngIf="empPos.includes('Supervisor')" mat-button class="menu-button" routerLink="/sidebar/view-request">
+    <button *ngIf="empPos == 'Supervisor'" mat-button class="menu-button" routerLink="/sidebar/view-request">
       <span>View Requests</span>
     </button>
 

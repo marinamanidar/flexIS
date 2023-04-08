@@ -20,11 +20,11 @@ export class LoginComponent {
 
   onLogin(form : NgForm) {
     //console.log(form.value);
-
     if(form.invalid){
       return;
     }
     this.authService.login(form.value.email, form.value.password);
+    sessionStorage.setItem('user', form.value.email);
     this.employee = this.employeesService.getEmployeeByEmail(form.value.email);
     console.log(this.employee)
 

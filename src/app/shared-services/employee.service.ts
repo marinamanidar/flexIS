@@ -22,7 +22,7 @@ getEmployee(id:string){
 }
 
 getEmployeeByEmail(email:string){
-  return {...this.employees.find(p=>p.email === email)};
+  return {...this.employees.find(p=>p.email == email)};
 }
 
 addEmployee(password:string, name:string, position:string, email:string, FWAstatus:string, supervisorID:string, departmentID:string, status:string) {

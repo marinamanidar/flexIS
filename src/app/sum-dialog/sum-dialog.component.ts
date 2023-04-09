@@ -68,6 +68,7 @@ export class SumDialogComponent {
 
                 //counts the number of schedules made for each date and sorts them from earliest to latest
         this.bblSort(this.listDate)
+        console.log(this.listDate)
         const counts = {};
         for (const num of this.listDate) {
           counts[num] = counts[num] ? counts[num] + 1 : 1;

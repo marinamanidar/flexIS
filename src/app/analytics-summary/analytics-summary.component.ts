@@ -12,6 +12,8 @@ import { FWARequest } from '../shared-model/request.model';
 import { Department } from '../shared-model/department.model';
 import { departmentsService } from '../shared-services/department.services';
 import { Subscription } from 'rxjs';
+import { schedulesService } from '../shared-services/schedule.services';
+import { Schedule } from '../shared-model/daily-schedule.model';
 
 
 export class summary{
@@ -19,7 +21,7 @@ export class summary{
   employeeID: string
   name: string
   location: string
-  hours: number
+  hours: string
 }
 
 @Component({
@@ -53,6 +55,8 @@ export class AnalyticsSummaryComponent {
 
   departments: Department[] = [];
 
+  schedules: Schedule[] = [];
+
   request: FWARequest;
 
   employee: Employee;
@@ -75,10 +79,23 @@ export class AnalyticsSummaryComponent {
     public dialog: MatDialog,
     public empService: employeesService,
     public reqService: requestService,
-    public depService: departmentsService
+    public depService: departmentsService,
+    public schService: schedulesService
     ) {}
 
   ngOnInit() {
+
+    this.empService.getEmployees();
+    this.empService.getEmployeesUpdateListener()
+    .subscribe((employees: Employee[]) =>{
+      this.employees = employees;
+    })
+
+    this.schService.getSchedules();
+    this.schService.getSchedulesUpdateListener()
+    .subscribe((schedules: Schedule[]) => {
+      this.schedules = schedules;
+    })
     //Retrieve departmentID from previous page
     this.sub = this.route.params.subscribe(params => {
       this.depID = params['id']
@@ -112,10 +129,10 @@ export class AnalyticsSummaryComponent {
         this.second = second2['0']
         this.first = first2['0']
       }
-      Object.values(this.listEmployees).forEach(emp => {
+      Object.values(this.employees).forEach(emp => {
         if (emp['departmentID'] == this.depID){
 
-          Object.values(this.listSchedules).forEach(sch => {
+          Object.values(this.schedules).forEach(sch => {
             if (emp['employeeID'] == sch['employeeID']){
               if (new Date(sch['date']) >= new Date(this.first)
               && (new Date(sch['date']) <= new Date(this.second))){

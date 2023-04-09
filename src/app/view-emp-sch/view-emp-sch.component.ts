@@ -55,7 +55,6 @@ export class ViewEmpSchComponent implements OnInit {
         .subscribe((schedules:Schedule[])=> {
           this.schedules = schedules;
           this.schedule = this.schedules.find(x => x.id == this.reqID);
-          console.log(this.schedule);
           this.scheduleForm.patchValue({
             date : this.schedule.date,
             workLocation : this.schedule.workLocation,
@@ -73,17 +72,18 @@ export class ViewEmpSchComponent implements OnInit {
   }
 
   reject(){
-    this.schedules[Number(this.reqID) - 1].status = "Rejected"
-    this.schedules[Number(this.reqID) - 1].supervisorComments = this.scheduleForm.value.comments
-    localStorage.setItem('Schedules', JSON.stringify(this.schedules));
+    this.sub = this.route.params.subscribe(params => {
+      this.schedulesService.updateSchedule(params['id'], this.schedulesService.getSchedule(params['id']).employeeID, this.scheduleForm.value.date, this.scheduleForm.value.workLocation, this.scheduleForm.value.workHours, this.scheduleForm.value.workReport, this.scheduleForm.value.comments, "Rejected");
+    });
     this.scheduleForm.reset();
     this.router.navigate(['/sidebar/review']);
   }
 
   approve(){
-    this.schedules[Number(this.reqID) - 1].status = "Approved"
-    this.schedules[Number(this.reqID) - 1].supervisorComments = this.scheduleForm.value.comments
-    localStorage.setItem('Schedules', JSON.stringify(this.schedules));
+    this.sub = this.route.params.subscribe(params => {
+      console.log(this.schedulesService.getSchedule(params['id']).employeeID)
+      this.schedulesService.updateSchedule(params['id'], this.schedulesService.getSchedule(params['id']).employeeID, this.scheduleForm.value.date, this.scheduleForm.value.workLocation, this.scheduleForm.value.workHours, this.scheduleForm.value.workReport, this.scheduleForm.value.comments, "Approved");
+    });
     this.scheduleForm.reset();
     this.router.navigate(['/sidebar/review']);
   }

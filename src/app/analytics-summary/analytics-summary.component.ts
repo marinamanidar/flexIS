@@ -80,21 +80,21 @@ export class AnalyticsSummaryComponent {
     public empService: employeesService,
     public reqService: requestService,
     public depService: departmentsService,
-    public schService: schedulesService
+    public schedService: schedulesService
     ) {}
 
   ngOnInit() {
 
-    this.empService.getEmployees();
-    this.empService.getEmployeesUpdateListener()
-    .subscribe((employees: Employee[]) =>{
-      this.employees = employees;
+    this.schedService.getSchedules();
+    this.schedService.getSchedulesUpdateListener()
+    .subscribe((schedule : Schedule[]) => {
+      this.schedules = schedule
     })
 
-    this.schService.getSchedules();
-    this.schService.getSchedulesUpdateListener()
-    .subscribe((schedules: Schedule[]) => {
-      this.schedules = schedules;
+    this.empService.getEmployees();
+    this.empService.getEmployeesUpdateListener()
+    .subscribe((employee: Employee[]) => {
+      this.employees = employee
     })
     //Retrieve departmentID from previous page
     this.sub = this.route.params.subscribe(params => {

@@ -183,9 +183,6 @@ app.put("/api/employees/:employeeID", (req, res, next) => {
       });
     });
   });
-
-
-
 });
 
 //Employee -- End
@@ -298,7 +295,6 @@ app.post("/api/requests", (req, res, next) => {
 });
 
 app.put("/api/requests/:requestID", (req, res, next) => {
-  console.log('does it reach here')
 
   const request = new Request({
     _id: req.body.requestID,

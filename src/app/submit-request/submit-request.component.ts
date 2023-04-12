@@ -18,9 +18,6 @@ export class SubmitRequestComponent {
 
     public reqService: requestService, public empService: employeesService, private formBuilder: FormBuilder,   private router: Router) {}
 
-
-
-
   private requestSub : Subscription | undefined;
   private empSub : Subscription | undefined;
 
@@ -37,7 +34,6 @@ export class SubmitRequestComponent {
   requests: FWARequest[] = [];
   employees: Employee[] = [];
   employeeID: string;
-  listRequests = JSON.parse(localStorage.getItem('Requests'));
   pastReq: any;
   isLinear = true;
   reqEmp: Employee;
@@ -81,27 +77,14 @@ export class SubmitRequestComponent {
   this.request.status = 'Pending';
   this.request.comment = '';
 
-
   this.reqService.addRequest(
     this.userID, this.today, this.type, this.secondFormGroup.get('secondCtrl').value, this.thirdFormGroup.get('thirdCtrl').value, 'Pending', ''
   );
   this.reqService.getRequestUpdateListener();
-  this.addRequest(this.request);
 
   alert('Your request has been submitted');
-  this.listRequests = JSON.parse(localStorage.getItem('Requests'));
   this.router.navigate(['/sidebar/home']);
 }
 
-addRequest(request){ //adds the request into local storage
-  let requests = [];
-  if (localStorage.getItem('Requests')){
-    requests = JSON.parse(localStorage.getItem('Requests'));
-    requests = [...requests, request]
-  }else{
-    requests = [request];
-  }
-  localStorage.setItem('Requests', JSON.stringify(requests));
-}
  }
 

@@ -1,0 +1,13 @@
+<p>Pick a date range</p>
+<mat-selection-list #pick (selectionChange)="onSelection($event)">
+  <mat-list-option *ngFor="let date of dateList"
+  [disabled]="pick.selectedOptions.selected.length == 2"
+  [value]="date.date"
+  >
+    Date: {{date.date}} | Count: {{date.count}}
+  </mat-list-option>
+</mat-selection-list>
+
+<button mat-raised-button color="primary" (click)="selected()">
+  select
+</button>

@@ -6,34 +6,45 @@ import { RegisterEmployeeComponent } from './register-employee/register-employee
 import { ReviewSchedulesComponent } from './review-schedules/review-schedules.component';
 import { SubmitRequestComponent } from './submit-request/submit-request.component';
 import { UpdateScheduleComponent } from './update-schedule/update-schedule.component';
+import { SideBarComponent } from "./side-bar/side-bar.component";
+import { LoginComponent } from './auth/login/login.component';
+import { PasswordComponent } from './password/password.component';
+import { ViewEmployeesComponent } from './view-employees/view-employees.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
+import { ReviewRequestComponent } from './review-request/review-request.component';
+import { ViewRequestComponent } from './view-request/view-request.component';
+import { AnalyticsSummaryComponent } from './analytics-summary/analytics-summary.component';
+import { ViewEmpSchComponent } from './view-emp-sch/view-emp-sch.component';
 
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'home',
+    component: LoginComponent
   },
   {
-    path: 'review',
-    component: ReviewSchedulesComponent,
+    path: 'reset',
+    component: PasswordComponent
   },
   {
-    path: 'submit',
-    component: SubmitRequestComponent,
-  },
-  {
-    path: 'fwa',
-    component: FwaAnalyticsComponent,
-  },
-  {
-    path: 'register',
-    component: RegisterEmployeeComponent,
-  },
-  {
-    path: 'update',
-    component: UpdateScheduleComponent,
-  },
-];
+    path: 'sidebar', component: SideBarComponent,
+    children: [
+      {path: 'review', component: ReviewSchedulesComponent},
+      {path: 'submit', component: SubmitRequestComponent},
+      {path: 'fwa', component: FwaAnalyticsComponent},
+      {path: 'register', component: RegisterEmployeeComponent},
+      {path: 'update', component: UpdateScheduleComponent},
+      {path: 'view-emp', component: ViewEmployeesComponent},
+      {path: 'home', component: HomePageComponent},
+	    {path: 'view-sch', component: ViewScheduleComponent},
+	    {path: 'request/:id',component: ReviewRequestComponent},
+      {path: 'view-request', component: ViewRequestComponent},
+		  {path: 'summary/:id',component: AnalyticsSummaryComponent},
+      {path: 'update/:id',component: UpdateScheduleComponent},
+      {path: 'view-emp-sch/:id',component: ViewEmpSchComponent},
+      {path: 'view-sch', component: ViewScheduleComponent}
+    ]
+  }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

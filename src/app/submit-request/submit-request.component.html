@@ -1,1 +1,79 @@
-<p>submit-request works!</p>
+<div *ngIf="pastReq != undefined">
+  <p>Work type: {{pastReq.workType}}</p>
+  <p>Description: {{pastReq.description}}</p>
+  <p>Reason: {{pastReq.reason}}</p>
+  <p>Request date: {{pastReq.requestDate}}</p>
+  <p>Status: {{pastReq.status}}</p>
+</div>
+
+<mat-vertical-stepper [linear]="true" #stepper *ngIf="pastReq == undefined">
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Select your work type</ng-template>
+
+      <mat-radio-group aria-label="Select an option">
+
+        <mat-radio-button value="flex" (change)="radioChange($event)" checked="true">
+         <p style="margin-left: 95px;">Flexi-hour</p>
+          <div class="example-ripple-container mat-elevation-z4" matRipple>
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="av_timer"></mat-icon>
+          </div>
+        </mat-radio-button>
+
+        <mat-radio-button value="home" (change)="radioChange($event)">
+          <p style="margin-left: 95px;">Work-from-home</p>
+          <div class="example-ripple-container mat-elevation-z4" matRipple>
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+          </div>
+        </mat-radio-button>
+
+        <mat-radio-button value="hybrid" (change)="radioChange($event)">
+          <p style="margin-left: 95px;">Hybrid</p>
+          <div class="example-ripple-container mat-elevation-z4" matRipple>
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="shuffle"></mat-icon>
+          </div>
+        </mat-radio-button>
+
+      </mat-radio-group>
+      <div style="margin-top: 20px;">
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Provide a description</ng-template>
+      <mat-form-field style="margin-top: 20px; width: 1000px">
+        <textarea matInput placeholder="" formControlName="secondCtrl" rows="10" required>
+
+        </textarea>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>State your reason</ng-template>
+      <mat-form-field style="margin-top: 20px; width: 1000px">
+        <input matInput placeholder="" formControlName="thirdCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <button mat-raised-button color="primary" style="margin-top: 10px;" matStepperNext (click)="submit()">Submit Request</button>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>

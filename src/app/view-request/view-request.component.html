@@ -1,0 +1,56 @@
+<div class="card text-white bg-primary mb-3">
+  <div class="card-body">
+    <h5 class="card-title">View Request</h5>
+  </div>
+</div>
+<!-- [dataSource]="dataSource" -->
+<!-- <table mat-table *ngFor="let req of reqTable">
+  <ng-container matColumnDef="ID">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell > {{req.ID}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell > {{req.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Status">
+    <th mat-header-cell *matHeaderCellDef> Status </th>
+    <td mat-cell > {{req.status}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row (click)="review(req.reqID)" ></tr>
+</table> -->
+
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">status</th>
+      <th scope="col">ID</th>
+      <th scope="col">Review</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let item of reqTable">
+          <td>
+              <span>{{ item.name}}</span>
+          </td>
+          <td>
+              <span>{{ item.status}}</span>
+          </td>
+          <td>
+              <span>{{ item.empID}}</span>
+          </td>
+          <td>
+            <button mat-raised-button color="primary" [routerLink]="['/sidebar/request', item.reqID]">Review</button>
+              <!-- <ng-container *ngFor="let dep of listDepartments">
+              <span *ngIf="dep.departmentID.includes(item.departmentID)">{{dep.departmentName}}</span>
+              </ng-container> -->
+          </td>
+      </tr>
+  </tbody>
+</table>

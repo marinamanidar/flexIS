@@ -1,1 +1,21 @@
-<p>fwa-analytics works!</p>
+<div class="card text-white bg-primary mb-3">
+  <div class="card-body">
+    <h5 class="card-title">View Analytics</h5>
+  </div>
+</div>
+
+<div class="container">
+  <button mat-raised-button *ngFor="let dep of departmentCount" class="button-size" [routerLink]="['/sidebar/summary', dep.departmentID]">
+
+    <h1>{{dep.departmentName}}</h1>
+    <div>
+
+      Flexi-hour: {{dep.flexCount}} <br>
+      Work-from-home: {{dep.homeCount}} <br>
+      Hybrid: {{dep.hybridCount}}
+
+    </div>
+
+  </button>
+</div>
+

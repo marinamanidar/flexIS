@@ -1,1 +1,63 @@
-<p>register-employee works!</p>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="" routerLink="/sidebar/view-emp">View Employees</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Register Employee</li>
+  </ol>
+</nav>
+
+<div class="card text-white bg-primary mb-3">
+  <div class="card-body">
+    <h5 class="card-title">Register New Employee</h5>
+  </div>
+</div>
+
+<form [formGroup]="employeeForm" (submit)="onSubmit()">
+
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control input-lg" id="floatingInput" name="name" formControlName="name" placeholder="John Doe" [class.is-invalid]="(employeeForm.get('name').touched || employeeForm.get('name').dirty) && employeeForm.get('name').invalid"/>
+    <label for="floatingInput">Employee Name *</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <select name="position" [class.is-invalid]="(employeeForm.get('position').touched || employeeForm.get('position').dirty) && employeeForm.get('position').invalid" class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="position" (change)="onSelected(position.value)" required>
+      <option class="text-muted" disabled [value]="null"></option>
+      <option value="Supervisor">Supervisor</option>
+      <option value="Employee">Employee</option>
+    </select>
+    <label for="floatingInput">Employee Position *</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input type="email" class="form-control input-lg" id="floatingInput" formControlName="email" placeholder="name@example.com" [class.is-invalid]="(employeeForm.get('email').touched || employeeForm.get('email').dirty) && employeeForm.get('email').invalid"/>
+    <label for="floatingInput">Employee Email *</label>
+  </div>
+
+  <div class="form-floating mb-3" id="condition">
+    <select name="supervisorID" id="position" [class.is-invalid]="(employeeForm.get('supervisorID').touched || employeeForm.get('supervisorID').dirty) && employeeForm.get('supervisorID').invalid" class="form-select" aria-label="Floating label select example" formControlName="supervisorID">*ngIf="emp.position.includes('Supervisor')"
+      <option class="text-muted" disabled [value]="null"></option>
+      <ng-container *ngFor="let emp of employees">
+        <option *ngIf="emp.position == 'Supervisor'" value={{emp.employeeID}}>{{emp.name}}</option>
+      </ng-container>
+    </select>
+    <label for="floatingInput">Supervisor</label>
+  </div>
+
+  <div class="row g-3 mb-3" id="dep">
+    <div class="form-floating col">
+      <select name="departmentID" [class.is-invalid]="(employeeForm.get('departmentID').touched || employeeForm.get('departmentID').dirty) && employeeForm.get('departmentID').invalid" class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="departmentID">
+        <option class="text-muted" disabled [value]="null"></option>
+        <option *ngFor="let dept of departments" value={{dept.departmentID}}>{{dept.departmentName}}</option>
+      </select>
+      <label for="floatingSelect">Department *</label>
+    </div>
+  </div>
+
+  <div class="d-grid gap-2">
+    <button class="btn btn-lg btn-primary" type="submit">Register</button>
+  </div>
+</form>
+
+
+
+
+

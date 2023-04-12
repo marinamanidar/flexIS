@@ -1,0 +1,61 @@
+<div class="card text-white bg-primary mb-3">
+    <div class="card-body">
+      <h5 class="card-title">View Employees</h5>
+    </div>
+  </div>
+<div class="d-md-flex justify-content-end align-items-center bg-white p-3">
+    <button type="button" class="btn btn-primary btn-lg" routerLink="/sidebar/register">
+        <i class="fas fa-plus  fs-3 me-1 text-white"></i>
+        <span class="ms-1 text-white">Add New Employee</span>
+    </button>
+</div>
+
+<div class="col-md-6 col-lg-6 col-xl-6">
+    <p class="h3 mb-3 mt-3">Employees:</p>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Position</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Supervisor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of employees">
+                        <td>
+                            <span>{{ item.name}}</span>
+                        </td>
+                        <td>
+                            <span>{{ item.position}}</span>
+                        </td>
+                        <td>
+                            <span>{{ item.email}}</span>
+                        </td>
+                        <td>
+                            <ng-container *ngFor="let dep of departments">
+                            <span *ngIf="dep.departmentID.includes(item.departmentID)">{{dep.departmentName}}</span>
+                            </ng-container>
+                        </td>
+                        <td>
+                            <ng-container *ngFor="let emp of employees">
+                            <span *ngIf="emp.employeeID == item.supervisorID">{{emp.name}}</span>
+                            </ng-container>
+                        </td>
+                    </tr>
+                    <tr *ngIf="employees.length == 0">
+                        <td colspan="6" class="text-center align-middle">
+                            <span class="text-muted font-medium">No Record(s) Found.</span>
+                        </td>
+                    </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>
